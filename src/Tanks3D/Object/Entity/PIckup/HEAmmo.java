@@ -1,4 +1,4 @@
 package Tanks3D.Object.Entity.PIckup;
 
-public class HEAmmo {
+public class HEAmmo extends Pickup {
 }

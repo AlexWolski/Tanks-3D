@@ -1,4 +1,4 @@
 package Tanks3D.Object.Wall;
 
-public class breakableWall {
+public class breakableWall extends Wall {
 }

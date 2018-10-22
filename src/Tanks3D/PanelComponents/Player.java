@@ -1,8 +1,8 @@
-package Tanks3D.GameComponents;
+package Tanks3D.PanelComponents;
 
-import Tanks3D.Game;
+import javax.swing.*;
 
-public class Player extends Game {
+public class Player extends JPanel {
     public Player() {
 
     }

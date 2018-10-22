@@ -1,12 +1,17 @@
 package Tanks3D;
 
-import Tanks3D.GameComponents.Minimap;
-import Tanks3D.GameComponents.Player;
+import Tanks3D.PanelComponents.Minimap;
+import Tanks3D.PanelComponents.Player;
 
 import javax.swing.*;
+import java.awt.*;
 
 //Controls the entire game. The program enters from this 'Game' class, which is a singleton class.
 public class Game {
+    private final String levelFile = "Indoor Arena.txt";
+    private final int defaultWidth = 1000;
+    private final int defualtHeight = 500;
+
     private JFrame gameDisplay;
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
     private long timeOfLastFrame;
@@ -34,11 +39,17 @@ public class Game {
         }
     }
 
-    //Initialize variables. The constructor is public because other classes need to extend it to access variables.
-    //The singleton class rule is upheld because only one instance is created by main.
-    public Game() {
+    //Initialize variables. The constructor is private to prevent any classes extending it and creating a new instance
+    private Game() {
         gameDisplay = new JFrame("Tanks 3D");
-        indoorArena = new Level("Indoor Arena.txt");
+        gameDisplay.setLayout(new BorderLayout());
+        gameDisplay.setSize(defaultWidth, defualtHeight);
+        gameDisplay.setResizable(false);
+        gameDisplay.setLocationRelativeTo(null);
+        gameDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameDisplay.setVisible(true);
+
+        indoorArena = new Level(levelFile);
         player1 = new Player();
         player2 = new Player();
         minimap = new Minimap();
