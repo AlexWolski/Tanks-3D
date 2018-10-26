@@ -1,7 +1,6 @@
 package Tanks3D.Object.Entity.PIckup;
 
 import Tanks3D.GameData;
-import Tanks3D.GameManager;
 import Tanks3D.Object.Entity.Entity;
 
 import java.awt.image.BufferedImage;

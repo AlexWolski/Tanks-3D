@@ -1,4 +1,4 @@
 package Tanks3D.Object;
 
-public class Object {
+public class GameObject {
 }

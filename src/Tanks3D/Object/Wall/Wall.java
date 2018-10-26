@@ -1,4 +1,6 @@
 package Tanks3D.Object.Wall;
 
-public class Wall extends Object {
+import Tanks3D.Object.GameObject;
+
+public class Wall extends GameObject {
 }

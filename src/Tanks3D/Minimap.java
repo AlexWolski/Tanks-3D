@@ -3,6 +3,7 @@ package Tanks3D;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+//Displays the minimap.
 public class Minimap implements Runnable{
     private GameData gameData;
     private BufferedImage minimapCanvas;
@@ -10,11 +11,6 @@ public class Minimap implements Runnable{
     public Minimap(GameData data, BufferedImage canvas, Dimension panelSize) {
         data = gameData;
         minimapCanvas = canvas;
-    }
-
-    public void update()
-    {
-
     }
 
     public void draw() {

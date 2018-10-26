@@ -5,16 +5,17 @@ import Tanks3D.Object.Entity.Entity;
 import java.awt.*;
 import java.util.ArrayList;
 
-//Controls the entire game. The program enters from this 'Game' class, which is a singleton class.
+//Controls the entire game. The program enters from this class, which is a singleton class.
 public class GameManager {
-    //Constant settings
+    //Constant settings.
     private final String levelFile = "Underground Arena.txt";
-    private final int defaultWidth = 1000;
+    //The extra 30px is for the title bar.
+    private final int defaultWidth = 1030;
     private final int defaultHeight = 500;
 
-    //The window that the game runs in.
+    //The window that the game runs in and controls drawing of the screen.
     private SplitWindow gameWindow;
-    //'struct' that hols all of the data for the game world
+    //'struct' that holds all of the data for the game world.
     private GameData gameData;
 
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
@@ -25,9 +26,9 @@ public class GameManager {
     private long deltaTime;
 
     //Remove
-    //Variable to count the number of frames run
+    //Variable to count the number of frames run.
     private int frames;
-    //Timer for fps
+    //Timer for fps.
     private long time;
 
     //Create a single 'Game' object and keep updating the game.
@@ -49,7 +50,7 @@ public class GameManager {
         gameData = new GameData();
         //Load the level from a text file.
         gameData.gameLevel = new Level(levelFile);
-        //Create the entity list and populate it with the player objects.
+        //Create the entity list.
         gameData.entityList = new ArrayList<>();
 
         //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
@@ -65,6 +66,7 @@ public class GameManager {
         timeOfLastFrame = System.currentTimeMillis();
 
         //Remove
+        //Set the timer for the FPS count.
         time = timeOfLastFrame;
     }
 
@@ -92,6 +94,8 @@ public class GameManager {
         //Update the time since the last frame.
         updateDeltaTime();
 
+        //Remove
+        //Print the FPS every second.
         if(currentTime - time > 1000)
         {
             System.out.println(frames);
@@ -99,18 +103,19 @@ public class GameManager {
             frames = 0;
         }
 
-        //Update all of the entities in the game
+        //Update the positions of all of the entities.
         for(Entity entity : gameData.entityList)
             entity.update(gameData);
 
+        //Update the two tanks' positions.
         gameData.player1.update();
         gameData.player2.update();
-        gameData.minimap.update();
 
-        //Draw both players' screen
+        //Draw both players' screen and the minimap.
         gameWindow.draw();
 
         //remove
+        //Increment the frame count for the FPS.
         frames++;
     }
 }
