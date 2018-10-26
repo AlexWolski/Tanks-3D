@@ -1,8 +1,11 @@
 package Tanks3D.Object.Entity;
 
+import Tanks3D.GameData;
 import Tanks3D.GameManager;
 
-public abstract class Entity {
-    public abstract void update(GameManager game);
-    public abstract void draw(GameManager game);
+import java.awt.image.BufferedImage;
+
+public abstract class Entity extends Object {
+    public abstract void update(GameData game);
+    public abstract void draw(BufferedImage canvas);
 }

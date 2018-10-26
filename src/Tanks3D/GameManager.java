@@ -13,13 +13,10 @@ public class GameManager {
     private final int defaultHeight = 500;
 
     //The window that the game runs in.
-    private SplitScreenWindow gameWindow;
+    private splitWindow gameWindow;
+    //'struct' that hols all of the data for the game world
+    private GameData gameData;
 
-    //The two objects that controls player input and displays their side of the screen.
-    private Player player1;
-    private Player player2;
-    //The object that controls the minimap
-    private Minimap minimap;
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
     private long timeOfLastFrame;
     //Store the current time.
@@ -32,11 +29,6 @@ public class GameManager {
     private int frames;
     //Timer for fps
     private long time;
-
-    //The 'Level' object stores all of the data for the game world and draws it to the screen.
-    public Level undergroundArena;
-    //A list of entities in the game. The first index is always player 1 and the second index is always player 2.
-    public ArrayList<Entity> entityList;
 
     //Create a single 'Game' object and keep updating the game.
     public static void main(String[] args) {
@@ -54,20 +46,21 @@ public class GameManager {
     //Initialize variables. The constructor is private to prevent any classes extending it and creating a new instance.
     private GameManager() {
         //Instantiate local objects.
+        gameData = new GameData();
         //Load the level from a text file.
-        undergroundArena = new Level(levelFile);
+        gameData.gameLevel = new Level(levelFile);
         //Create the entity list and populate it with the player objects.
-        entityList = new ArrayList<>();
+        gameData.entityList = new ArrayList<>();
 
         //Initialize the 'Player' objects. Get the initial positions for both players and pass it to their constructors.
         Dimension screenSize = new Dimension(defaultWidth/2, defaultHeight);
-        player1 = new Player(this, undergroundArena.getPlayer1Spawn(), Color.blue, screenSize);
-        player2 = new Player(this, undergroundArena.getPlayer2Spawn(), Color.green, screenSize);
+        gameData.player1 = new Player(gameData, gameData.gameLevel.getPlayer1Spawn(), Color.blue, screenSize);
+        gameData.player2 = new Player(gameData, gameData.gameLevel.getPlayer2Spawn(), Color.green, screenSize);
 
-        minimap = new Minimap(this, new Dimension(defaultWidth/4, defaultHeight/4));
+        gameData.minimap = new Minimap(this, new Dimension(defaultWidth/4, defaultHeight/4));
 
         //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
-        gameWindow = new SplitScreenWindow("Tanks 3D", new Dimension(defaultWidth, defaultHeight), player1, player2, minimap);
+        gameWindow = new splitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
@@ -100,8 +93,6 @@ public class GameManager {
         //Update the time since the last frame.
         updateDeltaTime();
 
-        frames++;
-
         if(currentTime - time > 1000)
         {
             System.out.println(frames);
@@ -110,17 +101,17 @@ public class GameManager {
         }
 
         //Update all of the entities in the game
-        for(Entity entity : entityList)
-            entity.update(this);
+        for(Entity entity : gameData.entityList)
+            entity.update(gameData);
 
-        player1.update();
-        player2.update();
-        minimap.update();
+        gameData.player1.update();
+        gameData.player2.update();
+        gameData.minimap.update();
 
         //Draw both players' screen
-        player1.repaint();
-        player2.repaint();
-        //Draw the minimap
-        minimap.repaint();
+        gameWindow.draw();
+
+        //remove
+        frames++;
     }
 }

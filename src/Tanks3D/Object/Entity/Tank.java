@@ -1,8 +1,10 @@
 package Tanks3D.Object.Entity;
 
+import Tanks3D.GameData;
 import Tanks3D.GameManager;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Tank extends Entity {
     private Point position;
@@ -15,11 +17,11 @@ public class Tank extends Entity {
         color = tankColor;
     }
 
-    public void update(GameManager game) {
+    public void update(GameData data) {
 
     }
 
-    public void draw(GameManager game) {
+    public void draw(BufferedImage canvas) {
 
     }
 }

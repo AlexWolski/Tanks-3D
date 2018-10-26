@@ -2,13 +2,13 @@ package Tanks3D;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Minimap extends JPanel {
+public class Minimap {
     private GameManager tankGame;
 
-    public Minimap(GameManager game, Dimension panelSize) {
-        tankGame = game;
-        setPreferredSize(panelSize);
+    public Minimap(GameManager data, Dimension panelSize) {
+        tankGame = data;
     }
 
     public void update()
@@ -16,7 +16,6 @@ public class Minimap extends JPanel {
 
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
+    public void draw(BufferedImage canvas) {
     }
 }

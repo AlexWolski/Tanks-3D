@@ -3,20 +3,18 @@ package Tanks3D;
 import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Object.SpawnPoint;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends JPanel {
-    private GameManager tankGame;
+public class Player {
+    private GameData gameData;
     private BufferedImage canvas;
     private Tank myTank;
     private Point position;
     private double angle;
 
-    public Player(GameManager game, SpawnPoint spawnPoint, Color tankColor, Dimension panelSize) {
-        tankGame = game;
-        setPreferredSize(panelSize);
+    public Player(GameData data, SpawnPoint spawnPoint, Color tankColor, Dimension panelSize) {
+        gameData = data;
         canvas = new BufferedImage(panelSize.width, panelSize.height, BufferedImage.TYPE_INT_RGB);
 
         position = spawnPoint.getPosition();
@@ -25,16 +23,10 @@ public class Player extends JPanel {
     }
 
     public void update() {
-        tankGame.undergroundArena.draw(canvas);
+
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        BufferedImage temp = new BufferedImage(canvas.getColorModel(), canvas.copyData(null), false, null);
-
-        Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(temp, null, null);
+    public void draw(BufferedImage canvas) {
+        gameData.gameLevel.draw(canvas, position, angle);
     }
 }

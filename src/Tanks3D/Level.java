@@ -40,7 +40,7 @@ public class Level {
         return player2Spawn;
     }
 
-    public void draw(BufferedImage screen) {
+    public void draw(BufferedImage screen, Point position, double angle) {
         int rbg = rand.nextInt();
 
         for(int loops = 0; loops < 4; loops++)
