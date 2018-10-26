@@ -6,16 +6,16 @@ import Tanks3D.Object.SpawnPoint;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player {
+public class Player implements Runnable {
     private GameData gameData;
-    private BufferedImage canvas;
+    private BufferedImage screenCanvas;
     private Tank myTank;
     private Point position;
     private double angle;
 
-    public Player(GameData data, SpawnPoint spawnPoint, Color tankColor, Dimension panelSize) {
+    public Player(GameData data, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor, Dimension panelSize) {
         gameData = data;
-        canvas = new BufferedImage(panelSize.width, panelSize.height, BufferedImage.TYPE_INT_RGB);
+        screenCanvas = canvas;
 
         position = spawnPoint.getPosition();
         angle = spawnPoint.getAngle();
@@ -26,7 +26,11 @@ public class Player {
 
     }
 
-    public void draw(BufferedImage canvas) {
-        gameData.gameLevel.draw(canvas, position, angle);
+    public void draw() {
+        gameData.gameLevel.draw(screenCanvas, position, angle);
+    }
+
+    public void run() {
+        draw();
     }
 }

@@ -13,7 +13,7 @@ public class GameManager {
     private final int defaultHeight = 500;
 
     //The window that the game runs in.
-    private splitWindow gameWindow;
+    private SplitWindow gameWindow;
     //'struct' that hols all of the data for the game world
     private GameData gameData;
 
@@ -52,15 +52,14 @@ public class GameManager {
         //Create the entity list and populate it with the player objects.
         gameData.entityList = new ArrayList<>();
 
+        //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
+        gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
+
         //Initialize the 'Player' objects. Get the initial positions for both players and pass it to their constructors.
         Dimension screenSize = new Dimension(defaultWidth/2, defaultHeight);
-        gameData.player1 = new Player(gameData, gameData.gameLevel.getPlayer1Spawn(), Color.blue, screenSize);
-        gameData.player2 = new Player(gameData, gameData.gameLevel.getPlayer2Spawn(), Color.green, screenSize);
-
-        gameData.minimap = new Minimap(this, new Dimension(defaultWidth/4, defaultHeight/4));
-
-        //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
-        gameWindow = new splitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
+        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.blue, screenSize);
+        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green, screenSize);
+        gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer(), new Dimension(defaultWidth/4, defaultHeight/4));
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();

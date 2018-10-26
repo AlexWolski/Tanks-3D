@@ -40,12 +40,11 @@ public class Level {
         return player2Spawn;
     }
 
-    public void draw(BufferedImage screen, Point position, double angle) {
+    public void draw(BufferedImage canvas, Point position, double angle) {
         int rbg = rand.nextInt();
 
-        for(int loops = 0; loops < 4; loops++)
-            for (int i = 0; i < screen.getWidth(); i++)
-                for (int j = 0; j < screen.getHeight(); j++)
-                    screen.setRGB(i, j, rbg);
+        for (int i = 0; i < canvas.getWidth(); i++)
+            for (int j = 0; j < canvas.getHeight(); j++)
+                canvas.setRGB(i, j, rbg);
     }
 }
