@@ -1,4 +1,4 @@
 package Tanks3D.Object.Entity.PIckup;
 
-public class APAmmo extends Pickup {
+public class GMRound extends Pickup {
 }

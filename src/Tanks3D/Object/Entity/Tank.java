@@ -3,6 +3,7 @@ package Tanks3D.Object.Entity;
 import Tanks3D.GameData;
 
 import java.awt.*;
+import Tanks3D.FastMath.Point;
 import java.awt.image.BufferedImage;
 
 public class Tank extends Entity {
@@ -10,10 +11,10 @@ public class Tank extends Entity {
     private double angle;
     private Color color;
 
-    public Tank(Point spawnPoint, double defaultAngle, Color tankColor) {
-        position = spawnPoint;
-        angle = defaultAngle;
-        color = tankColor;
+    public Tank(Point position, double angle, Color color) {
+        this.position = position;
+        this.angle = angle;
+        this.color = color;
     }
 
     public void update(GameData data) {

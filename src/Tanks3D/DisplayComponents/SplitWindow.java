@@ -1,4 +1,6 @@
-package Tanks3D;
+package Tanks3D.DisplayComponents;
+
+import Tanks3D.GameData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +14,10 @@ public class SplitWindow extends JFrame {
     private GameData gameData;
     private SplitPanel panel;
 
-    public SplitWindow(GameData data, String s, Dimension panelSize) {
+    public SplitWindow(GameData gameData, String s, Dimension panelSize) {
         super(s);
 
-        gameData = data;
+        this.gameData = gameData;
 
         //Set the settings for the JFrame.
         setLayout(new BorderLayout());

@@ -1,4 +1,4 @@
-package Tanks3D;
+package Tanks3D.DisplayComponents;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ public class SplitPanel extends JPanel {
     private BufferedImage minimapBuffer;
 
     public SplitPanel(Dimension size) {
-        panelSize = size;
+        this.panelSize = size;
         //The size of each player's screen and the minimap is pre-determined.
         screen1Buffer = new BufferedImage(panelSize.width/2, panelSize.height, BufferedImage.TYPE_INT_RGB);
         screen2Buffer = new BufferedImage(panelSize.width/2, panelSize.height, BufferedImage.TYPE_INT_RGB);

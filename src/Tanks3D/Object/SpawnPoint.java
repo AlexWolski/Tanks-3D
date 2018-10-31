@@ -1,23 +1,23 @@
 package Tanks3D.Object;
 
-import java.awt.*;
+import Tanks3D.FastMath.Point;
 
 public class SpawnPoint {
-    private Point position;
-    private double angle;
+    private Point spawnPoint;
+    private int spawnAngle;
     private int player;
 
-    public SpawnPoint(Point spawnPosition, double playerAngle, int playerNumber) {
-        position = spawnPosition;
-        angle = playerAngle;
-        player = playerNumber;
+    public SpawnPoint(Point spawnPoint, int spawnAngle, int player) {
+        this.spawnPoint = spawnPoint;
+        this.spawnAngle = spawnAngle;
+        this.player = player;
     }
 
     public Point getPosition() {
-        return position;
+        return spawnPoint;
     }
 
-    public double getAngle() {
-        return angle;
+    public int getAngle() {
+        return spawnAngle;
     }
 }

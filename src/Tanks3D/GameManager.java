@@ -1,5 +1,7 @@
 package Tanks3D;
 
+import Tanks3D.DisplayComponents.SplitWindow;
+import Tanks3D.FastMath.FastMath;
 import Tanks3D.Object.Entity.Entity;
 
 import java.awt.*;
@@ -57,13 +59,15 @@ public class GameManager {
         gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
 
         //Initialize the 'Player' objects. Get the initial positions for both players and pass it to their constructors.
-        Dimension screenSize = new Dimension(defaultWidth/2, defaultHeight);
-        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.blue, screenSize);
-        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green, screenSize);
-        gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer(), new Dimension(defaultWidth/4, defaultHeight/4));
+        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.blue);
+        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green);
+        gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer());
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
+
+        //Initialize the tables in the 'FastMath' class
+        FastMath.init();
 
         //Remove
         //Set the timer for the FPS count.
