@@ -34,14 +34,14 @@ public class Level {
     //Read the json objects from the file and create them. Walls are stored in the 'wallObjects' ArrayList.
     private void parseDataFile(String levelFile) {
         wallObjects = new ArrayList<>();
-        player1Spawn = new SpawnPoint(new Point(0, 0), 0, 1);
+        player1Spawn = new SpawnPoint(new Point(0, 0), 180, 1);
         player2Spawn = new SpawnPoint(new Point(0, 0), 0, 2);
 
 
         //remove
-        wallObjects.add(new Wall(new Point(-3, 3), new Point(3, 3), 500));
+        wallObjects.add(new Wall(new Point(5, 3), new Point(-5, 3), 500));
         wallObjects.add(new Wall(new Point(3, 3), new Point(3, -3), 500));
-        wallObjects.add(new Wall(new Point(3, -3), new Point(-3, -3), 500));
+        wallObjects.add(new Wall(new Point(5, -3), new Point(-5, -3), 500));
         wallObjects.add(new Wall(new Point(-3, -3), new Point(-3, 3), 500));
     }
 
@@ -57,7 +57,7 @@ public class Level {
         //The angle between each ray.
         double rayAngle = camera.FOV/wallBuffer.length;
         //The angle of the first ray.
-        double currentRay = camera.angle - camera.FOV/2;
+        double currentRay = -camera.FOV/2;
         //The rotated points of the current wall.
         Point p1;
         Point p2;
@@ -72,8 +72,8 @@ public class Level {
                 p2 = wall.getPoint2();
 
                 //Rotate the points so that the ray is parallel to the y axis.
-                FastMath.rotatePoint(p1, camera.position, -(camera.angle + currentRay));
-                FastMath.rotatePoint(p2, camera.position, -(camera.angle + currentRay));
+                FastMath.rotatePoint(p1, camera.position, currentRay - camera.angle);
+                FastMath.rotatePoint(p2, camera.position, currentRay - camera.angle);
 
                 p1.subtract(camera.position);
                 p2.subtract(camera.position);
