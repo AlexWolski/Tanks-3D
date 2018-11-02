@@ -36,6 +36,8 @@ public class SplitWindow extends JFrame {
         setVisible(true);
     }
 
+    //Return the JPanel
+    public JPanel getPanel() { return panel; }
     //Return the buffers for each player's screen and the minimap.
     public BufferedImage getScreen1Buffer() { return panel.getScreen1Buffer(); }
     public BufferedImage getScreen2Buffer() { return panel.getScreen2Buffer(); }

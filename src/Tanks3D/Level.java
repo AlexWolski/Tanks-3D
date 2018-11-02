@@ -39,10 +39,10 @@ public class Level {
 
 
         //remove
-        wallObjects.add(new Wall(new Point(5, 3), new Point(-5, 3), 500));
-        wallObjects.add(new Wall(new Point(3, 3), new Point(3, -3), 500));
-        wallObjects.add(new Wall(new Point(5, -3), new Point(-5, -3), 500));
-        wallObjects.add(new Wall(new Point(-3, -3), new Point(-3, 3), 500));
+        wallObjects.add(new Wall(new Point(3, 3), new Point(-3, 3), 500));
+        wallObjects.add(new Wall(new Point(-3, 3), new Point(-3, -3), 500));
+        wallObjects.add(new Wall(new Point(-3, -3), new Point(3, -3), 500));
+        wallObjects.add(new Wall(new Point(3, -3), new Point(3, 3), 500));
     }
 
     public SpawnPoint getPlayer1Spawn() {

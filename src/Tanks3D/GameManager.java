@@ -2,8 +2,10 @@ package Tanks3D;
 
 import Tanks3D.DisplayComponents.SplitWindow;
 import Tanks3D.FastMath.FastMath;
+import Tanks3D.InputManager.InputManager;
 import Tanks3D.Object.Entity.Entity;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -19,6 +21,8 @@ public class GameManager {
     private SplitWindow gameWindow;
     //'struct' that holds all of the data for the game world.
     private GameData gameData;
+    //The object that manages the keyboard inputs.
+    private InputManager inputManager;
 
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
     private long timeOfLastFrame;
@@ -62,6 +66,9 @@ public class GameManager {
         gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.blue);
         gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green);
         gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer());
+
+        //Link the controls for each player.
+        inputManager = new InputManager(gameWindow.getPanel(), gameData.player1, gameData.player2);
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
@@ -109,9 +116,9 @@ public class GameManager {
 
         //Update the positions of all of the entities.
         for(Entity entity : gameData.entityList)
-            entity.update(gameData);
+            entity.update(gameData, deltaTime);
 
-        //Update the two tanks' positions.
+        //Update the camera for both players.
         gameData.player1.update();
         gameData.player2.update();
 
