@@ -1,9 +1,9 @@
 package Tanks3D.Object.Entity.Round;
 
-import Tanks3D.FastMath.Point;
+import java.awt.geom.Point2D;
 
 public class GuidedMissile extends Round {
-    public GuidedMissile(Point position, double angle, int speed) {
+    public GuidedMissile(Point2D.Double position, double angle, int speed) {
         super(position, angle, speed);
     }
 }

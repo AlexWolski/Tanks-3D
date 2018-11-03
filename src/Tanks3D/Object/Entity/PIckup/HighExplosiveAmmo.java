@@ -1,9 +1,9 @@
 package Tanks3D.Object.Entity.PIckup;
 
-import Tanks3D.FastMath.Point;
+import java.awt.geom.Point2D;
 
 public class HighExplosiveAmmo extends Pickup {
-    public HighExplosiveAmmo(Point position) {
+    public HighExplosiveAmmo(Point2D.Double position) {
         super(position);
     }
 }

@@ -5,7 +5,6 @@ import Tanks3D.FastMath.FastMath;
 import Tanks3D.InputManager.InputManager;
 import Tanks3D.Object.Entity.Entity;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 

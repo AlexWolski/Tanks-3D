@@ -1,13 +1,13 @@
 package Tanks3D.Object.Entity.PIckup;
 
-import Tanks3D.FastMath.Point;
 import Tanks3D.GameData;
 import Tanks3D.Object.Entity.Entity;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class Pickup extends Entity {
-    public Pickup(Point position) {
+    public Pickup(Point2D.Double position) {
         super(position, 0, 0);
     }
 

@@ -1,13 +1,13 @@
 package Tanks3D;
 
-import Tanks3D.FastMath.Point;
+import java.awt.geom.Point2D;
 
 public class Camera {
-    protected Point position;
+    protected Point2D.Double position;
     protected double angle;
     protected double FOV;
 
-    public Camera(Point position, double angle, int FOV) {
+    public Camera(Point2D.Double position, double angle, int FOV) {
         this.position = position;
         this.angle = angle;
         this.FOV = FOV;

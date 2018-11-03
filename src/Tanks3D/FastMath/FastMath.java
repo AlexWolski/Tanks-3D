@@ -1,5 +1,9 @@
 package Tanks3D.FastMath;
 
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 //A class for fast trigonometric functions
 public final class FastMath {
     //The two tables for storing the pre-calculated values of sin and cos
@@ -53,14 +57,52 @@ public final class FastMath {
         return ((angle-Math.floor(angle)) * (nextVal-prevVal)) + prevVal;
     }
 
-    //Rotate a point around a pivot by some angle
-    public static void rotatePoint(Point point, Point pivot, double angle) {
-        point.subtract(pivot);
+    public static void add(Point2D.Double point1, Point2D.Double point2) {
+        point1.x += point2.x;
+        point1.y += point2.y;
+    }
+
+    public static void subtract(Point2D.Double point1, Point2D.Double point2) {
+        point1.x -= point2.x;
+        point1.y -= point2.y;
+    }
+
+    //Rotate a point around a pivot by some angle.
+    public static void rotate(Point2D.Double point, Point2D.Double pivot, double angle) {
+        //point.subtract(pivot);
+        subtract(point, pivot);
 
         double newX = (point.x * cos(angle)) + (point.y * sin(angle));
         double newY = (point.y * cos(angle)) - (point.x * sin(angle));
 
-        point.x = newX + pivot.x;
-        point.y = newY + pivot.y;
+        point.setLocation(newX + pivot.x, newY + pivot.y);
+    }
+
+    //Rotate a line round a pivot by some angle.
+    public static void rotate(Line2D.Double line, Point2D.Double pivot, double angle) {
+        Point2D.Double point1 = new Point2D.Double(line.x1, line.y1);
+        Point2D.Double point2 = new Point2D.Double(line.x2, line.y2);
+
+        rotate(point1, pivot, angle);
+        rotate(point2, pivot, angle);
+
+        line.setLine(point1, point2);
+    }
+
+    //
+    public  static void translate(Line2D.Double line, double xDist, double yDist) {
+        line.x1 += xDist;
+        line.y1 += yDist;
+        line.x2 += xDist;
+        line.y2 += yDist;
+    }
+
+    public static double getYIntercept(Line2D.Double line) {
+        //If the points are on opposite sides of the y axis, the wall intersects with the ray.
+        if(line.x1 > 0 && line.x2 < 0 || line.x1 < 0 && line.x2 > 0)
+            //Modified the linear equation y = mx + b. b is the y coordinate of the intersection, and x is always 0.
+            return line.y1 - ((line.y2 - line.y1) / (line.x2 - line.x1) * line.x1);
+
+        return -1;
     }
 }

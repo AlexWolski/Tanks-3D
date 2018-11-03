@@ -1,31 +1,46 @@
 package Tanks3D.Object.Wall;
 
-import Tanks3D.FastMath.Point;
 import Tanks3D.Object.GameObject;
 
-public class Wall extends GameObject {
-    private Point point1;
-    private Point point2;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
+public abstract class Wall extends GameObject {
+    private Line2D line;
     private double height;
     private double length;
     private int angle;
 
-    public Wall(Point point1, Point point2, double height) {
-        this.point1 = point1;
-        this.point2 = point2;
+    //Constructor that takes a line.
+    public Wall(Line2D.Double line, double height) {
+        this.line = line;
         this.height = height;
-        //Distance formula
-        length = Math.sqrt(Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2));
-        //Modified equation for polar coordinates
-        angle = (int) Math.toDegrees(Math.acos((point2.x-point1.x)/length));
+        init();
     }
 
-    public Point getPoint1() {
-        return new Point(point1.x, point1.y);
+    //Constructor that takes two points.
+    public Wall(Point2D.Double point1, Point2D.Double point2, double height) {
+        line = new Line2D.Double(point1, point2);
+        this.height = height;
+        init();
     }
 
-    public Point getPoint2() {
-        return new Point(point2.x, point2.y);
+    //Calculate the length and angle of the wall.
+    private void init() {
+        //Distance formula.
+        length = Math.sqrt(Math.pow(line.getX1() - line.getX2(), 2) + Math.pow(line.getY1() - line.getY2(), 2));
+        //Modified equation for polar coordinates.
+        angle = (int) Math.toDegrees(Math.acos((line.getX2()-line.getX1())/length));
+    }
+
+    public Line2D.Double getLine() { return new Line2D.Double(line.getP1(), line.getP2()); }
+
+    public Point2D.Double getPoint1() {
+        return new Point2D.Double(line.getX1(), line.getY1());
+    }
+
+    public Point2D.Double getPoint2() {
+        return new Point2D.Double(line.getX2(), line.getY2());
     }
 
     public double getHeight() {

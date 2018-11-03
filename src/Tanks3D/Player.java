@@ -19,12 +19,14 @@ public class Player implements Runnable {
     private WallSlice[] wallBuffer;
     //A camera for displaying the game world.
     private Camera camera;
+    //Booleans to remember what keys are being pressed.
+    private boolean forwardPressed, backPressed, leftPressed, rightPressed;
     //The field of view of the camera.
     private final int cameraFOV = 90;
-    //How fast the tank can move.
-    private final double tankSpeed = 0.001;
-    //How fast the tank can turn.
-    private final double rotationSpeed = 0.1;
+    //How many units the tank can move per second.
+    private final double tankSpeed = 2;
+    //How many degrees the tank can rotate per second.
+    private final double rotationSpeed = 200;
 
     public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor) {
         this.gameData = gameData;
@@ -37,6 +39,11 @@ public class Player implements Runnable {
         camera = new Camera(myTank.getPosition(), myTank.getAngle(), cameraFOV);
         //Add the new tank to the list of all entities.
         gameData.entityList.add(myTank);
+        //When the player is created, no keys are pressed.
+        forwardPressed = false;
+        backPressed = false;
+        leftPressed = false;
+        rightPressed = false;
     }
 
     //Set the angle of the camera to the angle of the tank. The camera has a reference to the tank's position.
@@ -58,31 +65,51 @@ public class Player implements Runnable {
         draw();
     }
 
+    //If the forward key has been pressed or released, update the tank's speed.
     public void forward(boolean keyPressed) {
-        if(keyPressed)
-            myTank.setSpeed(tankSpeed);
-        else
-            myTank.setSpeed(0);
+        if(keyPressed && !forwardPressed) {
+            myTank.speed += tankSpeed;
+            forwardPressed = true;
+        }
+        else if (!keyPressed && forwardPressed){
+            myTank.speed -= tankSpeed;
+            forwardPressed = false;
+        }
     }
 
+    //If the back key has been pressed or released, update the tank's speed.
     public void back(boolean keyPressed) {
-        if(keyPressed)
-            myTank.setSpeed(-tankSpeed);
-        else
-            myTank.setSpeed(0);
+        if(keyPressed && !backPressed) {
+            myTank.speed -= tankSpeed;
+            backPressed = true;
+        }
+        else if (!keyPressed && backPressed){
+            myTank.speed += tankSpeed;
+            backPressed = false;
+        }
     }
 
+    //If the left key has been pressed or released, update the tank's rotation.
     public void left(boolean keyPressed) {
-        if(keyPressed)
-            myTank.setRotationSpeed(rotationSpeed);
-        else
-            myTank.setRotationSpeed(0);
+        if(keyPressed && !leftPressed) {
+            myTank.rotationSpeed += rotationSpeed;
+            leftPressed = true;
+        }
+        else if (!keyPressed && leftPressed){
+            myTank.rotationSpeed -= rotationSpeed;
+            leftPressed = false;
+        }
     }
 
+    //If the right key has been pressed or released, update the tank's rotation.
     public void right(boolean keyPressed) {
-        if(keyPressed)
-            myTank.setRotationSpeed(-rotationSpeed);
-        else
-            myTank.setRotationSpeed(0);
+        if(keyPressed && !rightPressed) {
+            myTank.rotationSpeed -= rotationSpeed;
+            rightPressed = true;
+        }
+        else if (!keyPressed && rightPressed){
+            myTank.rotationSpeed += rotationSpeed;
+            rightPressed = false;
+        }
     }
 }

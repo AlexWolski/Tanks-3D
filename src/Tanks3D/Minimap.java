@@ -15,7 +15,7 @@ public class Minimap implements Runnable{
     public void draw() {
         for (int i = 0; i < canvas.getWidth(); i++)
             for (int j = 0; j < canvas.getHeight(); j++)
-                canvas.setRGB(i, j, 0);
+                canvas.setRGB(i, j, 16777215);
     }
 
     public void run() {
