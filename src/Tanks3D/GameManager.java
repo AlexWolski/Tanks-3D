@@ -13,7 +13,7 @@ public class GameManager {
     //Constant settings.
     private final String levelFile = "Underground Arena.txt";
     //The extra 30px is for the title bar.
-    private final int defaultWidth = 1030;
+    private final int defaultWidth = 1034;
     private final int defaultHeight = 500;
 
     //The window that the game runs in and controls drawing of the screen.

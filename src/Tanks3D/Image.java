@@ -1,5 +1,7 @@
 package Tanks3D;
 
+import Tanks3D.FastMath.FastMath;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -16,12 +18,15 @@ public final class Image {
 
     //Rotate the image and draw it to the graphic object centered at the given point.
     public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, int x, int y) {
-        //Transform the image around its center.
-        AffineTransform rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), image.getWidth()/2.0, image.getHeight()/2.0);
-        //Create a bilinear filter to draw the rotated image.
-        AffineTransformOp op = new AffineTransformOp(rotate, AffineTransformOp.TYPE_BILINEAR);
-        //Draw the rotated image.
-        graphic.drawImage(op.filter(image, null), x, y, null);
+        //Create a new transform.
+        AffineTransform transform = new AffineTransform();
+        //Translate the transform to where the image will be drawn.
+        transform.translate(x, y);
+        //Rotate the transform.
+        transform.rotate(Math.toRadians(angle), image.getWidth()/2.0, image.getHeight()/2.0);
+        //Draw the tank.
+        graphic.setTransform(transform);
+        graphic.drawImage(image, 0, 0, null);
     }
 
     //Change the hue of the given image.
