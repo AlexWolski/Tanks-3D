@@ -7,21 +7,19 @@ import java.awt.geom.Point2D;
 
 public abstract class Wall extends GameObject {
     private Line2D line;
-    private double height;
     private double length;
     private int angle;
+    private static final double height = 500;
 
     //Constructor that takes a line.
-    public Wall(Line2D.Double line, double height) {
+    public Wall(Line2D.Double line) {
         this.line = line;
-        this.height = height;
         init();
     }
 
     //Constructor that takes two points.
-    public Wall(Point2D.Double point1, Point2D.Double point2, double height) {
+    public Wall(Point2D.Double point1, Point2D.Double point2) {
         line = new Line2D.Double(point1, point2);
-        this.height = height;
         init();
     }
 

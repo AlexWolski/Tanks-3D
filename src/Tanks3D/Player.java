@@ -27,7 +27,7 @@ public class Player implements Runnable {
     //How many units the tank can move per second.
     private final double tankSpeed = 2;
     //How many degrees the tank can rotate per second.
-    private final double rotationSpeed = 200;
+    private double rotationSpeed = 200;
 
     public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor) {
         this.gameData = gameData;
@@ -73,6 +73,9 @@ public class Player implements Runnable {
     public Point2D.Double getPosition() {
         return myTank.getPosition();
     }
+    public double getAngle() {
+        return myTank.getAngle();
+    }
 
     //If the forward key has been pressed or released, update the tank's speed.
     public void forward(boolean keyPressed) {
@@ -91,21 +94,29 @@ public class Player implements Runnable {
         if(keyPressed && !backPressed) {
             myTank.speed -= tankSpeed;
             backPressed = true;
+
+            //Invert the left and right controls.
+            myTank.rotationSpeed *= -1;
+            rotationSpeed *= -1;
         }
         else if (!keyPressed && backPressed){
             myTank.speed += tankSpeed;
             backPressed = false;
+
+            //Revert the left and right controls.
+            myTank.rotationSpeed *= -1;
+            rotationSpeed *= -1;
         }
     }
 
     //If the left key has been pressed or released, update the tank's rotation.
     public void left(boolean keyPressed) {
         if(keyPressed && !leftPressed) {
-            myTank.rotationSpeed += rotationSpeed;
+            myTank.rotationSpeed -= rotationSpeed;
             leftPressed = true;
         }
         else if (!keyPressed && leftPressed){
-            myTank.rotationSpeed -= rotationSpeed;
+            myTank.rotationSpeed += rotationSpeed;
             leftPressed = false;
         }
     }
@@ -113,11 +124,11 @@ public class Player implements Runnable {
     //If the right key has been pressed or released, update the tank's rotation.
     public void right(boolean keyPressed) {
         if(keyPressed && !rightPressed) {
-            myTank.rotationSpeed -= rotationSpeed;
+            myTank.rotationSpeed += rotationSpeed;
             rightPressed = true;
         }
         else if (!keyPressed && rightPressed){
-            myTank.rotationSpeed += rotationSpeed;
+            myTank.rotationSpeed -= rotationSpeed;
             rightPressed = false;
         }
     }

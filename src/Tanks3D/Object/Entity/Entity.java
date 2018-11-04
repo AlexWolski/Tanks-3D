@@ -20,7 +20,9 @@ public abstract class Entity extends GameObject {
 
     public void update(GameData game, double deltaTime) {
         double distMoved = speed * deltaTime / 1000;
+        //Equivalent of cos(angle-90)
         position.x += distMoved * FastMath.sin(angle);
+        //Equivalent of sin(angle-90)
         position.y += distMoved * FastMath.cos(angle);
     }
 

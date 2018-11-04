@@ -25,7 +25,7 @@ public class Minimap implements Runnable{
 
         try {
             //Load the tank icon image from the resources folder.
-            player1Icon = ImageIO.read(new File("Tank Icon.png"));
+            player1Icon = ImageIO.read(new File("resources/Tank Icon.png"));
             //Copy for the second player.
             player2Icon = Image.copy(player1Icon);
 
@@ -39,23 +39,44 @@ public class Minimap implements Runnable{
         //Determine how the game world should be mapped to the minimap based on their sizes.
         if(gameData.gameLevel.getMapWidth() > gameData.gameLevel.getMapHeight()) {
             if (canvas.getWidth() > canvas.getHeight())
-                sizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getWidth() - 1);
-            else
                 sizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getHeight() - 1);
+            else
+                sizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getWidth() - 1);
         }
         else
         {
             if (canvas.getWidth() > canvas.getHeight())
                 sizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getHeight() - 1);
             else
-                sizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getHeight() - 1);
+                sizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getWidth() - 1);
         }
     }
 
     //Transform a point from the map dimensions to the minimap dimensions.
-    public Point2D.Double gameToMiniMap(Point2D.Double coordinate) {
+    private Point2D.Double gameToMiniMap(Point2D.Double coordinate) {
         return new Point2D.Double((coordinate.x - gameData.gameLevel.mapCenter.x)/sizeRatio + canvas.getWidth()/2.0,
                                   (coordinate.y - gameData.gameLevel.mapCenter.y)/sizeRatio + canvas.getHeight()/2.0);
+    }
+
+    //Get the two points of a wall, convert them to ints, and draw them.
+    private void drawWall(Graphics2D graphic, Wall wall) {
+        //Map the points in the game world to points on the minimap.
+        Point2D.Double p1 = gameToMiniMap(wall.getPoint1());
+        Point2D.Double p2 = gameToMiniMap(wall.getPoint2());
+
+        //Draw the points. The y coordinates are subtracted from the canvas height because the y axis is inverse.
+        graphic.drawLine((int)p1.x, canvas.getHeight()-(int)p1.y-1, (int)p2.x, canvas.getHeight()-(int)p2.y-1);
+    }
+
+    //Calculate the position to draw the tank. Then rotate and draw it.
+    private void drawTank(Graphics2D graphic, Player player, BufferedImage image) {
+        //Get the position of the first tank.
+        Point2D.Double tankPos = gameToMiniMap(player.getPosition());
+        //Center it by subtracting half of the image size.
+        tankPos.x -= image.getWidth()/2.0;
+        tankPos.y += image.getHeight()/2.0;
+        //Draw it rotated.
+        Image.drawRotated(graphic, image, player.getAngle(), (int)tankPos.x, canvas.getHeight()-(int)tankPos.y);
     }
 
     public void draw() {
@@ -69,19 +90,12 @@ public class Minimap implements Runnable{
         Graphics2D graphic = canvas.createGraphics();
 
         //Draw the walls
-        for(Wall wall : gameData.gameLevel.wallObjects) {
-            Point2D.Double p1 = gameToMiniMap(wall.getPoint1());
-            Point2D.Double p2 = gameToMiniMap(wall.getPoint2());
-
-            graphic.drawLine((int)p1.x, (int)p1.y, (int)p2.x, (int)p2.y);
-        }
+        for(Wall wall : gameData.gameLevel.wallObjects)
+            drawWall(graphic, wall);
 
         //Draw the tanks.
-        Point2D.Double tankPos = gameToMiniMap(gameData.player1.getPosition());
-        graphic.drawImage(player1Icon, (int)tankPos.x - player1Icon.getWidth()/2, (int)tankPos.y - player1Icon.getHeight()/2, null);
-
-        tankPos = gameToMiniMap(gameData.player2.getPosition());
-        graphic.drawImage(player2Icon, (int)tankPos.x - player2Icon.getWidth()/2, (int)tankPos.y - player2Icon.getHeight()/2, null);
+        drawTank(graphic, gameData.player1, player1Icon);
+        drawTank(graphic, gameData.player2, player2Icon);
 
         //Delete the graphics object.
         graphic.dispose();

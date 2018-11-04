@@ -2,9 +2,7 @@ package Tanks3D;
 
 import Tanks3D.FastMath.FastMath;
 import Tanks3D.Object.SpawnPoint;
-import Tanks3D.Object.Wall.BreakableWall;
-import Tanks3D.Object.Wall.Wall;
-import Tanks3D.Object.Wall.WallSlice;
+import Tanks3D.Object.Wall.*;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -42,16 +40,19 @@ public class Level {
     private void parseDataFile(String levelFile) {
         //remove
         wallObjects = new ArrayList<>();
-        player1Spawn = new SpawnPoint(new Point2D.Double(0, 0), 180, 1);
-        player2Spawn = new SpawnPoint(new Point2D.Double(0, 0), 0, 2);
+        player1Spawn = new SpawnPoint(new Point2D.Double(-1, -2), 0, 1);
+        player2Spawn = new SpawnPoint(new Point2D.Double(1, -2), 0, 2);
 
         floorColor = new Color(0x803700).getRGB();
         ceilColor = new Color(0).getRGB();
 
-        wallObjects.add(new BreakableWall(new Point2D.Double(3, 3), new Point2D.Double(-3, 3), 500));
-        wallObjects.add(new BreakableWall(new Point2D.Double(-3, 3), new Point2D.Double(-3, -3), 500));
-        wallObjects.add(new BreakableWall(new Point2D.Double(-3, -3), new Point2D.Double(3, -3), 500));
-        wallObjects.add(new BreakableWall(new Point2D.Double(3, -3), new Point2D.Double(3, 3), 500));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(3, 3), new Point2D.Double(-3, 3)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-3, 3), new Point2D.Double(-3, -3)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-3, -3), new Point2D.Double(3, -3)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(3, -3), new Point2D.Double(3, 3)));
+
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 3), new Point2D.Double(0, 0)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(3, 0)));
 
         mapCenter = new Point.Double(0, 0);
         mapWidth = 6;
@@ -87,7 +88,7 @@ public class Level {
                 Line2D.Double line = wall.getLine();
 
                 //Rotate the wall so that the ray is facing along the y axis.
-                FastMath.rotate(line, camera.position, currentRay - camera.angle);
+                FastMath.rotate(line, camera.position, -camera.angle - currentRay);
                 FastMath.translate(line, -camera.position.x, -camera.position.y);
 
                 //The distance between the camera and the point on the wall that the ray hit.

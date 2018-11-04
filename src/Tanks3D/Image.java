@@ -15,13 +15,13 @@ public final class Image {
     }
 
     //Rotate the image and draw it to the graphic object centered at the given point.
-    public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, Point drawLocation) {
+    public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, int x, int y) {
         //Transform the image around its center.
         AffineTransform rotate = AffineTransform.getRotateInstance(Math.toRadians(angle), image.getWidth()/2.0, image.getHeight()/2.0);
         //Create a bilinear filter to draw the rotated image.
         AffineTransformOp op = new AffineTransformOp(rotate, AffineTransformOp.TYPE_BILINEAR);
         //Draw the rotated image.
-        graphic.drawImage(op.filter(image, null), drawLocation.x, drawLocation.y, null);
+        graphic.drawImage(op.filter(image, null), x, y, null);
     }
 
     //Change the hue of the given image.

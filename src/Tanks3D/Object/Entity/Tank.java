@@ -18,9 +18,9 @@ public class Tank extends Entity {
     }
 
     public void update(GameData data, double deltaTime) {
-        super.update(data, deltaTime);
-
         angle += rotationSpeed * deltaTime / 1000;
+
+        super.update(data, deltaTime);
     }
 
     public Color getColor() {
