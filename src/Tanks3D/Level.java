@@ -18,9 +18,12 @@ import java.util.Random;
 
 //Store the list of immobile objects and print them to a screen.
 public class Level {
+    public ArrayList<Wall> wallObjects;
+    public Point.Double mapCenter;
+    private double mapWidth;
+    private double mapHeight;
     private SpawnPoint player1Spawn;
     private SpawnPoint player2Spawn;
-    private ArrayList<Wall> wallObjects;
     private int floorColor;
     private int ceilColor;
 
@@ -49,7 +52,14 @@ public class Level {
         wallObjects.add(new BreakableWall(new Point2D.Double(-3, 3), new Point2D.Double(-3, -3), 500));
         wallObjects.add(new BreakableWall(new Point2D.Double(-3, -3), new Point2D.Double(3, -3), 500));
         wallObjects.add(new BreakableWall(new Point2D.Double(3, -3), new Point2D.Double(3, 3), 500));
+
+        mapCenter = new Point.Double(0, 0);
+        mapWidth = 10;
+        mapHeight = 10;
     }
+
+    public double getMapWidth() { return mapWidth; }
+    public double getMapHeight() { return mapHeight; }
 
     public SpawnPoint getPlayer1Spawn() {
         return player1Spawn;
@@ -80,12 +90,12 @@ public class Level {
                 FastMath.rotate(line, camera.position, currentRay - camera.angle);
                 FastMath.translate(line, -camera.position.x, -camera.position.y);
 
-                //b is the distance between the camera and the point on the wall that the ray hit.
-                double b = FastMath.getYIntercept(line);
+                //The distance between the camera and the point on the wall that the ray hit.
+                double dist = FastMath.getYIntercept(line);
 
                 //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
-                if(b > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > b))
-                    wallBuffer[i] = new WallSlice(wall, null, null, currentRay, b);
+                if(dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist))
+                    wallBuffer[i] = new WallSlice(wall, null, null, currentRay, dist);
             }
 
             //Move on to the next ray.

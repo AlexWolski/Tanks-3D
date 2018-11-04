@@ -29,7 +29,4 @@ public class Tank extends Entity {
 
     public Point2D.Double getPosition() { return super.position; }
     public double getAngle() { return super.angle; }
-
-    public void setSpeed(double speed) { this.speed = speed; }
-    public void setRotationSpeed(double rotationSpeed) { this.rotationSpeed = rotationSpeed; }
 }

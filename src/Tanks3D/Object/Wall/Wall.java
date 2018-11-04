@@ -38,7 +38,6 @@ public abstract class Wall extends GameObject {
     public Point2D.Double getPoint1() {
         return new Point2D.Double(line.getX1(), line.getY1());
     }
-
     public Point2D.Double getPoint2() {
         return new Point2D.Double(line.getX2(), line.getY2());
     }
@@ -46,7 +45,6 @@ public abstract class Wall extends GameObject {
     public double getHeight() {
         return height;
     }
-
     public double getLength() {
         return length;
     }
