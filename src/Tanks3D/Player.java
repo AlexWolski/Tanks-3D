@@ -5,6 +5,7 @@ import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.WallSlice;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 //Manage the player's tank and screen. This extends 'Runnable' so that the draw function can be threaded.
@@ -63,6 +64,14 @@ public class Player implements Runnable {
     //Draw the player's screen in a thread.
     public void run() {
         draw();
+    }
+
+    public Color getColor() {
+        return myTank.getColor();
+    }
+
+    public Point2D.Double getPosition() {
+        return myTank.getPosition();
     }
 
     //If the forward key has been pressed or released, update the tank's speed.

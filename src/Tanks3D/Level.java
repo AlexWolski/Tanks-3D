@@ -54,8 +54,8 @@ public class Level {
         wallObjects.add(new BreakableWall(new Point2D.Double(3, -3), new Point2D.Double(3, 3), 500));
 
         mapCenter = new Point.Double(0, 0);
-        mapWidth = 10;
-        mapHeight = 10;
+        mapWidth = 6;
+        mapHeight = 6;
     }
 
     public double getMapWidth() { return mapWidth; }

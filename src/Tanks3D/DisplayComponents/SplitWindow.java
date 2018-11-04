@@ -57,6 +57,7 @@ public class SplitWindow extends JFrame {
         try {
             while (!es.awaitTermination(1, TimeUnit.MINUTES));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         //Paint all three buffers on the display. 'paintImmediately' is used to prevent the buffers being modified before painting is complete.

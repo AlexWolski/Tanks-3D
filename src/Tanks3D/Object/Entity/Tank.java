@@ -23,6 +23,10 @@ public class Tank extends Entity {
         angle += rotationSpeed * deltaTime / 1000;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public void draw(BufferedImage canvas) {
 
     }

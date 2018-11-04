@@ -72,9 +72,6 @@ public class GameManager {
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
 
-        //Initialize the tables in the 'FastMath' class
-        FastMath.init();
-
         //Remove
         //Set the timer for the FPS count.
         time = timeOfLastFrame;

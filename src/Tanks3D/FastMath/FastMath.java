@@ -10,12 +10,12 @@ public final class FastMath {
     private static double sinTable[];
     private static double cosTable[];
 
-    //Trig is non-instantiable
+    //This class is non-instantiable
     private FastMath() {
     }
 
-    //Fill the tables with the cos and sin of every integer between 0 and 360. The values are rounded to 4 decimal places
-    public static void init() {
+    //When the object is first called, fill the tables with the cos and sin values of every integer between 0 and 360.
+    static {
         sinTable = new double[361];
 
         for(int i = 0; i < 361; i++)
@@ -69,7 +69,6 @@ public final class FastMath {
 
     //Rotate a point around a pivot by some angle.
     public static void rotate(Point2D.Double point, Point2D.Double pivot, double angle) {
-        //point.subtract(pivot);
         subtract(point, pivot);
 
         double newX = (point.x * cos(angle)) + (point.y * sin(angle));
@@ -89,7 +88,6 @@ public final class FastMath {
         line.setLine(point1, point2);
     }
 
-    //
     public  static void translate(Line2D.Double line, double xDist, double yDist) {
         line.x1 += xDist;
         line.y1 += yDist;
@@ -97,6 +95,7 @@ public final class FastMath {
         line.y2 += yDist;
     }
 
+    //Return the y-coordinate where the line intersects the y-axis. If the line doesn't intersect the y-axis, return -1.
     public static double getYIntercept(Line2D.Double line) {
         //If the points are on opposite sides of the y axis, the wall intersects with the ray.
         if(line.x1 > 0 && line.x2 < 0 || line.x1 < 0 && line.x2 > 0)
