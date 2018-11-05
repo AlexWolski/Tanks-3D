@@ -1,6 +1,7 @@
 package Tanks3D;
 
 import Tanks3D.Object.Wall.Wall;
+import Tanks3D.Utilities.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,11 +27,11 @@ public class Minimap implements Runnable{
             //Load the tank icon image from the resources folder.
             player1Icon = ImageIO.read(new File("resources/Tank Icon.png"));
             //Copy for the second player.
-            player2Icon = Image.copy(player1Icon);
+            player2Icon = Tanks3D.Utilities.Image.copy(player1Icon);
 
             //Color both images based on the tank's color.
-            Image.setHue(player1Icon, gameData.player1.getColor());
-            Image.setHue(player2Icon, gameData.player2.getColor());
+            Tanks3D.Utilities.Image.setHue(player1Icon, gameData.player1.getColor());
+            Tanks3D.Utilities.Image.setHue(player2Icon, gameData.player2.getColor());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

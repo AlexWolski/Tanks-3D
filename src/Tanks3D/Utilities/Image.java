@@ -1,10 +1,7 @@
-package Tanks3D;
-
-import Tanks3D.FastMath.FastMath;
+package Tanks3D.Utilities;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public final class Image {
@@ -16,7 +13,7 @@ public final class Image {
         return new BufferedImage(image.getColorModel(), image.copyData(null), image.isAlphaPremultiplied(), null);
     }
 
-    //Rotate the image and draw it to the graphic object centered at the given point.
+    //Rotate the image and draw it at the given point. There are many ways rotate an image, but this was the fastest.
     public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, int x, int y) {
         //Create a new transform.
         AffineTransform transform = new AffineTransform();

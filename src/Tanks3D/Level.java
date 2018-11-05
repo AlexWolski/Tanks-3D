@@ -1,6 +1,6 @@
 package Tanks3D;
 
-import Tanks3D.FastMath.FastMath;
+import Tanks3D.Utilities.FastMath;
 import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.*;
 
@@ -75,9 +75,6 @@ public class Level {
         double rayAngle = camera.FOV/wallBuffer.length;
         //The angle of the first ray.
         double currentRay = -camera.FOV/2;
-        //The rotated points of the current wall.
-        Point2D.Double point1;
-        Point2D.Double point2;
 
         //Iterate through each ray and determine which wall to draw.
         for(int i = 0; i < wallBuffer.length; i++) {
@@ -140,8 +137,9 @@ public class Level {
             }
 
             //Draw the ceiling.
-            for(int j = 0; j < wallStart; j++)
+            for(int j = 0; j < wallStart; j++) {
                 canvas.setRGB(i, j, ceilColor);
+            }
 
             //Draw the floor.
             for(int j = wallEnd; j < canvas.getHeight(); j++)

@@ -1,6 +1,6 @@
 package Tanks3D.Object.Entity;
 
-import Tanks3D.FastMath.FastMath;
+import Tanks3D.Utilities.FastMath;
 import Tanks3D.GameData;
 import Tanks3D.Object.GameObject;
 

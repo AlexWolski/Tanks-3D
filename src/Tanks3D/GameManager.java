@@ -1,7 +1,6 @@
 package Tanks3D;
 
 import Tanks3D.DisplayComponents.SplitWindow;
-import Tanks3D.FastMath.FastMath;
 import Tanks3D.InputManager.InputManager;
 import Tanks3D.Object.Entity.Entity;
 
@@ -11,10 +10,10 @@ import java.util.ArrayList;
 //Controls the entire game. The program enters from this class, which is a singleton class.
 public class GameManager {
     //Constant settings.
-    private final String levelFile = "Underground Arena.txt";
+    private final static String levelFile = "Underground Arena.txt";
     //The extra 30px is for the title bar.
-    private final int defaultWidth = 1034;
-    private final int defaultHeight = 500;
+    private final static int defaultWidth = 1034;
+    private final static int defaultHeight = 500;
 
     //The window that the game runs in and controls drawing of the screen.
     private SplitWindow gameWindow;
@@ -62,7 +61,7 @@ public class GameManager {
         gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
 
         //Initialize the 'Player' objects. Get the initial positions for both players and pass it to their constructors.
-        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.blue);
+        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan);
         gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green);
         gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer());
 

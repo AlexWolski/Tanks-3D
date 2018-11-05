@@ -23,9 +23,9 @@ public class Player implements Runnable {
     //Booleans to remember what keys are being pressed.
     private boolean forwardPressed, backPressed, leftPressed, rightPressed;
     //The field of view of the camera.
-    private final int cameraFOV = 90;
+    private final static int cameraFOV = 90;
     //How many units the tank can move per second.
-    private final double tankSpeed = 2;
+    private final static double tankSpeed = 2;
     //How many degrees the tank can rotate per second.
     private double rotationSpeed = 200;
 

@@ -9,7 +9,7 @@ public abstract class Wall extends GameObject {
     private Line2D line;
     private double length;
     private int angle;
-    private static final double height = 500;
+    private final static double height = 500;
 
     //Constructor that takes a line.
     public Wall(Line2D.Double line) {

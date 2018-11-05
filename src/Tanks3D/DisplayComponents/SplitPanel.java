@@ -12,7 +12,7 @@ public class SplitPanel extends JPanel {
     private BufferedImage screen2Buffer;
     private BufferedImage minimapBuffer;
     //The distance between the two screens.
-    private final int screenGap = 4;
+    private final static int screenGap = 4;
 
     public SplitPanel(Dimension size) {
         this.panelSize = size;
