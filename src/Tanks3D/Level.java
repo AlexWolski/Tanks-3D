@@ -7,8 +7,8 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-//Load the map from a file and store it.
-public class Level {
+//A 'struct' that loads the map data from a file and stores it.
+public final class Level {
     public ArrayList<Wall> wallObjects;
     public Point.Double mapCenter;
     private double mapWidth;
@@ -28,23 +28,25 @@ public class Level {
     private void parseDataFile(String levelFile) {
         //remove
         wallObjects = new ArrayList<>();
-        player1Spawn = new SpawnPoint(new Point2D.Double(-1, -2), 0, 1);
-        player2Spawn = new SpawnPoint(new Point2D.Double(1, -2), 0, 2);
+        player1Spawn = new SpawnPoint(new Point2D.Double(-10, -20), 0, 1);
+        player2Spawn = new SpawnPoint(new Point2D.Double(10, -20), 0, 2);
 
         floorColor = new Color(0x803700).getRGB();
         ceilColor = new Color(0).getRGB();
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(3, 3), new Point2D.Double(-3, 3)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-3, 3), new Point2D.Double(-3, -3)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-3, -3), new Point2D.Double(3, -3)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(3, -3), new Point2D.Double(3, 3)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30)));
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 3), new Point2D.Double(0, 0)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(3, 0)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 30), new Point2D.Double(0, 0)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 0)));
+//        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(10, 30)));
+//        wallObjects.add(new UnbreakableWall(new Point2D.Double(10, 30), new Point2D.Double(20, -10)));
 
         mapCenter = new Point.Double(0, 0);
-        mapWidth = 6;
-        mapHeight = 6;
+        mapWidth = 60;
+        mapHeight = 60;
     }
 
     public double getMapWidth() { return mapWidth; }

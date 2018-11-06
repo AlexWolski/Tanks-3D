@@ -111,7 +111,7 @@ public class GameManager {
         for(Entity entity : gameData.entityList)
             entity.update(gameData, deltaTime);
 
-        //Draw both players' screen and the minimap.
+        //Draw both players' screens and the minimap.
         gameWindow.draw();
 
         //remove

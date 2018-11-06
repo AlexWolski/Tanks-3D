@@ -5,7 +5,7 @@ import Tanks3D.Object.Entity.Entity;
 import java.util.ArrayList;
 
 //A 'struct' to contain objects used in the game world. All of the members are public.
-public class GameData {
+public final class GameData {
     //The 'Level' object stores all of the data for the game world and draws it to the screen.
     public Level gameLevel;
     //A list of entities in the game. The first index is always player 1 and the second index is always player 2.

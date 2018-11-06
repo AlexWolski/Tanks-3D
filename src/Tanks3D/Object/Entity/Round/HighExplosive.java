@@ -6,4 +6,8 @@ public class HighExplosive extends Round {
     public HighExplosive(Point2D.Double position, double angle, int speed) {
         super(position, angle, speed);
     }
+
+    public void collide(Object object) {
+
+    }
 }

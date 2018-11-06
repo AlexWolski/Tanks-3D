@@ -6,4 +6,8 @@ public class GuidedMissile extends Round {
     public GuidedMissile(Point2D.Double position, double angle, int speed) {
         super(position, angle, speed);
     }
+
+    public void collide(Object object) {
+
+    }
 }

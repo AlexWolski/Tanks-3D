@@ -16,7 +16,7 @@ public class Player implements Runnable {
     //Booleans to remember what keys are being pressed.
     private boolean forwardPressed, backPressed, leftPressed, rightPressed;
     //How many units the tank can move per second.
-    private final static double tankSpeed = 2;
+    private final static double tankSpeed = 20;
     //How many degrees the tank can rotate per second.
     private double rotationSpeed = 200;
 

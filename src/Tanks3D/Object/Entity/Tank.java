@@ -1,25 +1,22 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
-import Tanks3D.HitCircle;
+import Tanks3D.Object.Wall.*;
+import Tanks3D.Utilities.FastMath;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 public class Tank extends Entity {
     public double rotationSpeed;
     private final Color color;
-    private final HitCircle hitCircle;
-    private final static int hitCircleRadius = 10;
+    private final static int hitCircleRadius = 3;
 
     public Tank(Point2D.Double position, double angle, Color color) {
-        super(position, angle, 0);
+        super(position, hitCircleRadius, angle, 0);
 
         this.rotationSpeed = 0;
         this.color = color;
-
-        hitCircle = new HitCircle(super.position, hitCircleRadius);
     }
 
     public void update(GameData data, double deltaTime) {
@@ -28,14 +25,37 @@ public class Tank extends Entity {
         super.update(data, deltaTime);
     }
 
+    public void collide(Object object) {
+        if(object instanceof BreakableWall) {
+
+        }
+        else if(object instanceof UnbreakableWall) {
+            double lineAngle = ((UnbreakableWall) object).getAngle();
+            //Copy the first point of the wall.
+            Point2D.Double linePoint1 = ((UnbreakableWall) object).getPoint1();
+
+            //Rotate the point so that the line it would be vertical next to the entity.
+            FastMath.rotate(linePoint1, position, -lineAngle);
+            //The x distance between the line and the entity.
+            double xDistance = linePoint1.x - position.x;
+
+            if(xDistance > 0) {
+                this.position.x -= (hitCircleRadius - xDistance) * FastMath.cos(lineAngle);
+                this.position.y += (hitCircleRadius - xDistance) * FastMath.sin(lineAngle);
+            }
+            else {
+                this.position.x += (hitCircleRadius + xDistance) * FastMath.cos(lineAngle);
+                this.position.y -= (hitCircleRadius + xDistance) * FastMath.sin(lineAngle);
+            }
+        }
+        else if(object instanceof Tank) {
+            System.out.println("TANK!");
+        }
+    }
+
     public Color getColor() {
         return color;
     }
-
-    public void draw(BufferedImage canvas) {
-
-    }
-
     public Point2D.Double getPosition() { return super.position; }
     public double getAngle() { return super.angle; }
 }

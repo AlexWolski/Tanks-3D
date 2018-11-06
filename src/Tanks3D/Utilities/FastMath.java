@@ -32,6 +32,9 @@ public final class FastMath {
         if(angle < 0)
             angle += 360;
 
+        if(angle >= 360)
+            System.out.println("Test");
+
         return angle;
     }
 
