@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class Right extends AbstractAction {
-    private Player player;
-    private boolean keyPressed;
+    private final Player player;
+    private final boolean keyPressed;
 
     public Right(Player player, boolean keyPressed) {
         this.player = player;

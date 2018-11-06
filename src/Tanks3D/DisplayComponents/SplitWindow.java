@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 //Draws both players' screens and the minimap to the display.
 public class SplitWindow extends JFrame {
-    private GameData gameData;
-    private SplitPanel panel;
+    private final GameData gameData;
+    private final SplitPanel panel;
 
     public SplitWindow(GameData gameData, String s, Dimension panelSize) {
         super(s);

@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 
 public class Tank extends Entity {
     public double rotationSpeed;
-    private Color color;
-    private HitCircle hitCircle;
+    private final Color color;
+    private final HitCircle hitCircle;
     private final static int hitCircleRadius = 10;
 
     public Tank(Point2D.Double position, double angle, Color color) {

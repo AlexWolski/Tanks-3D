@@ -2,15 +2,17 @@ package Tanks3D.InputManager;
 
 import Tanks3D.InputManager.PlayerControl.*;
 import Tanks3D.Player;
-
 import javax.swing.*;
-
 import static java.awt.event.KeyEvent.*;
 import static javax.swing.JComponent.*;
 
 //Handles keyboard inputs.
-public class InputManager {
-    public InputManager(JComponent window, Player player1, Player player2) {
+public final class InputManager {
+    //This class is non-instantiable
+    private InputManager() {
+    }
+
+    public static void init(JComponent window, Player player1, Player player2) {
         //Get the input map from the window, which maps a key event to a string.
         InputMap inputMap = window.getInputMap(WHEN_IN_FOCUSED_WINDOW);
         //Get the action map from the window, which maps a string to a class.

@@ -9,12 +9,17 @@ public abstract class Wall extends GameObject {
     private Line2D line;
     private double length;
     private int angle;
-    private final static double height = 500;
+    private final static double height = 1.5;
 
     //Constructor that takes a line.
     public Wall(Line2D.Double line) {
         this.line = line;
         init();
+    }
+
+    //Return the height of every wall.
+    public static double getHeight() {
+        return height;
     }
 
     //Constructor that takes two points.
@@ -40,9 +45,6 @@ public abstract class Wall extends GameObject {
         return new Point2D.Double(line.getX2(), line.getY2());
     }
 
-    public double getHeight() {
-        return height;
-    }
     public double getLength() {
         return length;
     }

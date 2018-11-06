@@ -1,20 +1,13 @@
 package Tanks3D;
 
-import Tanks3D.Utilities.FastMath;
 import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.*;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-
-//remove
-import java.util.Random;
-
-//Store the list of immobile objects and print them to a screen.
+//Load the map from a file and store it.
 public class Level {
     public ArrayList<Wall> wallObjects;
     public Point.Double mapCenter;
@@ -25,13 +18,8 @@ public class Level {
     private int floorColor;
     private int ceilColor;
 
-    //remove
-    Random rand;
-
     //Read the data file and translate it into objects. Save the player spawn-points to construct the player objects.
     public Level(String levelFile) {
-        //remove
-        rand = new Random();
         //Read the data file and create all of the map objects.
         parseDataFile(levelFile);
     }
@@ -61,89 +49,17 @@ public class Level {
 
     public double getMapWidth() { return mapWidth; }
     public double getMapHeight() { return mapHeight; }
+    public int getFloorColor() {
+        return floorColor;
+    }
+    public int getCeilColor() {
+        return ceilColor;
+    }
 
     public SpawnPoint getPlayer1Spawn() {
         return player1Spawn;
     }
     public SpawnPoint getPlayer2Spawn() {
         return player2Spawn;
-    }
-
-    //Fill the given buffer with the slices of wall that needs to be drawn.
-    public void calculateBuffer(WallSlice[] wallBuffer, Camera camera) {
-        //The angle between each ray.
-        double rayAngle = camera.FOV/wallBuffer.length;
-        //The angle of the first ray.
-        double currentRay = -camera.FOV/2;
-
-        //Iterate through each ray and determine which wall to draw.
-        for(int i = 0; i < wallBuffer.length; i++) {
-            wallBuffer[i] = null;
-
-            for(Wall wall : wallObjects) {
-                //Copy the points of the wall.
-                Line2D.Double line = wall.getLine();
-
-                //Rotate the wall so that the ray is facing along the y axis.
-                FastMath.rotate(line, camera.position, -camera.angle - currentRay);
-                FastMath.translate(line, -camera.position.x, -camera.position.y);
-
-                //The distance between the camera and the point on the wall that the ray hit.
-                double dist = FastMath.getYIntercept(line);
-
-                //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
-                if(dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist))
-                    wallBuffer[i] = new WallSlice(wall, null, null, currentRay, dist);
-            }
-
-            //Move on to the next ray.
-            currentRay += rayAngle;
-        }
-    }
-
-    public void draw(WallSlice[] wallBuffer, BufferedImage canvas) {
-        double fixedDistance;
-        int onscreenHeight;
-        int wallStart;
-        int wallEnd;
-
-        //Iterate through the wall slices and draw them.
-        for(int i = 0; i < canvas.getWidth(); i++) {
-
-            if(wallBuffer[i] == null) {
-                wallStart = canvas.getHeight()/2;
-                wallEnd = wallStart;
-            }
-            else {
-                //The fixed distance between the wall slice and the camera removing the fish-eye effect.
-                fixedDistance = wallBuffer[i].distToCamera * FastMath.cos(wallBuffer[i].rayAngle);
-                //Calculate the height of the wall on the screen.
-                onscreenHeight = (int) Math.round((wallBuffer[i].wall.getHeight() / fixedDistance));
-                //Calculate the height where the wall starts.
-                wallStart = canvas.getHeight()/2 - onscreenHeight/2;
-
-                if(wallStart < 0)
-                    wallStart = 0;
-
-                //Calculate the height where the wall ends.
-                wallEnd = wallStart + onscreenHeight;
-
-                if(wallEnd > canvas.getHeight())
-                    wallEnd = canvas.getHeight();
-
-                //Draw the walls.
-                for (int j = wallStart; j < wallEnd; j++)
-                        canvas.setRGB(i, j, 255);
-            }
-
-            //Draw the ceiling.
-            for(int j = 0; j < wallStart; j++) {
-                canvas.setRGB(i, j, ceilColor);
-            }
-
-            //Draw the floor.
-            for(int j = wallEnd; j < canvas.getHeight(); j++)
-                canvas.setRGB(i, j, floorColor);
-        }
     }
 }

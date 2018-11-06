@@ -2,7 +2,6 @@ package Tanks3D;
 
 import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Object.SpawnPoint;
-import Tanks3D.Object.Wall.WallSlice;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -10,34 +9,22 @@ import java.awt.image.BufferedImage;
 
 //Manage the player's tank and screen. This extends 'Runnable' so that the draw function can be threaded.
 public class Player implements Runnable {
-    //A struct that contains the necessary data about the game.
-    private GameData gameData;
-    //An buffer that get written to, then displayed on the screen.
-    private BufferedImage canvas;
     //The tank object that the player controls.
-    private Tank myTank;
-    //An array containing the wall slices that need to be drawn.
-    private WallSlice[] wallBuffer;
+    private final Tank myTank;
     //A camera for displaying the game world.
-    private Camera camera;
+    private final Camera camera;
     //Booleans to remember what keys are being pressed.
     private boolean forwardPressed, backPressed, leftPressed, rightPressed;
-    //The field of view of the camera.
-    private final static int cameraFOV = 90;
     //How many units the tank can move per second.
     private final static double tankSpeed = 2;
     //How many degrees the tank can rotate per second.
     private double rotationSpeed = 200;
 
     public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor) {
-        this.gameData = gameData;
-        this.canvas = canvas;
-        //Initialize the array of wall slices.
-        wallBuffer = new WallSlice[canvas.getWidth()];
         //Create a new tank given the spawn-point and add it to the entity list.
         myTank = new Tank(spawnPoint.getPosition(), spawnPoint.getAngle(), tankColor);
         //Create a new camera given the spawn-point position and angle.
-        camera = new Camera(myTank.getPosition(), myTank.getAngle(), cameraFOV);
+        camera = new Camera(gameData, canvas, myTank.getPosition(), myTank.getAngle());
         //Add the new tank to the list of all entities.
         gameData.entityList.add(myTank);
         //When the player is created, no keys are pressed.
@@ -47,18 +34,13 @@ public class Player implements Runnable {
         rightPressed = false;
     }
 
-    //Set the angle of the camera to the angle of the tank. The camera has a reference to the tank's position.
-    public void update() {
-        camera.angle = myTank.getAngle();
-    }
-
     //Draw the player's screen.
     public void draw() {
-        //Pass the wall buffer to 'gameLevel' so it can calculate which parts of which walls to draw.
-        gameData.gameLevel.calculateBuffer(wallBuffer, camera);
-
-        //Draw all of the wall slices.
-        gameData.gameLevel.draw(wallBuffer, canvas);
+        //Move the camera to the tank's position.
+        camera.angle = myTank.getAngle();
+        //Draw the walls and entities.
+        camera.draw();
+        //Draw the HUD.
     }
 
     //Draw the player's screen in a thread.
@@ -69,7 +51,6 @@ public class Player implements Runnable {
     public Color getColor() {
         return myTank.getColor();
     }
-
     public Point2D.Double getPosition() {
         return myTank.getPosition();
     }

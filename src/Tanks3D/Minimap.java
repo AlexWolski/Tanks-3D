@@ -12,8 +12,8 @@ import java.io.IOException;
 
 //Displays the minimap.
 public class Minimap implements Runnable{
-    private GameData gameData;
-    private BufferedImage canvas;
+    private final GameData gameData;
+    private final BufferedImage canvas;
     private double sizeRatio;
     private int backgroundColor;
     private BufferedImage player1Icon, player2Icon;

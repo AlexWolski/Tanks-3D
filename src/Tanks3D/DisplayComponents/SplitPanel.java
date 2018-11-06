@@ -6,11 +6,11 @@ import java.awt.image.BufferedImage;
 
 //Controls the painting of the buffers to the display.
 public class SplitPanel extends JPanel {
-    private Dimension panelSize;
+    private final Dimension panelSize;
     //The three buffers used to store each player's screen and the minimap.
-    private BufferedImage screen1Buffer;
-    private BufferedImage screen2Buffer;
-    private BufferedImage minimapBuffer;
+    private final BufferedImage screen1Buffer;
+    private final BufferedImage screen2Buffer;
+    private final BufferedImage minimapBuffer;
     //The distance between the two screens.
     private final static int screenGap = 4;
 

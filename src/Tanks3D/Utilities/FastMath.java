@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 //A class for fast trigonometric functions
 public final class FastMath {
     //A table to store the pre-calculated values of sin. This is also used for cos.
-    private static double sinTable[];
+    private static final double sinTable[];
 
     //This class is non-instantiable
     private FastMath() {
@@ -23,7 +23,7 @@ public final class FastMath {
     //Restrict the angle between 0 and 360 degrees
     private static double formatAngle(double angle) {
         //If the angle is close to 0, set it to 0.
-        if(angle < 0.001 && angle > -0.001)
+        if(angle < 0.01 && angle > -0.01)
             angle = 0;
 
         if(angle < -360 || angle > 360)
@@ -110,7 +110,7 @@ public final class FastMath {
             double b = line.y1 - ((line.y2 - line.y1) / (line.x2 - line.x1) * line.x1);
 
             //If the intercept is close to 0, return 0.
-            if(b < 0.001 && b > -0.001)
+            if(b < 0.01 && b > -0.01)
                 return 0;
 
             return b;

@@ -16,11 +16,9 @@ public class GameManager {
     private final static int defaultHeight = 500;
 
     //The window that the game runs in and controls drawing of the screen.
-    private SplitWindow gameWindow;
+    private final SplitWindow gameWindow;
     //'struct' that holds all of the data for the game world.
-    private GameData gameData;
-    //The object that manages the keyboard inputs.
-    private InputManager inputManager;
+    private final GameData gameData;
 
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
     private long timeOfLastFrame;
@@ -66,7 +64,7 @@ public class GameManager {
         gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer());
 
         //Link the controls for each player.
-        inputManager = new InputManager(gameWindow.getPanel(), gameData.player1, gameData.player2);
+        InputManager.init(gameWindow.getPanel(), gameData.player1, gameData.player2);
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
@@ -112,10 +110,6 @@ public class GameManager {
         //Update the positions of all of the entities.
         for(Entity entity : gameData.entityList)
             entity.update(gameData, deltaTime);
-
-        //Update the camera for both players.
-        gameData.player1.update();
-        gameData.player2.update();
 
         //Draw both players' screen and the minimap.
         gameWindow.draw();
