@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public abstract class Entity extends GameObject {
     public double angle;
@@ -25,22 +26,42 @@ public abstract class Entity extends GameObject {
     }
 
     //All entity classes have a 'collide' method that handles the event that it collides with a wall or another entity.
-    public abstract void collide(Object object);
+    public abstract void collide(Object object, ListIterator iterator);
 
     //Check if this entity collides with any walls. If it does, pass the wall to the 'collide' method.
     private void checkCollisionWall(ArrayList<Wall> wallList) {
         Line2D.Double rotatedLine;
 
-        for(Wall wall : wallList) {
-            //Copy the line of the wall.
-            rotatedLine = wall.getLine();
-            //Rotate the line around the entity so that it is vertical.
-            FastMath.rotate(rotatedLine, this.position, -wall.getAngle());
+        //Iterator for checking all of the walls.
+        ListIterator<Wall> iterator = wallList.listIterator();
+        //A temporary wall object to reference the wall being checked.
+        Wall wall;
 
-            //If the distance to the line is less than the hit circle radius and the line is next to the entity, call the 'collide' method.t
-            if(Math.abs(rotatedLine.x1 - this.position.x) < this.getHitCircleRadius()
-               && ((rotatedLine.y1 >= this.position.y - getHitCircleRadius() && rotatedLine.y2 <= this.position.y) || (rotatedLine.y1 <= this.position.y && rotatedLine.y2 >= this.position.y)))
-                this.collide(wall);
+        //Iterate through the array of walls and check if the entity collides with it.
+        while(iterator.hasNext()) {
+            //Store the wall being checked.
+            wall = iterator.next();
+
+            //Check for collisions with the wall if it is visible.
+            if(wall.getVisible()) {
+                //Check if the entity hits the sides of the wall. If it does, call the 'collide' method.
+                if (FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()) ||
+                        FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
+                    this.collide(wall, iterator);
+
+                //Copy the line of the wall.
+                rotatedLine = wall.getLine();
+                //Rotate the line around the entity so that it is vertical.
+                FastMath.rotate(rotatedLine, this.position, -wall.getAngle());
+
+                //If the distance to the line is less than the hit circle radius and the line is next to the entity, call the 'collide' method.
+                if (Math.abs(rotatedLine.x1 - this.position.x) < this.getHitCircleRadius()
+                        && ((rotatedLine.y1 >= this.position.y - this.getHitCircleRadius()
+                        && rotatedLine.y2 <= this.position.y) || (rotatedLine.y1 <= this.position.y
+                        && rotatedLine.y2 >= this.position.y)))
+                    //Pass the iterator in case the entity needs to delete the wall.
+                    this.collide(wall, iterator);
+            }
         }
     }
 
@@ -51,7 +72,16 @@ public abstract class Entity extends GameObject {
         //The distance where the two entities touch squared.
         double minDistSquared;
 
-        for(Entity entity : entityList) {
+        //Iterator for checking all of the entities.
+        ListIterator<Entity> iterator = entityList.listIterator();
+        //A temporary entity object to reference the entity being checked.
+        Entity entity;
+
+        //Iterate through the array of entities and check if the entity collides with it.
+        while(iterator.hasNext()) {
+            //Store the wall being checked.
+            entity = iterator.next();
+
             //Prevent collisions between an entity and itself.
             if(this != entity) {
                 //Calculate the two distances.
@@ -60,7 +90,8 @@ public abstract class Entity extends GameObject {
 
                 //If the entities collide, call the collide method of this entity.
                 if (actualDistSquared < minDistSquared)
-                    this.collide(entity);
+                    //Pass the iterator in case this entity needs to delete the other.
+                    this.collide(entity, iterator);
             }
         }
     }

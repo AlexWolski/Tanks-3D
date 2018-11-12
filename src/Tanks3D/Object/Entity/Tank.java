@@ -6,6 +6,8 @@ import Tanks3D.Utilities.FastMath;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Tank extends Entity {
     public double rotationSpeed;
@@ -25,9 +27,11 @@ public class Tank extends Entity {
         super.update(data, deltaTime);
     }
 
-    public void collide(Object object) {
+    public void collide(Object object, ListIterator iterator) {
         if(object instanceof BreakableWall) {
-
+            //If the tank collides with a breakable wall, destroy the wall.
+            ((BreakableWall) object).breakWall();
+            iterator.remove();
         }
         else if(object instanceof UnbreakableWall) {
             double lineAngle = ((UnbreakableWall) object).getAngle();

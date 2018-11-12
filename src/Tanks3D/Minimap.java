@@ -54,8 +54,8 @@ public class Minimap implements Runnable{
 
     //Transform a point from the map dimensions to the minimap dimensions.
     private Point2D.Double gameToMiniMap(Point2D.Double coordinate) {
-        return new Point2D.Double((coordinate.x - gameData.gameLevel.mapCenter.x)/sizeRatio + canvas.getWidth()/2.0,
-                                  (coordinate.y - gameData.gameLevel.mapCenter.y)/sizeRatio + canvas.getHeight()/2.0);
+        return new Point2D.Double((coordinate.x - gameData.gameLevel.getMapCenterX())/sizeRatio + canvas.getWidth()/2.0,
+                                  (coordinate.y - gameData.gameLevel.getMapCenterY())/sizeRatio + canvas.getHeight()/2.0);
     }
 
     //Get the two points of a wall, convert them to ints, and draw them.
@@ -89,9 +89,11 @@ public class Minimap implements Runnable{
         //Create a graphic so that shapes can be drawn to the buffered image.
         Graphics2D graphic = canvas.createGraphics();
 
-        //Draw the walls
+        //Draw the walls if they are visible.
+
         for(Wall wall : gameData.gameLevel.wallObjects)
-            drawWall(graphic, wall);
+            if(wall.getVisible())
+                drawWall(graphic, wall);
 
         //Draw the tanks.
         drawTank(graphic, gameData.player1, player1Icon);

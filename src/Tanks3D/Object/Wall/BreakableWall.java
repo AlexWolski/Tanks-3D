@@ -8,6 +8,7 @@ public class BreakableWall extends Wall {
     }
 
     public void breakWall() {
-        
+        super.setVisibility(false);
+
     }
 }

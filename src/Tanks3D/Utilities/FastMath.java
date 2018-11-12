@@ -32,8 +32,10 @@ public final class FastMath {
         if(angle < 0)
             angle += 360;
 
-        if(angle >= 360)
+        if(angle >= 360) {
             System.out.println("Test");
+            while(true);
+        }
 
         return angle;
     }
@@ -121,5 +123,12 @@ public final class FastMath {
 
         //If the wall doesn't intersect the y axis, return -1.
         return -1;
+    }
+
+    //
+    public static boolean isPointInCircle(Point2D.Double point, Point2D.Double circlePos, double circleRadius) {
+        double distSquared = Math.pow(circlePos.x - point.x, 2) + Math.pow(circlePos.y - point.y, 2);
+
+        return distSquared < Math.pow(circleRadius, 2);
     }
 }

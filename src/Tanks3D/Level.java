@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //A 'struct' that loads the map data from a file and stores it.
 public final class Level {
     public ArrayList<Wall> wallObjects;
-    public Point.Double mapCenter;
+    private Point2D.Double mapCenter;
     private double mapWidth;
     private double mapHeight;
     private SpawnPoint player1Spawn;
@@ -39,16 +39,18 @@ public final class Level {
         wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30)));
         wallObjects.add(new UnbreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30)));
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 30), new Point2D.Double(0, 0)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 0)));
+        wallObjects.add(new BreakableWall(new Point2D.Double(0, 30), new Point2D.Double(0, 0)));
+        wallObjects.add(new BreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 0)));
 //        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(10, 30)));
 //        wallObjects.add(new UnbreakableWall(new Point2D.Double(10, 30), new Point2D.Double(20, -10)));
 
-        mapCenter = new Point.Double(0, 0);
+        mapCenter = new Point2D.Double(0, 0);
         mapWidth = 60;
         mapHeight = 60;
     }
 
+    public double getMapCenterX() { return mapCenter.x; }
+    public double getMapCenterY() { return mapCenter.y; }
     public double getMapWidth() { return mapWidth; }
     public double getMapHeight() { return mapHeight; }
     public int getFloorColor() {

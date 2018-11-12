@@ -9,6 +9,7 @@ public abstract class Wall extends GameObject {
     private Line2D.Double line;
     private double length;
     private double angle;
+    private boolean visible;
     private final static double height = 20;
 
     //Constructor that takes a line.
@@ -25,6 +26,8 @@ public abstract class Wall extends GameObject {
 
     //Calculate the length and angle of the wall.
     private void init() {
+        //The wall can be seen and has collision.
+        visible = true;
         //Distance formula.
         length = Math.sqrt(Math.pow(line.x1 - line.x2, 2) + Math.pow(line.y1 - line.y2, 2));
         //Modified equation for spherical coordinates.
@@ -34,14 +37,12 @@ public abstract class Wall extends GameObject {
     public Line2D.Double getLine() {
         return new Line2D.Double(line.getP1(), line.getP2());
     }
-
     public Point2D.Double getPoint1() {
         return new Point2D.Double(line.getX1(), line.getY1());
     }
     public Point2D.Double getPoint2() {
         return new Point2D.Double(line.getX2(), line.getY2());
     }
-
     public double getLength() {
         return length;
     }
@@ -51,4 +52,7 @@ public abstract class Wall extends GameObject {
     public double getAngle() {
         return angle;
     }
+
+    public boolean getVisible() { return visible; }
+    protected void setVisibility(boolean visible) { this.visible = visible; }
 }

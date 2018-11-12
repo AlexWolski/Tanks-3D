@@ -30,8 +30,6 @@ public class SplitPanel extends JPanel {
     //Paint the three buffers to the display.
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
         Graphics2D graphic = (Graphics2D) g;
 
         //The location of each player's screen and the minimap is pre-determined.

@@ -49,19 +49,22 @@ public class Camera {
             wallBuffer[i] = null;
 
             for(Wall wall : gameData.gameLevel.wallObjects) {
-                //Copy the points of the wall.
-                Line2D.Double line = wall.getLine();
+                //Scan the wall if it is visible.
+                if(wall.getVisible()) {
+                    //Copy the points of the wall.
+                    Line2D.Double line = wall.getLine();
 
-                //Rotate the wall so that the ray is facing along the y axis.
-                FastMath.rotate(line, position, -angle - currentRay);
-                FastMath.translate(line, -position.x, -position.y);
+                    //Rotate the wall so that the ray is facing along the y axis.
+                    FastMath.rotate(line, position, -angle - currentRay);
+                    FastMath.translate(line, -position.x, -position.y);
 
-                //The distance between the camera and the point on the wall that the ray hit.
-                double dist = FastMath.getYIntercept(line);
+                    //The distance between the camera and the point on the wall that the ray hit.
+                    double dist = FastMath.getYIntercept(line);
 
-                //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
-                if(dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist))
-                    wallBuffer[i] = new WallSlice(wall, null, null, currentRay, dist);
+                    //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
+                    if (dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist))
+                        wallBuffer[i] = new WallSlice(wall, null, null, currentRay, dist);
+                }
             }
 
             //Move on to the next ray.
