@@ -22,20 +22,14 @@ public final class FastMath {
 
     //Restrict the angle between 0 and 360 degrees
     private static double formatAngle(double angle) {
-        //If the angle is close to 0, set it to 0.
-        if(angle < 0.01 && angle > -0.01)
-            angle = 0;
-
         if(angle < -360 || angle > 360)
             angle %= 360;
 
         if(angle < 0)
             angle += 360;
 
-        if(angle >= 360) {
-            System.out.println("Test");
-            while(true);
-        }
+        if(angle >= 360)
+            angle = 359.999;
 
         return angle;
     }
@@ -57,21 +51,10 @@ public final class FastMath {
         return sin(angle + 90.0);
     }
 
-    public static void add(Point2D.Double point, double x, double y) {
-        point.x += x;
-        point.y += y;
-    }
-
     public static void add(Point2D.Double point1, Point2D.Double point2) {
         point1.x += point2.x;
         point1.y += point2.y;
     }
-
-    public static void subtract(Point2D.Double point, double x, double y) {
-        point.x -= x;
-        point.y -= y;
-    }
-
     public static void subtract(Point2D.Double point1, Point2D.Double point2) {
         point1.x -= point2.x;
         point1.y -= point2.y;
@@ -125,7 +108,6 @@ public final class FastMath {
         return -1;
     }
 
-    //
     public static boolean isPointInCircle(Point2D.Double point, Point2D.Double circlePos, double circleRadius) {
         double distSquared = Math.pow(circlePos.x - point.x, 2) + Math.pow(circlePos.y - point.y, 2);
 

@@ -1,18 +1,19 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
+import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class Tank extends Entity {
     public double rotationSpeed;
     private final Color color;
-    private final static int hitCircleRadius = 3;
+    private final static int hitCircleRadius = 4;
 
     public Tank(Point2D.Double position, double angle, Color color) {
         super(position, hitCircleRadius, angle, 0);
@@ -28,12 +29,28 @@ public class Tank extends Entity {
     }
 
     public void collide(Object object, ListIterator iterator) {
-        if(object instanceof BreakableWall) {
-            //If the tank collides with a breakable wall, destroy the wall.
+        //If the tank collides with a breakable wall, destroy the wall.
+        if(iterator instanceof BreakableWall) {
             ((BreakableWall) object).breakWall();
             iterator.remove();
         }
+        //If the tank hits the corner of the wall, fix its position.
+        else if(object instanceof Point2D.Double) {
+            Point2D.Double point = (Point2D.Double)object;
+
+            //Calculate the distance from the point to the edge of the hit circle.
+            double distance = hitCircleRadius - Math.hypot(point.x - position.x, point.y - position.y);
+
+            //Calculate the angle between the tank and the hit circle.
+            double angle = Math.toDegrees(Math.atan2(point.x - position.x, point.y - position.y));
+
+            //Move the tank.
+            this.position.x -= distance * FastMath.sin(angle);
+            this.position.y -= distance * FastMath.cos(angle);
+        }
+        //If the tank hits a wall, fix its position.
         else if(object instanceof UnbreakableWall) {
+            //Get the angle of the line.
             double lineAngle = ((UnbreakableWall) object).getAngle();
             //Copy the first point of the wall.
             Point2D.Double linePoint1 = ((UnbreakableWall) object).getPoint1();
@@ -43,11 +60,10 @@ public class Tank extends Entity {
             //The x distance between the line and the entity.
             double xDistance = linePoint1.x - position.x;
 
-            if(xDistance > 0) {
+            if (xDistance > 0) {
                 this.position.x -= (hitCircleRadius - xDistance) * FastMath.cos(lineAngle);
                 this.position.y += (hitCircleRadius - xDistance) * FastMath.sin(lineAngle);
-            }
-            else {
+            } else {
                 this.position.x += (hitCircleRadius + xDistance) * FastMath.cos(lineAngle);
                 this.position.y -= (hitCircleRadius + xDistance) * FastMath.sin(lineAngle);
             }

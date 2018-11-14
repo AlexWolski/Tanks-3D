@@ -1,6 +1,7 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.HitCircle;
+import Tanks3D.Object.Wall.UnbreakableWall;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.GameData;
@@ -16,7 +17,7 @@ public abstract class Entity extends GameObject {
     public double angle;
     public double speed;
     protected Point2D.Double position;
-    private HitCircle hitCircle;
+    protected HitCircle hitCircle;
 
     public Entity(Point2D.Double position, int hitCircleRadius, double angle, double speed) {
         this.position = position;
@@ -45,9 +46,11 @@ public abstract class Entity extends GameObject {
             //Check for collisions with the wall if it is visible.
             if(wall.getVisible()) {
                 //Check if the entity hits the sides of the wall. If it does, call the 'collide' method.
-                if (FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()) ||
-                        FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
-                    this.collide(wall, iterator);
+                if(wall instanceof UnbreakableWall)
+                    if (FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
+                        this.collide(wall.getPoint1(), iterator);
+                    else if(FastMath.isPointInCircle(wall.getPoint2(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
+                        this.collide(wall.getPoint2(), iterator);
 
                 //Copy the line of the wall.
                 rotatedLine = wall.getLine();
@@ -58,9 +61,10 @@ public abstract class Entity extends GameObject {
                 if (Math.abs(rotatedLine.x1 - this.position.x) < this.getHitCircleRadius()
                         && ((rotatedLine.y1 >= this.position.y - this.getHitCircleRadius()
                         && rotatedLine.y2 <= this.position.y) || (rotatedLine.y1 <= this.position.y
-                        && rotatedLine.y2 >= this.position.y)))
+                        && rotatedLine.y2 >= this.position.y))) {
                     //Pass the iterator in case the entity needs to delete the wall.
                     this.collide(wall, iterator);
+                }
             }
         }
     }
