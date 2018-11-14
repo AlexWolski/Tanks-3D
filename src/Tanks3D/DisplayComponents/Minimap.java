@@ -1,6 +1,8 @@
-package Tanks3D;
+package Tanks3D.DisplayComponents;
 
+import Tanks3D.GameData;
 import Tanks3D.Object.Wall.Wall;
+import Tanks3D.Player;
 import Tanks3D.Utilities.Image;
 
 import javax.imageio.ImageIO;
@@ -11,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 //Displays the minimap.
-public class Minimap implements Runnable{
+public class Minimap implements Runnable {
     private final GameData gameData;
     private final BufferedImage canvas;
     private double sizeRatio;

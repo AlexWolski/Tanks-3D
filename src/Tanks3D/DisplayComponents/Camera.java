@@ -1,5 +1,6 @@
-package Tanks3D;
+package Tanks3D.DisplayComponents;
 
+import Tanks3D.GameData;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Object.Wall.WallSlice;
 import Tanks3D.Utilities.FastMath;
@@ -10,20 +11,20 @@ import java.awt.image.BufferedImage;
 
 //Draw the level and entities.
 public class Camera {
-    //An buffer that get written to, then displayed on the screen.
-    private final BufferedImage canvas;
     //A struct that contains the necessary data about the game.
     private final GameData gameData;
+    //An buffer that get written to, then displayed on the screen.
+    private final BufferedImage canvas;
     //An array containing the wall slices that need to be drawn.
     private final WallSlice[] wallBuffer;
     //The field of view of the camera.
     private static final double FOV = 80;
     //The distance from the camera to the projection plane.
     private double distProjectionPlane;
-
-    //The orientation of the camera in the game world.
-    protected final Point2D.Double position;
-    protected double angle;
+    //The position of the point.
+    private final Point2D.Double position;
+    //The angle of the camera.
+    public double angle;
 
     public Camera(GameData gameData, BufferedImage canvas, Point2D.Double position, double angle) {
         this.canvas = canvas;

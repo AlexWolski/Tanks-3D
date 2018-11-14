@@ -40,7 +40,7 @@ public final class Level {
         wallObjects.add(new UnbreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30)));
 
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10)));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 0)));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10)));
         //wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(10, 30)));
         //wallObjects.add(new UnbreakableWall(new Point2D.Double(10, 30), new Point2D.Double(20, -10)));
 

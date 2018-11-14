@@ -1,5 +1,6 @@
 package Tanks3D;
 
+import Tanks3D.DisplayComponents.Minimap;
 import Tanks3D.DisplayComponents.SplitWindow;
 import Tanks3D.InputManager.InputManager;
 import Tanks3D.Object.Entity.Entity;

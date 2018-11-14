@@ -1,12 +1,10 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
-import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ListIterator;
 
