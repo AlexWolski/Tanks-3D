@@ -10,30 +10,30 @@ import java.io.IOException;
 public class HUD {
     //An buffer that get written to, then displayed on the screen.
     private final BufferedImage canvas;
-    //The color of the icon on the HUD.
-    private final Color hudColor;
+    //The gradient used for the health bar.
+    private final GradientPaint gradient;
     //The side of the screen that the stats will be on.
     private final String iconSide;
     //Images that will be displayed.
     private BufferedImage body, gun, healthIcon, lifeIcon;
-    //The position and size of the tank images.
-    private Point bodyPos, gunPos;
-    private Dimension bodyDim, gunDim;
+    //The position and size of the tank images. The gun's position is not final so it can be animated.
+    private Point gunPos;
+    private final Point bodyPos;
+    private final Dimension bodyDim, gunDim;
     //The position of the status images.
-    private Point healthIconPos, lifeIconPos;
+    private final Point healthIconPos, lifeIconPos;
     //The position and dimension of the health bar.
-    private Point healthBarPos;
+    private final Point healthBarPos;
     private final Dimension healthBarDim;
     //The size of the health and life icons.
     private final int iconSize = 50;
     //The distance between the icons and the side of the screen.
     private final int iconGap = 20;
     //The distance between each life icon. Can be positive or negative depending on if its on the left or right.
-    private int lifeIconGap;
+    private final int lifeIconGap;
 
     public HUD(BufferedImage canvas, Color hudColor, String iconSide) {
         this.canvas = canvas;
-        this.hudColor = hudColor;
         this.iconSide = iconSide;
         this.healthBarDim = new Dimension(canvas.getWidth()/2, canvas.getWidth()/15);
 
@@ -51,8 +51,6 @@ public class HUD {
             Tanks3D.Utilities.Image.setHue(lifeIcon, hudColor);
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            //Return so that the dimensions of the image aren't accessed.
-            return;
         }
 
         //The ratio between how large the image is and its size onscreen.
@@ -66,12 +64,14 @@ public class HUD {
 
         //Calculate the position of the health and life depending on if they are on the right or the left.
         if(iconSide.equals("left")) {
+            gradient = new GradientPaint(0, 0, Color.darkGray, 500, 0, hudColor);
             healthIconPos = new Point(iconGap, iconGap);
             healthBarPos = new Point(healthIconPos.x + iconGap + iconSize, healthIconPos.y + (iconSize - healthBarDim.height)/2);
             lifeIconPos = new Point(iconGap, 2*iconGap + iconSize);
             lifeIconGap = iconSize + iconGap;
         }
         else {
+            gradient = new GradientPaint(500, 0, Color.darkGray, 0, 0, hudColor);
             healthIconPos = new Point(canvas.getWidth() - iconGap - iconSize, iconGap);
             healthBarPos = new Point(healthIconPos.x  - iconGap - healthBarDim.width, healthIconPos.y + (iconSize - healthBarDim.height)/2);
             lifeIconPos = new Point(canvas.getWidth() - iconGap - iconSize, 2*iconGap + iconSize);
@@ -97,8 +97,8 @@ public class HUD {
         //Calculate how wide the health bar is based on the current and maximum health.
         int healthWidth = (int)(healthBarDim.width * (health/(double)maxHealth));
 
-        //Set the color of the current health bar.
-        graphic.setColor(hudColor.darker());
+        //Set the gradient for the health bar.
+        graphic.setPaint(gradient);
 
         //Draw the current heath.
         if(iconSide.equals("left"))

@@ -17,8 +17,8 @@ public class Player implements Runnable {
     private final Camera camera;
     //The heads up display for the player.
     private final HUD hud;
-    //Booleans to remember what keys are being pressed.
-    private boolean forwardPressed, backPressed, leftPressed, rightPressed;
+    //Booleans to remember what keys are being pressed. When the tank is created, it isn't moving.
+    private boolean forwardPressed, backPressed, leftPressed, rightPressed = false;
     //How many units the tank can move per second.
     private final static double tankSpeed = 20;
     //How many degrees the tank can rotate per second.
@@ -35,12 +35,6 @@ public class Player implements Runnable {
 
         //Create a new HUD object with the tank's color. 'iconSide' determines which side of the screen the HUD icons are on.
         hud = new HUD(canvas, getColor(), iconSide);
-
-        //When the player is created, no keys are pressed.
-        forwardPressed = false;
-        backPressed = false;
-        leftPressed = false;
-        rightPressed = false;
     }
 
     //Draw the player's screen.
