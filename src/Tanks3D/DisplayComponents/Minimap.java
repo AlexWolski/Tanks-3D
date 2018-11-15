@@ -23,7 +23,7 @@ public class Minimap implements Runnable {
     public Minimap(GameData gameData, BufferedImage canvas) {
         this.gameData = gameData;
         this.canvas = canvas;
-        backgroundColor = new Color(80, 80, 80).getRGB();
+        backgroundColor = Color.darkGray.getRGB();
 
         try {
             //Load the tank icon image from the resources folder.
@@ -82,7 +82,7 @@ public class Minimap implements Runnable {
     }
 
     public void draw() {
-        //Draw a black background
+        //Draw a background.
         for(int i = 0; i < canvas.getWidth(); i++) {
             for (int j = 0; j < canvas.getHeight(); j++)
                 canvas.setRGB(i, j, backgroundColor);

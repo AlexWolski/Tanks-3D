@@ -4,8 +4,12 @@ import Tanks3D.GameData;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ListIterator;
 
 public class Tank extends Entity {
@@ -22,6 +26,28 @@ public class Tank extends Entity {
 
         this.rotationSpeed = 0;
         this.color = color;
+
+        BufferedImage images[] = new BufferedImage[4];
+
+        //Load the images for the tank and color them.
+        try {
+            //Load the images.
+            images[0] = ImageIO.read(new File("resources/Tank Body.png"));
+            images[1] = ImageIO.read(new File("resources/Tank Gun.png"));
+            images[2] = ImageIO.read(new File("resources/Health Icon.png"));
+            images[3] = ImageIO.read(new File("resources/Life Icon.png"));
+
+            //Color the images.
+            Tanks3D.Utilities.Image.setHue(images[0], color);
+            Tanks3D.Utilities.Image.setHue(images[1], color);
+            Tanks3D.Utilities.Image.setHue(images[2], color);
+            Tanks3D.Utilities.Image.setHue(images[3], color);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        //Pass the images to the parent class.
+        super.setImages(images);
     }
 
     public void update(GameData data, double deltaTime) {
@@ -44,7 +70,7 @@ public class Tank extends Entity {
             double distance = hitCircleRadius - Math.hypot(point.x - position.x, point.y - position.y);
 
             //Calculate the angle between the tank and the hit circle.
-            double angle = Math.toDegrees(Math.atan2(point.x - position.x, point.y - position.y));
+            double angle = Math.toDegrees(FastMath.atan(point.x - position.x, point.y - position.y));
 
             //Move the tank.
             this.position.x -= distance * FastMath.sin(angle);
@@ -71,7 +97,7 @@ public class Tank extends Entity {
             }
         }
         else if(object instanceof Tank) {
-            System.out.println("TANK!");
+            health--;
         }
     }
 

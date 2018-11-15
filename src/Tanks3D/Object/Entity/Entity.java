@@ -13,14 +13,18 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 public abstract class Entity extends GameObject {
+    //The radius of the hit circle of the entity.
+    private final int hitCircleRadius;
+    //An array containing the sprites for the entity at different angles.
+    private BufferedImage images[];
+    //The entity's data in 3d space.
+    protected Point2D.Double position;
     public double angle;
     public double speed;
-    protected Point2D.Double position;
-    protected HitCircle hitCircle;
 
     public Entity(Point2D.Double position, int hitCircleRadius, double angle, double speed) {
+        this.hitCircleRadius = hitCircleRadius;
         this.position = position;
-        this.hitCircle = new HitCircle(position, hitCircleRadius);
         this.angle = angle;
         this.speed = speed;
     }
@@ -46,9 +50,9 @@ public abstract class Entity extends GameObject {
             if(wall.getVisible()) {
                 //Check if the entity hits the sides of the wall. If it does, call the 'collide' method.
                 if(wall instanceof UnbreakableWall)
-                    if (FastMath.isPointInCircle(wall.getPoint1(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
+                    if (FastMath.isPointInCircle(wall.getPoint1(), position, this.getHitCircleRadius()))
                         this.collide(wall.getPoint1(), iterator);
-                    else if(FastMath.isPointInCircle(wall.getPoint2(), this.hitCircle.getPosition(), this.getHitCircleRadius()))
+                    else if(FastMath.isPointInCircle(wall.getPoint2(), position, this.getHitCircleRadius()))
                         this.collide(wall.getPoint2(), iterator);
 
                 //Copy the line of the wall.
@@ -117,10 +121,19 @@ public abstract class Entity extends GameObject {
 
     }
 
-    public Point2D.Double getPosition() {
-        return new Point2D.Double(position.x, position.y);
+    private int getHitCircleRadius() {
+        return hitCircleRadius;
     }
-    public int getHitCircleRadius() {
-        return hitCircle.getRadius();
+    public double getXPos() {
+        return position.x;
+    }
+    public double getYPos() {
+        return position.y;
+    }
+    public int getWidth() {
+       return images[0].getWidth();
+    }
+    protected void setImages(BufferedImage images[]) {
+        this.images = images;
     }
 }

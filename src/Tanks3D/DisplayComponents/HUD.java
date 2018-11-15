@@ -97,6 +97,10 @@ public class HUD {
         //Calculate how wide the health bar is based on the current and maximum health.
         int healthWidth = (int)(healthBarDim.width * (health/(double)maxHealth));
 
+        //Draw the health bar background.
+        graphic.setPaint(Color.darkGray);
+        graphic.fillRect(healthBarPos.x, healthBarPos.y, healthBarDim.width, healthBarDim.height);
+
         //Set the gradient for the health bar.
         graphic.setPaint(gradient);
 
