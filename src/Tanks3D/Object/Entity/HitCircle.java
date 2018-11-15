@@ -1,4 +1,4 @@
-package Tanks3D;
+package Tanks3D.Object.Entity;
 
 import java.awt.geom.Point2D;
 
@@ -17,6 +17,4 @@ public class HitCircle {
     public int getRadius() {
         return radius;
     }
-
-
 }

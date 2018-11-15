@@ -12,6 +12,10 @@ public class Tank extends Entity {
     public double rotationSpeed;
     private final Color color;
     private final static int hitCircleRadius = 4;
+    //Stats of the tank.
+    private final int maxHealth = 100;
+    private int health = maxHealth;
+    private int lives = 3;
 
     public Tank(Point2D.Double position, double angle, Color color) {
         super(position, hitCircleRadius, angle, 0);
@@ -74,6 +78,17 @@ public class Tank extends Entity {
     public Color getColor() {
         return color;
     }
-    public Point2D.Double getPosition() { return super.position; }
+    public Point2D.Double getPosition() {
+        return super.position;
+    }
     public double getAngle() { return super.angle; }
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    public int getHealth() {
+        return health;
+    }
+    public int getLives() {
+        return lives;
+    }
 }

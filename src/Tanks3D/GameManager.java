@@ -59,9 +59,9 @@ public class GameManager {
         //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
         gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
 
-        //Initialize the 'Player' objects. Get the initial positions for both players and pass it to their constructors.
-        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan);
-        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green);
+        //Initialize the 'Player' objects. Get the initial positions for both players and indicate which side of the screen the HUD icons are on.
+        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan, "left");
+        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green, "right");
         gameData.minimap = new Minimap(gameData, gameWindow.getMinimapBuffer());
 
         //Link the controls for each player.

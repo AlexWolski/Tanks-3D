@@ -18,19 +18,13 @@ public class Camera {
     //An array containing the wall slices that need to be drawn.
     private final WallSlice[] wallBuffer;
     //The field of view of the camera.
-    private static final double FOV = 80;
+    private static final double FOV = 70;
     //The distance from the camera to the projection plane.
     private double distProjectionPlane;
-    //The position of the point.
-    private final Point2D.Double position;
-    //The angle of the camera.
-    public double angle;
 
-    public Camera(GameData gameData, BufferedImage canvas, Point2D.Double position, double angle) {
+    public Camera(GameData gameData, BufferedImage canvas) {
         this.canvas = canvas;
         this.gameData = gameData;
-        this.position = position;
-        this.angle = angle;
 
         //Calculate the distance from the camera to the projection plane from the FOV and image buffer width.
         distProjectionPlane = FastMath.cos(FOV/2) / FastMath.sin(FOV/2) * canvas.getWidth() / 2;
@@ -39,7 +33,7 @@ public class Camera {
     }
 
     //Fill the given buffer with the slices of wall that needs to be drawn.
-    public void calculateWallBuffer() {
+    public void calculateWallBuffer(Point2D.Double position, double angle) {
         //The angle between each ray.
         double rayAngle = FOV/wallBuffer.length;
         //The angle of the first ray.
@@ -121,11 +115,11 @@ public class Camera {
     }
 
     //Calculate the wall slices, draw the entities, and finally draw the walls.
-    public void draw() {
-        //Pass the wall buffer to 'gameLevel' so it can calculate which parts of which walls to draw.
-        calculateWallBuffer();
+    public void draw(Point2D.Double position, double angle) {
+        //Calculate which walls to draw given the position and angle of the camera.
+        calculateWallBuffer(position, angle);
 
-        //Draw all of the wall slices.
+        //Draw the walls.
         drawWalls();
     }
 }

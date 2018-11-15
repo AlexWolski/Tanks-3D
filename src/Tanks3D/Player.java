@@ -5,12 +5,9 @@ import Tanks3D.DisplayComponents.HUD;
 import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Object.SpawnPoint;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 //Manage the player's tank and screen. This extends 'Runnable' so that the draw function can be threaded.
 public class Player implements Runnable {
@@ -27,33 +24,17 @@ public class Player implements Runnable {
     //How many degrees the tank can rotate per second.
     private double rotationSpeed = 200;
 
-    public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor) {
+    public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor, String iconSide) {
         //Create a new tank given the spawn-point and add it to the entity list.
         myTank = new Tank(spawnPoint.getPosition(), spawnPoint.getAngle(), tankColor);
         //Add the new tank to the list of all entities.
         gameData.entityList.add(myTank);
 
         //Create a new camera given the spawn-point position and angle.
-        camera = new Camera(gameData, canvas, myTank.getPosition(), myTank.getAngle());
+        camera = new Camera(gameData, canvas);
 
-        //The images for the player's own tank and gun.
-        BufferedImage tankBody = null;
-        BufferedImage tankGun = null;
-
-        //Load the images.
-        try {
-            tankBody = ImageIO.read(new File("resources/Tank Body.png"));
-            tankGun = ImageIO.read(new File("resources/Tank Gun.png"));
-
-            //Color both images based on the tank's color.
-            Tanks3D.Utilities.Image.setHue(tankBody, getColor());
-            Tanks3D.Utilities.Image.setHue(tankGun, getColor());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        //Create a new HUD object with the images and tank stats.
-        hud = new HUD(canvas, tankBody, tankGun);
+        //Create a new HUD object with the tank's color. 'iconSide' determines which side of the screen the HUD icons are on.
+        hud = new HUD(canvas, getColor(), iconSide);
 
         //When the player is created, no keys are pressed.
         forwardPressed = false;
@@ -64,12 +45,11 @@ public class Player implements Runnable {
 
     //Draw the player's screen.
     public void draw() {
-        //Move the camera to the tank's position.
-        camera.angle = myTank.getAngle();
         //Draw the walls and entities.
-        camera.draw();
+        camera.draw(myTank.getPosition(), myTank.getAngle());
+
         //Draw the HUD.
-        hud.draw();
+        hud.draw(myTank.getMaxHealth(), myTank.getHealth(), myTank.getLives());
     }
 
     //Draw the player's screen in a thread.

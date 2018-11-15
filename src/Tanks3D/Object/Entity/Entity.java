@@ -1,6 +1,5 @@
 package Tanks3D.Object.Entity;
 
-import Tanks3D.HitCircle;
 import Tanks3D.Object.Wall.UnbreakableWall;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Utilities.FastMath;
