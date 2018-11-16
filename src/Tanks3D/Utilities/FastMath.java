@@ -7,22 +7,17 @@ import java.awt.geom.Point2D;
 public final class FastMath {
     //A table to store the pre-calculated values of sin. This is also used for cos.
     private static final double sinTable[];
-    //A table to store the pre-calculated values of arc tangent.
-    private static final double atanTable[];
 
     //This class is non-instantiable
     private FastMath() {
     }
 
-    //When the object is first called, fill the tables with the trig functions of angles between 0 and 360.
+    //When the object is first called, fill the table with the sin of angles between 0 and 360.
     static {
         sinTable = new double[361];
-        atanTable = new double[361];
 
-        for(int i = 0; i < 361; i++) {
+        for(int i = 0; i < 361; i++)
             sinTable[i] = Math.sin(Math.toRadians(i));
-            atanTable[i] = Math.atan(Math.toRadians(i));
-        }
     }
 
     //Restrict the angle between 0 and 360 degrees
@@ -54,16 +49,6 @@ public final class FastMath {
     //Add 90 to the angle to convert sin to cos and look up the value in the sin table.
     public static double cos(double angle) {
         return sin(angle + 90.0);
-    }
-
-    public static double atan(double x, double y) {
-        double angle = formatAngle(x/y);
-
-        //Use linear interpolation to guess the values in-between two known values
-        double prevVal = atanTable[(int)angle];
-        double nextVal = atanTable[(int)angle + 1];
-
-        return ((angle-Math.floor(angle)) * (nextVal-prevVal)) + prevVal;
     }
 
     public static void add(Point2D.Double point1, Point2D.Double point2) {

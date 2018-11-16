@@ -10,7 +10,7 @@ public abstract class Round extends Entity {
     private final static int hitCircleRadius = 5;
 
     public Round(Point2D.Double position, double angle, int speed) {
-        super(position, hitCircleRadius, angle, speed);
+        super(position, 1, 1, hitCircleRadius, angle, speed);
     }
 
     public void update(GameData game, double deltaTime) {

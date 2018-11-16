@@ -1,11 +1,12 @@
 package Tanks3D.Object.Entity;
 
+import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.UnbreakableWall;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.GameData;
-import Tanks3D.Object.GameObject;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -17,12 +18,15 @@ public abstract class Entity extends GameObject {
     private final int hitCircleRadius;
     //An array containing the sprites for the entity at different angles.
     private BufferedImage images[];
+    //The in-game size of the entity. The images are stretched to fit this.
+    private Dimension entitySize;
     //The entity's data in 3d space.
-    protected Point2D.Double position;
+    public Point2D.Double position;
     public double angle;
     public double speed;
 
-    public Entity(Point2D.Double position, int hitCircleRadius, double angle, double speed) {
+    public Entity(Point2D.Double position, int width, int height, int hitCircleRadius, double angle, double speed) {
+        this.entitySize = new Dimension(width, height);
         this.hitCircleRadius = hitCircleRadius;
         this.position = position;
         this.angle = angle;
@@ -34,8 +38,8 @@ public abstract class Entity extends GameObject {
 
     //Check if this entity collides with any walls. If it does, pass the wall to the 'collide' method.
     private void checkCollisionWall(ArrayList<Wall> wallList) {
+        //The line of the wall rotated so that the ray is along the y axis.
         Line2D.Double rotatedLine;
-
         //Iterator for checking all of the walls.
         ListIterator<Wall> iterator = wallList.listIterator();
         //A temporary wall object to reference the wall being checked.
@@ -124,14 +128,8 @@ public abstract class Entity extends GameObject {
     private int getHitCircleRadius() {
         return hitCircleRadius;
     }
-    public double getXPos() {
-        return position.x;
-    }
-    public double getYPos() {
-        return position.y;
-    }
-    public int getWidth() {
-       return images[0].getWidth();
+    public Dimension getSize() {
+        return entitySize;
     }
     protected void setImages(BufferedImage images[]) {
         this.images = images;

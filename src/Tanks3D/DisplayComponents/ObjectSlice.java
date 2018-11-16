@@ -1,16 +1,18 @@
-package Tanks3D.Object.Wall;
+package Tanks3D.DisplayComponents;
 
-//A 'struct' to contain the data needed to draw a wall slice. All of the members are public.
-public class WallSlice {
+import Tanks3D.Object.GameObject;
+
+//A 'struct' to contain the data needed to draw a slice of a wall or entity.
+public class ObjectSlice {
     //The wall that this slice came from.
-    public final Wall wall;
+    public final GameObject object;
     //The distance from the camera to the intersection between the ray and the wall.
     public final double distToCamera;
     //How far along the wall the ray intersected. Between 0 and 1.
     public final double intersectRatio;
 
-    public WallSlice(Wall wall, double distToCamera, double intersectRatio) {
-        this.wall = wall;
+    public ObjectSlice(GameObject wall, double distToCamera, double intersectRatio) {
+        this.object = wall;
         this.distToCamera = distToCamera;
         this.intersectRatio = intersectRatio;
     }

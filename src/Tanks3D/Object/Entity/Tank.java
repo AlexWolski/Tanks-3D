@@ -15,14 +15,14 @@ import java.util.ListIterator;
 public class Tank extends Entity {
     public double rotationSpeed;
     private final Color color;
-    private final static int hitCircleRadius = 4;
+    private final static int hitCircleRadius = 5;
     //Stats of the tank.
     private final int maxHealth = 100;
     private int health = maxHealth;
     private int lives = 3;
 
     public Tank(Point2D.Double position, double angle, Color color) {
-        super(position, hitCircleRadius, angle, 0);
+        super(position, 10, 10, hitCircleRadius, angle, 0);
 
         this.rotationSpeed = 0;
         this.color = color;
@@ -70,7 +70,7 @@ public class Tank extends Entity {
             double distance = hitCircleRadius - Math.hypot(point.x - position.x, point.y - position.y);
 
             //Calculate the angle between the tank and the hit circle.
-            double angle = Math.toDegrees(FastMath.atan(point.x - position.x, point.y - position.y));
+            double angle = Math.toDegrees(Math.atan2(point.x - position.x, point.y - position.y));
 
             //Move the tank.
             this.position.x -= distance * FastMath.sin(angle);

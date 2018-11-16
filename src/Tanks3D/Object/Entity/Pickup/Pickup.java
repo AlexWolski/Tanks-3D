@@ -10,7 +10,7 @@ public abstract class Pickup extends Entity {
     private final static int hitCircleRadius = 10;
 
     public Pickup(Point2D.Double position) {
-        super(position, hitCircleRadius, 0, 0);
+        super(position, 1, 1, hitCircleRadius, 0, 0);
     }
 
     public void update(GameData data, double deltaTime) {
