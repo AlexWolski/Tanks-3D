@@ -39,10 +39,10 @@ public class HUD {
 
         try {
             //Load the images.
-            body = ImageIO.read(new File("resources/Tank Body.png"));
-            gun = ImageIO.read(new File("resources/Tank Gun.png"));
-            healthIcon = ImageIO.read(new File("resources/Health Icon.png"));
-            lifeIcon = ImageIO.read(new File("resources/Life Icon.png"));
+            body = ImageIO.read(new File("resources/HUD/Tank Body.png"));
+            gun = ImageIO.read(new File("resources/HUD/Tank Gun.png"));
+            healthIcon = ImageIO.read(new File("resources/HUD/Health Icon.png"));
+            lifeIcon = ImageIO.read(new File("resources/HUD/Life Icon.png"));
 
             //Color the images.
             Tanks3D.Utilities.Image.setHue(body, hudColor);

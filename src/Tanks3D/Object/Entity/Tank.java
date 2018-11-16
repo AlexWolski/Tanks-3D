@@ -15,44 +15,48 @@ import java.util.ListIterator;
 public class Tank extends Entity {
     public double rotationSpeed;
     private final Color color;
+    //The size of the hit circle around the tank.
     private final static int hitCircleRadius = 5;
+    //How much to scale the images when drawn to the screen.
+    private final double scale = 0.04;
     //Stats of the tank.
     private final int maxHealth = 100;
     private int health = maxHealth;
     private int lives = 3;
 
     public Tank(Point2D.Double position, double angle, Color color) {
-        super(position, 10, 10, hitCircleRadius, angle, 0);
+        super(position, hitCircleRadius, angle, 0);
 
         this.rotationSpeed = 0;
         this.color = color;
 
-        BufferedImage images[] = new BufferedImage[4];
+        BufferedImage sprites[] = new BufferedImage[4];
 
-        //Load the images for the tank and color them.
+        //Load the sprites for the tank and color them.
         try {
-            //Load the images.
-            images[0] = ImageIO.read(new File("resources/Tank Body.png"));
-            images[1] = ImageIO.read(new File("resources/Tank Gun.png"));
-            images[2] = ImageIO.read(new File("resources/Health Icon.png"));
-            images[3] = ImageIO.read(new File("resources/Life Icon.png"));
+            //Load the sprites.
+            sprites[0] = ImageIO.read(new File("resources/Tank/Front.png"));
+            sprites[1] = ImageIO.read(new File("resources/Tank/Left.png"));
+            sprites[2] = ImageIO.read(new File("resources/Tank/Back.png"));
+            sprites[3] = ImageIO.read(new File("resources/Tank/Right.png"));
 
-            //Color the images.
-            Tanks3D.Utilities.Image.setHue(images[0], color);
-            Tanks3D.Utilities.Image.setHue(images[1], color);
-            Tanks3D.Utilities.Image.setHue(images[2], color);
-            Tanks3D.Utilities.Image.setHue(images[3], color);
+            //Color the sprites.
+            Tanks3D.Utilities.Image.setHue(sprites[0], color);
+            Tanks3D.Utilities.Image.setHue(sprites[1], color);
+            Tanks3D.Utilities.Image.setHue(sprites[2], color);
+            Tanks3D.Utilities.Image.setHue(sprites[3], color);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
-        //Pass the images to the parent class.
-        super.setImages(images);
+        //Pass the sprites to the parent class.
+        super.setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
     }
 
     public void update(GameData data, double deltaTime) {
         //Update the angle and position of the tank.
         angle += rotationSpeed * deltaTime / 1000;
+        angle = FastMath.formatAngle(angle);
         super.update(data, deltaTime);
     }
 

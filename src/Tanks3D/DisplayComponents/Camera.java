@@ -21,8 +21,8 @@ public class Camera {
     private final ObjectSlice[] wallBuffer;
     //An array full of booleans indicating whether a pixel has been written to or not.
     private final boolean[][] pixelTable;
-    //The field of view of the camera.
-    private static final double FOV = 70;
+    //The horizontal and vertical field of view of the camera.
+    private static double FOV = 60;
     //The distance from the camera to the projection plane.
     private double distProjectionPlane;
 
@@ -31,7 +31,7 @@ public class Camera {
         this.gameData = gameData;
 
         //Calculate the distance from the camera to the projection plane from the FOV and image buffer width.
-        distProjectionPlane = FastMath.cos(FOV/2) / FastMath.sin(FOV/2) * canvas.getWidth() / 2;
+        distProjectionPlane = FastMath.cos(FOV /2) / FastMath.sin(FOV /2) * canvas.getWidth() / 2;
         //Initialize the array of wall slices and array of booleans.
         wallBuffer = new ObjectSlice[canvas.getWidth()];
         pixelTable = new boolean[canvas.getWidth()][canvas.getHeight()];
@@ -47,9 +47,9 @@ public class Camera {
     //Fill the given buffer with the slices of wall that needs to be drawn.
     private void calculateWallBuffer(Point2D.Double position, double angle) {
         //The angle between each ray.
-        double rayAngle = FOV/wallBuffer.length;
+        double rayAngle = FOV /wallBuffer.length;
         //The angle of the first ray.
-        double currentRay = -FOV/2;
+        double currentRay = -FOV /2;
 
         //Iterate through each ray.
         for(int i = 0; i < wallBuffer.length; i++) {
@@ -71,12 +71,61 @@ public class Camera {
 
                     //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
                     if (dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist))
-                        wallBuffer[i] = new ObjectSlice(wall, dist, -line.x1/wall.getLength());
+                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), Math.abs(line.x1)/wall.getLength());
                 }
             }
 
             //Move on to the next ray.
             currentRay += rayAngle;
+        }
+    }
+
+    //Draw a slice of an image.
+    private void drawSlice(ObjectSlice slice, int canvasX, int sliceHeight) {
+        //The color of the pixel being drawn to the screen.
+        int pixelColor;
+        //The y coordinate of the image where it will start being drawn.
+        int imageStart;
+        //The height of the image that actually gets drawn.
+        int onscreenHeight;
+        //Calculate the y positions where the wall starts and stops on the screen.
+        int wallStart = canvas.getHeight()/2 - sliceHeight/2;
+        int wallEnd = canvas.getHeight()/2 + sliceHeight/2;
+
+        if(wallStart < 0)
+            wallStart = 0;
+
+        if(wallEnd > canvas.getHeight())
+            wallEnd = canvas.getHeight();
+
+        //Calculate the y coordinate to start drawing the image.
+        if(sliceHeight > canvas.getHeight()) {
+            onscreenHeight = canvas.getHeight();
+            imageStart = (sliceHeight - canvas.getHeight()) / 2;
+        }
+        else {
+            onscreenHeight = sliceHeight;
+            imageStart = 0;
+        }
+
+        //The column of the image that will be drawn.
+        int imageX = (int)(slice.intersectRatio * slice.image.getWidth());
+        //The row of the image that is going to be drawn.
+        int imageY = 0;
+
+        //Loop through the image and draw all of the rows.
+        for(int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
+            //Get the color of the pixel at the current point in the image.
+            pixelColor = slice.image.getRGB(imageX,  (int)((imageY + imageStart)/(double)onscreenHeight * slice.image.getHeight()));
+
+            //If the image is not transparent, draw it.
+            if((pixelColor>>24) != 0x00 ) {
+                canvas.setRGB(canvasX, canvasY, pixelColor);
+                pixelTable[canvasX][canvasY] = false;
+            }
+
+            //Move on to the next row to draw.
+            imageY++;
         }
     }
 
@@ -135,9 +184,9 @@ public class Camera {
     //Draw the entities, comparing their distance to the wall buffer.
     private void drawEntities(Point2D.Double position, double angle) {
         //The angle between each ray.
-        double rayAngle = FOV/wallBuffer.length;
+        double rayAngle = FOV /wallBuffer.length;
         //The angle of the first ray.
-        double currentRay = -FOV/2;
+        double currentRay = -FOV /2;
         //Distance from the camera to the center of the entity.
         double dist;
         //The onscreen width and height of the entity accounting for distance.
@@ -171,11 +220,11 @@ public class Camera {
                 dist = FastMath.getYIntercept(rotatedLine) * FastMath.cos(currentRay);
 
                 //If the entity intersects with the ray and it is in front of the walls, draw it.
-                if (dist > 0 && dist <= wallBuffer[i].distToCamera) {
+                if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
                     //Recalculate the distance to the center of the entity, not where it intersects.
                     dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y);
                     //Create the object slice.
-                    currentSlice = new ObjectSlice(entity, dist, -rotatedLine.x1/entitySize.width);
+                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
 
                     //If the array list is empty, add the object slice.
                     if(visibleEntities.isEmpty())
@@ -191,19 +240,7 @@ public class Camera {
             //Draw all of the entities in the array list in order from nearest to farthest.
             for(ObjectSlice slice : visibleEntities) {
                 int sliceHeight = (int) (((Entity) slice.object).getSize().height / slice.distToCamera * distProjectionPlane);
-                int sliceStart = canvas.getHeight()/2 - sliceHeight/2;
-                int sliceEnd = canvas.getHeight()/2 + sliceHeight;
-
-                if(sliceStart < 0)
-                    sliceStart = 0;
-
-                if(sliceEnd > canvas.getHeight())
-                    sliceEnd = canvas.getHeight();
-
-                for (int j = sliceStart; j < sliceEnd; j++) {
-                    canvas.setRGB(i, j, Color.yellow.getRGB());
-                    pixelTable[i][j] = false;
-                }
+                drawSlice(slice, i, sliceHeight);
             }
 
             //Move on to the next ray.

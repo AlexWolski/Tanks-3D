@@ -14,14 +14,14 @@ public class SplitWindow extends JFrame {
     private final GameData gameData;
     private final SplitPanel panel;
 
-    public SplitWindow(GameData gameData, String s, Dimension panelSize) {
+    public SplitWindow(GameData gameData, String s, Dimension panelSize, int titleBarHeight) {
         super(s);
 
         this.gameData = gameData;
 
         //Set the settings for the JFrame.
         setLayout(new BorderLayout());
-        setSize(panelSize);
+        setSize(new Dimension(panelSize.width, panelSize.height - titleBarHeight));
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

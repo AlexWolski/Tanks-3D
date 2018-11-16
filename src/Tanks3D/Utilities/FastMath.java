@@ -21,7 +21,7 @@ public final class FastMath {
     }
 
     //Restrict the angle between 0 and 360 degrees
-    private static double formatAngle(double angle) {
+    public static double formatAngle(double angle) {
         if(angle < -360 || angle > 360)
             angle %= 360;
 

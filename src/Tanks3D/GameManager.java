@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class GameManager {
     //Constant settings.
     private final static String levelFile = "Underground Arena.txt";
-    //The extra 30px is for the title bar.
-    private final static int defaultWidth = 1034;
+    //Size of the display. The extra 4px on the width is for the screen divider.
+    private final static int defaultWidth = 1004;
     private final static int defaultHeight = 500;
+    //How much space the title bar takes.
+    private final static int titleBarHeight = 30;
 
     //The window that the game runs in and controls drawing of the screen.
     private final SplitWindow gameWindow;
@@ -57,7 +59,7 @@ public class GameManager {
         gameData.entityList = new ArrayList<>();
 
         //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
-        gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight));
+        gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight), titleBarHeight);
 
         //Initialize the 'Player' objects. Get the initial positions for both players and indicate which side of the screen the HUD icons are on.
         gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan, "left");

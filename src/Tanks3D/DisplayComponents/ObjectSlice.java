@@ -2,18 +2,23 @@ package Tanks3D.DisplayComponents;
 
 import Tanks3D.Object.GameObject;
 
-//A 'struct' to contain the data needed to draw a slice of a wall or entity.
-public class ObjectSlice {
-    //The wall that this slice came from.
-    public final GameObject object;
-    //The distance from the camera to the intersection between the ray and the wall.
-    public final double distToCamera;
-    //How far along the wall the ray intersected. Between 0 and 1.
-    public final double intersectRatio;
+import java.awt.image.BufferedImage;
 
-    public ObjectSlice(GameObject wall, double distToCamera, double intersectRatio) {
+//A 'struct' to contain the data needed to draw a slice of a wall or entity.
+class ObjectSlice {
+    //The wall that this slice came from.
+    final GameObject object;
+    //The distance from the camera to the intersection between the ray and the wall.
+    final double distToCamera;
+    //The image that a slice will be taken out of.
+    final BufferedImage image;
+    //How far along the wall the ray intersected. Between 0 and 1.
+    final double intersectRatio;
+
+    ObjectSlice(GameObject wall, double distToCamera, BufferedImage image, double intersectRatio) {
         this.object = wall;
         this.distToCamera = distToCamera;
+        this.image = image;
         this.intersectRatio = intersectRatio;
     }
 }

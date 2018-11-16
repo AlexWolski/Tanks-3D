@@ -17,16 +17,15 @@ public abstract class Entity extends GameObject {
     //The radius of the hit circle of the entity.
     private final int hitCircleRadius;
     //An array containing the sprites for the entity at different angles.
-    private BufferedImage images[];
-    //The in-game size of the entity. The images are stretched to fit this.
+    private BufferedImage sprites[];
+    //The in-game size of the entity. The sprites are stretched to fit this.
     private Dimension entitySize;
     //The entity's data in 3d space.
     public Point2D.Double position;
     public double angle;
     public double speed;
 
-    public Entity(Point2D.Double position, int width, int height, int hitCircleRadius, double angle, double speed) {
-        this.entitySize = new Dimension(width, height);
+    public Entity(Point2D.Double position, int hitCircleRadius, double angle, double speed) {
         this.hitCircleRadius = hitCircleRadius;
         this.position = position;
         this.angle = angle;
@@ -35,6 +34,24 @@ public abstract class Entity extends GameObject {
 
     //All entity classes have a 'collide' method that handles the event that it collides with a wall or another entity.
     public abstract void collide(Object object, ListIterator iterator);
+
+    public void update(GameData gamedata, double deltaTime) {
+        //Move the entity based on its angle and speed.
+        double distMoved = speed * deltaTime / 1000;
+        //Equivalent of cos(angle-90)
+        position.x += distMoved * FastMath.sin(angle);
+        //Equivalent of sin(angle-90)
+        position.y += distMoved * FastMath.cos(angle);
+
+        //Check if the entity collides with any walls or entities.
+        checkCollisionWall(gamedata.gameLevel.wallObjects);
+        checkCollisionEntity(gamedata.entityList);
+    }
+
+    //Draw the entity.
+    protected void draw(BufferedImage canvas) {
+
+    }
 
     //Check if this entity collides with any walls. If it does, pass the wall to the 'collide' method.
     private void checkCollisionWall(ArrayList<Wall> wallList) {
@@ -107,31 +124,24 @@ public abstract class Entity extends GameObject {
         }
     }
 
-    public void update(GameData gamedata, double deltaTime) {
-        //Move the entity based on its angle and speed.
-        double distMoved = speed * deltaTime / 1000;
-        //Equivalent of cos(angle-90)
-        position.x += distMoved * FastMath.sin(angle);
-        //Equivalent of sin(angle-90)
-        position.y += distMoved * FastMath.cos(angle);
-
-        //Check if the entity collides with any walls or entities.
-        checkCollisionWall(gamedata.gameLevel.wallObjects);
-        checkCollisionEntity(gamedata.entityList);
-    }
-
-    //Draw the entity.
-    protected void draw(BufferedImage canvas) {
-
-    }
-
     private int getHitCircleRadius() {
         return hitCircleRadius;
     }
     public Dimension getSize() {
         return entitySize;
     }
-    protected void setImages(BufferedImage images[]) {
-        this.images = images;
+
+    //Set the sprites and size of the entity. The sprites start with a front shot and rotate clockwise.
+    protected void setSprites(BufferedImage images[], int width, int height) {
+        this.sprites = images;
+        this.entitySize = new Dimension(width, height);
+    }
+
+    //Given the angle of the camera, return the appropriate image.
+    public BufferedImage getImage(double viewerAngle) {
+        //Get the difference in angle between the tank and the viewer.
+        viewerAngle = FastMath.formatAngle(this.angle - viewerAngle - 540.0/ sprites.length);
+        //Map the angle to one of the sprites and return it.
+        return sprites[(int)(viewerAngle * sprites.length/360)];
     }
 }
