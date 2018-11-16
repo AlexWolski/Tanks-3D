@@ -34,13 +34,15 @@ public final class Level {
         floorColor = new Color(0x803700).getRGB();
         ceilColor = new Color(0).getRGB();
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30), "resources/Textures/Brick.png", Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), "resources/Textures/Brick.png", Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), "resources/Textures/Brick.png", Color.white));
-        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), "resources/Textures/CrackedBrick.png", Color.white));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30), Color.red));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), Color.white));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), Color.white));
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), "resources/Textures/Brick.png", Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), "resources/Textures/Brick.png", Color.white));
+        for(int i = 0; i < 1000; i++)
+        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), Color.white));
+
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), Color.white));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), Color.white));
         //wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(10, 30)));
         //wallObjects.add(new UnbreakableWall(new Point2D.Double(10, 30), new Point2D.Double(20, -10)));
 

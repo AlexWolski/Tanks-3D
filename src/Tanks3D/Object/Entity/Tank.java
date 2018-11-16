@@ -3,6 +3,7 @@ package Tanks3D.Object.Entity;
 import Tanks3D.GameData;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
+import Tanks3D.Utilities.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -32,22 +33,17 @@ public class Tank extends Entity {
 
         BufferedImage sprites[] = new BufferedImage[4];
 
-        //Load the sprites for the tank and color them.
-        try {
-            //Load the sprites.
-            sprites[0] = ImageIO.read(new File("resources/Tank/Front.png"));
-            sprites[1] = ImageIO.read(new File("resources/Tank/Left.png"));
-            sprites[2] = ImageIO.read(new File("resources/Tank/Back.png"));
-            sprites[3] = ImageIO.read(new File("resources/Tank/Right.png"));
+        //Load the sprites.
+        sprites[0] = Image.load("resources/Tank/Front.png");
+        sprites[1] = Image.load("resources/Tank/Left.png");
+        sprites[2] = Image.load("resources/Tank/Back.png");
+        sprites[3] = Image.load("resources/Tank/Right.png");
 
-            //Color the sprites.
-            Tanks3D.Utilities.Image.setHue(sprites[0], color);
-            Tanks3D.Utilities.Image.setHue(sprites[1], color);
-            Tanks3D.Utilities.Image.setHue(sprites[2], color);
-            Tanks3D.Utilities.Image.setHue(sprites[3], color);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        //Color the sprites.
+        Tanks3D.Utilities.Image.setHue(sprites[0], color);
+        Tanks3D.Utilities.Image.setHue(sprites[1], color);
+        Tanks3D.Utilities.Image.setHue(sprites[2], color);
+        Tanks3D.Utilities.Image.setHue(sprites[3], color);
 
         //Pass the sprites to the parent class.
         super.setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));

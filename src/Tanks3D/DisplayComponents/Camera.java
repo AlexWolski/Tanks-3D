@@ -53,6 +53,10 @@ public class Camera {
         //The distance from the camera to the wall slice.dd
         double dist;
 
+        //Variables for calculating the intersection ratio of the wall texture.
+        double scaledImgWidth;
+        double inGameImgWidth;
+
         //Iterate through each ray.
         for(int i = 0; i < wallBuffer.length; i++) {
             wallBuffer[i] = null;
@@ -73,11 +77,18 @@ public class Camera {
 
                     //If this wall is visible and is closer to the camera than walls previously checked, save it in the buffer.
                     if (dist > 0 && (wallBuffer[i] == null || wallBuffer[i].distToCamera > dist)) {
-                        double scaledImgWidth = wall.getHeight()/wall.getTexture().getHeight() * wall.getTexture().getWidth();
-                        double numImg = wall.getWidth()/scaledImgWidth;
-                        double ingameImgWidth = Math.abs(line.x2 - line.x1)/numImg;
+                        //If the texture for the wall wasn't loaded correctly, put a dummy variable in for inGameImgWidth.
+                        if(wall.getTexture() == null)
+                            inGameImgWidth = -1;
+                        else {
+                            //The size of the image fit to the wall.
+                            scaledImgWidth = wall.getHeight() / wall.getTexture().getHeight() * wall.getTexture().getWidth();
+                            //The width of the image as viewed from the camera.
+                            inGameImgWidth = Math.abs(line.x2 - line.x1) / (wall.getWidth()/scaledImgWidth);
+                        }
 
-                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), (Math.abs(line.x1) % ingameImgWidth)/ingameImgWidth);
+                        //Calculate the intersection ratio for the texture and
+                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), (Math.abs(line.x1) % inGameImgWidth)/inGameImgWidth);
                     }
                 }
             }
@@ -106,28 +117,38 @@ public class Camera {
             if (wallEnd > canvas.getHeight())
                 wallEnd = canvas.getHeight();
 
-            //If the slice is larger than the screen, set the image height and reset the onscreen height.
-            if (sliceHeight > canvas.getHeight())
-                imageStart = (int) ((sliceHeight - canvas.getHeight()) / 2.0 / sliceHeight * slice.image.getHeight());
-
-            //The column of the image that will be drawn.
-            int imageX = (int) (slice.intersectRatio * slice.image.getWidth());
-            //The row of the image that is going to be drawn.
-            int imageY = 0;
-
-            //Loop through the image and draw all of the rows.
-            for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
-                //Get the color of the pixel at the current point in the image.
-                pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
-
-                //If the image is not transparent and not written to yet, draw the pixel.
-                if ((pixelColor >> 24) != 0x00 && pixelTable[canvasX][canvasY]) {
-                    canvas.setRGB(canvasX, canvasY, pixelColor);
+            //If the image wasn't loaded properly, just draw a purple slice.
+            if(slice.image == null) {
+                for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
+                    canvas.setRGB(canvasX, canvasY, Color.MAGENTA.getRGB());
                     pixelTable[canvasX][canvasY] = false;
                 }
+            }
+            //Otherwise, draw the image.
+            else {
+                //If the slice is larger than the screen, set the image height and reset the onscreen height.
+                if (sliceHeight > canvas.getHeight())
+                    imageStart = (int) ((sliceHeight - canvas.getHeight()) / 2.0 / sliceHeight * slice.image.getHeight());
 
-                //Move on to the next row to draw.
-                imageY++;
+                //The column of the image that will be drawn.
+                int imageX = (int) (slice.intersectRatio * slice.image.getWidth());
+                //The row of the image that is going to be drawn.
+                int imageY = 0;
+
+                //Loop through the image and draw all of the rows.
+                for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
+                    //Get the color of the pixel at the current point in the image.
+                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
+
+                    //If the image is not transparent and not written to yet, draw the pixel.
+                    if ((pixelColor >> 24) != 0x00 && pixelTable[canvasX][canvasY]) {
+                        canvas.setRGB(canvasX, canvasY, pixelColor);
+                        pixelTable[canvasX][canvasY] = false;
+                    }
+
+                    //Move on to the next row to draw.
+                    imageY++;
+                }
             }
         }
     }
@@ -162,8 +183,8 @@ public class Camera {
         double currentRay = -FOV /2;
         //Distance from the camera to the center of the entity.
         double dist;
-        //The onscreen width and height of the entity accounting for distance.
-        Dimension entitySize;
+        //The angle between the camera and the entity.
+        double entityAngle;
         //A line representing the entity's location and the width of its image.
         Line2D.Double rotatedLine = new Line2D.Double();
         //A list of entities that the ray intersects.
@@ -178,13 +199,13 @@ public class Camera {
 
             //Iterate through each entity.
             for (Entity entity : gameData.entityList) {
-                //The in-game dimensions of the entity.
-                double entityWidth = entity.getWidth();
+                //The angle between the camera and the entity.
+                entityAngle = Math.toDegrees(Math.atan2(entity.position.x - position.x, entity.position.y - position.y));
 
                 //Create a line at the entity's position with the same width. It is horizontal.
-                rotatedLine.setLine(entity.position.x - entityWidth/2, entity.position.y, entity.position.x + entityWidth/2, entity.position.y);
+                rotatedLine.setLine(entity.position.x - entity.getWidth()/2, entity.position.y, entity.position.x + entity.getWidth()/2, entity.position.y);
                 //Rotate the line around itself so that it is facing the camera.
-                FastMath.rotate(rotatedLine, entity.position, Math.toDegrees(Math.atan2(entity.position.x - position.x, entity.position.y - position.y)));
+                FastMath.rotate(rotatedLine, entity.position, entityAngle);
                 //Rotate the line around the camera so that the ray is along the y axis.
                 FastMath.rotate(rotatedLine, position, -angle - currentRay);
                 FastMath.translate(rotatedLine, -position.x, -position.y);
@@ -195,7 +216,7 @@ public class Camera {
                 //If the entity intersects with the ray and it is in front of the walls, draw it.
                 if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
                     //Recalculate the distance to the center of the entity, not where it intersects.
-                    dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y);
+                    dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
                     //Create the object slice.
                     currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
 

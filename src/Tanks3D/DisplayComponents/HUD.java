@@ -1,10 +1,9 @@
 package Tanks3D.DisplayComponents;
 
-import javax.imageio.ImageIO;
+import Tanks3D.Utilities.Image;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 //A Heads Up Display that shows the player's tank, health, and lives.
 public class HUD {
@@ -37,21 +36,17 @@ public class HUD {
         this.iconSide = iconSide;
         this.healthBarDim = new Dimension(canvas.getWidth()/2, canvas.getWidth()/15);
 
-        try {
-            //Load the images.
-            body = ImageIO.read(new File("resources/HUD/Tank Body.png"));
-            gun = ImageIO.read(new File("resources/HUD/Tank Gun.png"));
-            healthIcon = ImageIO.read(new File("resources/HUD/Health Icon.png"));
-            lifeIcon = ImageIO.read(new File("resources/HUD/Life Icon.png"));
+        //Load the images.
+        body = Image.load("resources/HUD/Tank Body.png");
+        gun = Image.load("resources/HUD/Tank Gun.png");
+        healthIcon = Image.load("resources/HUD/Health Icon.png");
+        lifeIcon = Image.load("resources/HUD/Life Icon.png");
 
-            //Color the images.
-            Tanks3D.Utilities.Image.setHue(body, hudColor);
-            Tanks3D.Utilities.Image.setHue(gun, hudColor);
-            Tanks3D.Utilities.Image.setHue(healthIcon, hudColor);
-            Tanks3D.Utilities.Image.setHue(lifeIcon, hudColor);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        //Color the images.
+        Tanks3D.Utilities.Image.setHue(body, hudColor);
+        Tanks3D.Utilities.Image.setHue(gun, hudColor);
+        Tanks3D.Utilities.Image.setHue(healthIcon, hudColor);
+        Tanks3D.Utilities.Image.setHue(lifeIcon, hudColor);
 
         //The ratio between how large the image is and its size onscreen.
         double scale = (double)canvas.getWidth()/body.getWidth();
