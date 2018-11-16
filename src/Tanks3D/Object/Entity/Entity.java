@@ -18,6 +18,8 @@ public abstract class Entity extends GameObject {
     private final int hitCircleRadius;
     //An array containing the sprites for the entity at different angles.
     private BufferedImage sprites[];
+    //The color each sprite will be tinted.
+    private Color spriteColor;
     //The in-game size of the entity. The sprites are stretched to fit this.
     private Dimension entitySize;
     //The entity's data in 3d space.
@@ -135,8 +137,9 @@ public abstract class Entity extends GameObject {
     }
 
     //Set the sprites and size of the entity. The sprites start with a front shot and rotate clockwise.
-    protected void setSprites(BufferedImage images[], int width, int height) {
+    protected void setSprites(BufferedImage images[], Color spriteColor, int width, int height) {
         this.sprites = images;
+        this.spriteColor = spriteColor;
         this.entitySize = new Dimension(width, height);
     }
 
@@ -146,5 +149,9 @@ public abstract class Entity extends GameObject {
         viewerAngle = FastMath.formatAngle(this.angle - viewerAngle - 540.0/ sprites.length);
         //Map the angle to one of the sprites and return it.
         return sprites[(int)(viewerAngle * sprites.length/360)];
+    }
+
+    public Color getSpriteColor() {
+        return spriteColor;
     }
 }

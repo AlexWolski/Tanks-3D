@@ -1,7 +1,6 @@
 package Tanks3D.Object.Wall;
 
 import Tanks3D.Object.GameObject;
-import Tanks3D.Utilities.Image;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -10,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class Wall extends GameObject {
     private BufferedImage texture;
+    private Color textureColor;
     private Line2D.Double line;
     private double length;
     private double angle;
@@ -17,7 +17,11 @@ public abstract class Wall extends GameObject {
     private final static double height = 20;
 
     //Constructor that takes two points.
-    Wall(Point2D.Double point1, Point2D.Double point2) {
+    Wall(Point2D.Double point1, Point2D.Double point2, BufferedImage texture, Color textureColor) {
+        //Set the texture of the wall.
+        this.texture = texture;
+        this.textureColor = textureColor;
+
         line = new Line2D.Double(point1, point2);
         //The wall can be seen and has collision.
         visible = true;
@@ -29,6 +33,9 @@ public abstract class Wall extends GameObject {
 
     public BufferedImage getTexture() {
         return texture;
+    }
+    public Color getTextureColor() {
+        return textureColor;
     }
     public Line2D.Double getLine() {
         return new Line2D.Double(line.getP1(), line.getP2());
@@ -50,8 +57,5 @@ public abstract class Wall extends GameObject {
     }
     public boolean getVisible() { return visible; }
 
-    public void setTexture(BufferedImage texture) {
-        this.texture = texture;
-    }
     void invisible() { visible = false; }
 }

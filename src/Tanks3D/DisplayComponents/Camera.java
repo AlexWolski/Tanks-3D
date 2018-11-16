@@ -4,6 +4,7 @@ import Tanks3D.GameData;
 import Tanks3D.Object.Entity.Entity;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Utilities.FastMath;
+import Tanks3D.Utilities.Image;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -88,7 +89,7 @@ public class Camera {
                         }
 
                         //Calculate the intersection ratio for the texture and
-                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), (Math.abs(line.x1) % inGameImgWidth)/inGameImgWidth);
+                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), wall.getTextureColor(), (Math.abs(line.x1) % inGameImgWidth)/inGameImgWidth);
                     }
                 }
             }
@@ -119,10 +120,11 @@ public class Camera {
 
             //If the image wasn't loaded properly, just draw a purple slice.
             if(slice.image == null) {
-                for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
-                    canvas.setRGB(canvasX, canvasY, Color.MAGENTA.getRGB());
-                    pixelTable[canvasX][canvasY] = false;
-                }
+                for (int canvasY = wallStart; canvasY < wallEnd; canvasY++)
+                    if(pixelTable[canvasX][canvasY]) {
+                        canvas.setRGB(canvasX, canvasY, Color.MAGENTA.getRGB());
+                        pixelTable[canvasX][canvasY] = false;
+                    }
             }
             //Otherwise, draw the image.
             else {
@@ -138,11 +140,11 @@ public class Camera {
                 //Loop through the image and draw all of the rows.
                 for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
                     //Get the color of the pixel at the current point in the image.
-                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
+                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));;
 
                     //If the image is not transparent and not written to yet, draw the pixel.
                     if ((pixelColor >> 24) != 0x00 && pixelTable[canvasX][canvasY]) {
-                        canvas.setRGB(canvasX, canvasY, pixelColor);
+                        canvas.setRGB(canvasX, canvasY, Image.tintPixel(new Color(pixelColor), slice.imageColor));
                         pixelTable[canvasX][canvasY] = false;
                     }
 
@@ -218,12 +220,12 @@ public class Camera {
                     //Recalculate the distance to the center of the entity, not where it intersects.
                     dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
                     //Create the object slice.
-                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
+                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), entity.getSpriteColor(), -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
 
                     //If the array list is empty, add the object slice.
                     if(visibleEntities.isEmpty())
                         visibleEntities.add(currentSlice);
-                    //Otherwise, insert the object slice in order by distance.
+                        //Otherwise, insert the object slice in order by distance.
                     else
                         for(int j = 0; j < visibleEntities.size(); j++)
                             if(dist < visibleEntities.get(j).distToCamera)

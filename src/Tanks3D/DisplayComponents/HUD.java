@@ -43,10 +43,10 @@ public class HUD {
         lifeIcon = Image.load("resources/HUD/Life Icon.png");
 
         //Color the images.
-        Tanks3D.Utilities.Image.setHue(body, hudColor);
-        Tanks3D.Utilities.Image.setHue(gun, hudColor);
-        Tanks3D.Utilities.Image.setHue(healthIcon, hudColor);
-        Tanks3D.Utilities.Image.setHue(lifeIcon, hudColor);
+        Tanks3D.Utilities.Image.tintImage(body, hudColor);
+        Tanks3D.Utilities.Image.tintImage(gun, hudColor);
+        Tanks3D.Utilities.Image.tintImage(healthIcon, hudColor);
+        Tanks3D.Utilities.Image.tintImage(lifeIcon, hudColor);
 
         //The ratio between how large the image is and its size onscreen.
         double scale = (double)canvas.getWidth()/body.getWidth();

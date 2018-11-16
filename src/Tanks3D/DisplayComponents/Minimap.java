@@ -28,8 +28,8 @@ public class Minimap implements Runnable {
         player2Icon = Tanks3D.Utilities.Image.copy(player1Icon);
 
         //Color both images based on the tank's color.
-        Tanks3D.Utilities.Image.setHue(player1Icon, gameData.player1.getColor());
-        Tanks3D.Utilities.Image.setHue(player2Icon, gameData.player2.getColor());
+        Tanks3D.Utilities.Image.tintImage(player1Icon, gameData.player1.getColor());
+        Tanks3D.Utilities.Image.tintImage(player2Icon, gameData.player2.getColor());
 
         //Determine how the game world should be mapped to the minimap based on their sizes.
         if(gameData.gameLevel.getMapWidth() > gameData.gameLevel.getMapHeight()) {

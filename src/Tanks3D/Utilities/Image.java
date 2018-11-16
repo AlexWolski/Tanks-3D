@@ -41,26 +41,21 @@ public final class Image {
         graphic.drawImage(image, 0, 0, null);
     }
 
-    //Change the hue of the given image.
-    public static void setHue(BufferedImage image, Color hue) {
+    public static int tintPixel(Color pixelColor, Color tintColor) {
+        //Calculate the luminance. These values are pre-determined.
+        double lum = (pixelColor.getRed() * 0.2126 + pixelColor.getGreen() * 0.7152 + pixelColor.getBlue() * 0.0722) / 255;
+
+        //Calculate the new tinted color of the pixel and return it.
+        return new Color((int) (tintColor.getRed() * lum), (int) (tintColor.getGreen() * lum), (int) (tintColor.getBlue() * lum), pixelColor.getAlpha()).getRGB();
+    }
+
+    public static void tintImage(BufferedImage image, Color tintColor) {
         //Color the image if it was loaded correctly.
-        if (image != null) {
-            //The luminance of the pixel.
-            double lum;
-            //Store the color of the pixel
-            Color pixelColor;
-
-            //Loop through the image and change the hue of each color.
+        if (image != null)
+            //Loop through the image and change the tint of each color.
             for (int i = 0; i < image.getWidth(); i++)
-                for (int j = 0; j < image.getHeight(); j++) {
-                    //Get the color of the current pixel.
-                    pixelColor = new Color(image.getRGB(i, j), true);
-                    //Calculate the luminance. These values are pre-determined.
-                    lum = (pixelColor.getRed() * 0.2126 + pixelColor.getGreen() * 0.7152 + pixelColor.getBlue() * 0.0722) / 255;
-
-                    //Calculate the new color and store it in the image.
-                    image.setRGB(i, j, new Color((int) (hue.getRed() * lum), (int) (hue.getGreen() * lum), (int) (hue.getBlue() * lum), pixelColor.getAlpha()).getRGB());
-                }
-        }
+                for (int j = 0; j < image.getHeight(); j++)
+                    //Get the color of the pixel, tint it, and write the new color to the pixel.
+                    image.setRGB(i, j, tintPixel(new Color(image.getRGB(i, j), true), tintColor));
     }
 }

@@ -5,12 +5,9 @@ import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.Utilities.Image;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ListIterator;
 
 public class Tank extends Entity {
@@ -25,11 +22,11 @@ public class Tank extends Entity {
     private int health = maxHealth;
     private int lives = 3;
 
-    public Tank(Point2D.Double position, double angle, Color color) {
+    public Tank(Point2D.Double position, double angle, Color spriteColor) {
         super(position, hitCircleRadius, angle, 0);
 
         this.rotationSpeed = 0;
-        this.color = color;
+        this.color = spriteColor;
 
         BufferedImage sprites[] = new BufferedImage[4];
 
@@ -39,14 +36,8 @@ public class Tank extends Entity {
         sprites[2] = Image.load("resources/Tank/Back.png");
         sprites[3] = Image.load("resources/Tank/Right.png");
 
-        //Color the sprites.
-        Tanks3D.Utilities.Image.setHue(sprites[0], color);
-        Tanks3D.Utilities.Image.setHue(sprites[1], color);
-        Tanks3D.Utilities.Image.setHue(sprites[2], color);
-        Tanks3D.Utilities.Image.setHue(sprites[3], color);
-
         //Pass the sprites to the parent class.
-        super.setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+        super.setSprites(sprites, spriteColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
     }
 
     public void update(GameData data, double deltaTime) {
