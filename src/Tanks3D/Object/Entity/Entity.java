@@ -127,8 +127,11 @@ public abstract class Entity extends GameObject {
     private int getHitCircleRadius() {
         return hitCircleRadius;
     }
-    public Dimension getSize() {
-        return entitySize;
+    public double getHeight() {
+        return entitySize.height;
+    }
+    public double getWidth() {
+        return entitySize.width;
     }
 
     //Set the sprites and size of the entity. The sprites start with a front shot and rotate clockwise.

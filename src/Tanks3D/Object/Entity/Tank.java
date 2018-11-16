@@ -62,7 +62,7 @@ public class Tank extends Entity {
 
     public void collide(Object object, ListIterator iterator) {
         //If the tank collides with a breakable wall, destroy the wall.
-        if(iterator instanceof BreakableWall) {
+        if(object instanceof BreakableWall) {
             ((BreakableWall) object).breakWall();
             iterator.remove();
         }

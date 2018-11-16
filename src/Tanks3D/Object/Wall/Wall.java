@@ -49,10 +49,10 @@ public abstract class Wall extends GameObject {
     public Point2D.Double getPoint2() {
         return new Point2D.Double(line.getX2(), line.getY2());
     }
-    public double getLength() {
+    public double getWidth() {
         return length;
     }
-    public static double getHeight() {
+    public double getHeight() {
         return height;
     }
     public double getAngle() {

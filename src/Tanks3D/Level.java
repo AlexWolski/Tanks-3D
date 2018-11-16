@@ -37,7 +37,7 @@ public final class Level {
         wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30), "resources/Textures/Brick.png", Color.white));
         wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), "resources/Textures/Brick.png", Color.white));
         wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), "resources/Textures/Brick.png", Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), "resources/Textures/Brick.png", Color.white));
+        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), "resources/Textures/CrackedBrick.png", Color.white));
 
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), "resources/Textures/Brick.png", Color.white));
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), "resources/Textures/Brick.png", Color.white));

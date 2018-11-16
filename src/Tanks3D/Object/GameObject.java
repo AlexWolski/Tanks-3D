@@ -1,4 +1,6 @@
 package Tanks3D.Object;
 
-public class GameObject {
+public abstract class GameObject {
+    public abstract double getWidth();
+    public abstract double getHeight();
 }
