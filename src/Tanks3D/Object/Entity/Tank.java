@@ -1,6 +1,8 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
+import Tanks3D.Object.Entity.Round.ArmorPiercing;
+import Tanks3D.Object.Entity.Round.Round;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.Utilities.Image;
@@ -8,9 +10,14 @@ import Tanks3D.Utilities.Image;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class Tank extends Entity {
+    //How many units the tank can move per second.
+    public final double maxSpeed = 20;
+    //How many degrees the tank can rotate per second.
+    public final double maxRotationSpeed = 200;
     public double rotationSpeed;
     private final Color color;
     //The size of the hit circle around the tank.
@@ -92,6 +99,27 @@ public class Tank extends Entity {
         }
     }
 
+    public void fire(ArrayList<Entity> entityList) {
+        //Calculate the distance to spawn the round so it doesn't hit the tank.
+        double distance = (hitCircleRadius/2.0 + Round.getHitCircleRadius()/2.0) + 3;
+        //Calculate the x and y position to spawn the round based on the tank's position and angle.
+        double xPos = position.x + distance * FastMath.sin(angle);
+        double yPos = position.y + distance * FastMath.cos(angle);
+        //Create the round and add it ot the entity list.
+        entityList.add(new ArmorPiercing(new Point2D.Double(xPos, yPos), angle));
+    }
+
+    //Deal damage to the tank.
+    public void damage(int damage) {
+        health -= damage;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+    public double getMaxRotationSpeed() {
+        return maxRotationSpeed;
+    }
     public Color getColor() {
         return color;
     }

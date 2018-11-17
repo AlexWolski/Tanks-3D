@@ -3,6 +3,8 @@ package Tanks3D.InputManager;
 import Tanks3D.InputManager.PlayerControl.*;
 import Tanks3D.Player;
 import javax.swing.*;
+import java.awt.event.InputEvent;
+
 import static java.awt.event.KeyEvent.*;
 import static javax.swing.JComponent.*;
 
@@ -27,6 +29,7 @@ public final class InputManager {
         inputMap.put(KeyStroke.getKeyStroke(VK_A, 0, true), "a released");
         inputMap.put(KeyStroke.getKeyStroke(VK_D, 0, false), "d pressed");
         inputMap.put(KeyStroke.getKeyStroke(VK_D, 0, true), "d released");
+        inputMap.put(KeyStroke.getKeyStroke(VK_SPACE, 0, false), "space pressed");
 
         //Key bindings for the second player.
         inputMap.put(KeyStroke.getKeyStroke(VK_UP, 0, false), "up pressed");
@@ -37,6 +40,7 @@ public final class InputManager {
         inputMap.put(KeyStroke.getKeyStroke(VK_LEFT, 0, true), "left released");
         inputMap.put(KeyStroke.getKeyStroke(VK_RIGHT, 0, false), "right pressed");
         inputMap.put(KeyStroke.getKeyStroke(VK_RIGHT, 0, true), "right released");
+        inputMap.put(KeyStroke.getKeyStroke(VK_ENTER, 0, false), "enter pressed");
 
         //Map the classes for player 1's controls.
         actionMap.put("w pressed", new Forward(player1, true));
@@ -47,6 +51,7 @@ public final class InputManager {
         actionMap.put("a released", new Left(player1, false));
         actionMap.put("d pressed", new Right(player1, true));
         actionMap.put("d released", new Right(player1, false));
+        actionMap.put("space pressed", new Fire(player1));
 
         //Map the classes for player 2's controls.
         actionMap.put("up pressed", new Forward(player2, true));
@@ -57,5 +62,6 @@ public final class InputManager {
         actionMap.put("left released", new Left(player2, false));
         actionMap.put("right pressed", new Right(player2, true));
         actionMap.put("right released", new Right(player2, false));
+        actionMap.put("enter pressed", new Fire(player2));
     }
 }

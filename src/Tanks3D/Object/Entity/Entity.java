@@ -50,22 +50,17 @@ public abstract class Entity extends GameObject {
         checkCollisionEntity(gamedata.entityList);
     }
 
-    //Draw the entity.
-    protected void draw(BufferedImage canvas) {
-
-    }
-
     //Check if this entity collides with any walls. If it does, pass the wall to the 'collide' method.
     private void checkCollisionWall(ArrayList<Wall> wallList) {
         //The line of the wall rotated so that the ray is along the y axis.
         Line2D.Double rotatedLine;
         //Iterator for checking all of the walls.
-        ListIterator<Wall> iterator = wallList.listIterator();
+
         //A temporary wall object to reference the wall being checked.
         Wall wall;
 
         //Iterate through the array of walls and check if the entity collides with it.
-        while(iterator.hasNext()) {
+        for(ListIterator<Wall> iterator = wallList.listIterator(); iterator.hasNext();) {
             //Store the wall being checked.
             wall = iterator.next();
 
@@ -137,7 +132,7 @@ public abstract class Entity extends GameObject {
     }
 
     //Set the sprites and size of the entity. The sprites start with a front shot and rotate clockwise.
-    protected void setSprites(BufferedImage images[], Color spriteColor, int width, int height) {
+    public void setSprites(BufferedImage images[], Color spriteColor, int width, int height) {
         this.sprites = images;
         this.spriteColor = spriteColor;
         this.entitySize = new Dimension(width, height);

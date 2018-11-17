@@ -109,8 +109,8 @@ public class Camera {
             //The height of the image that actually gets drawn.
             int sliceHeight = (int) (slice.object.getHeight() / slice.distToCamera * distProjectionPlane);
             //Calculate the y positions where the wall starts and stops on the screen.
-            int wallStart = canvas.getHeight() / 2 - sliceHeight / 2;
-            int wallEnd = canvas.getHeight() / 2 + sliceHeight / 2;
+            int wallStart = (int) (canvas.getHeight()/2.0 - sliceHeight/2.0);
+            int wallEnd = (int) (canvas.getHeight()/2.0 + sliceHeight/2.0);
 
             if (wallStart < 0)
                 wallStart = 0;
@@ -140,7 +140,7 @@ public class Camera {
                 //Loop through the image and draw all of the rows.
                 for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
                     //Get the color of the pixel at the current point in the image.
-                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));;
+                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
 
                     //If the image is not transparent and not written to yet, draw the pixel.
                     if ((pixelColor >> 24) != 0x00 && pixelTable[canvasX][canvasY]) {
@@ -228,8 +228,10 @@ public class Camera {
                         //Otherwise, insert the object slice in order by distance.
                     else
                         for(int j = 0; j < visibleEntities.size(); j++)
-                            if(dist < visibleEntities.get(j).distToCamera)
+                            if(dist < visibleEntities.get(j).distToCamera) {
                                 visibleEntities.add(j, currentSlice);
+                                break;
+                            }
                 }
             }
 

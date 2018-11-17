@@ -28,8 +28,8 @@ public final class Level {
     private void parseDataFile(String levelFile) {
         //remove
         wallObjects = new ArrayList<>();
-        player1Spawn = new SpawnPoint(new Point2D.Double(-10, -20), 0, 1);
-        player2Spawn = new SpawnPoint(new Point2D.Double(10, -20), 0, 2);
+        player1Spawn = new SpawnPoint(new Point2D.Double(-10, -20), 0);
+        player2Spawn = new SpawnPoint(new Point2D.Double(10, -20), 0);
 
         floorColor = new Color(0x803700).getRGB();
         ceilColor = new Color(0).getRGB();

@@ -4,6 +4,7 @@ import Tanks3D.DisplayComponents.Minimap;
 import Tanks3D.DisplayComponents.SplitWindow;
 import Tanks3D.InputManager.InputManager;
 import Tanks3D.Object.Entity.Entity;
+import Tanks3D.Object.Entity.Round.Round;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class GameManager {
 
         //Link the controls for each player.
         InputManager.init(gameWindow.getPanel(), gameData.player1, gameData.player2);
+        //Initialize the round object.
+        Round.init(gameData.entityList);
 
         //Set the initial time.
         timeOfLastFrame = System.currentTimeMillis();
