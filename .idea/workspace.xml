@@ -8,17 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ee0992c8-61b3-4767-b2a8-a386d8d1bb00" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/csc413_tankgame_AlexWolski_jar/csc413-tankgame-AlexWolski.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/csc413_tankgame_AlexWolski_jar/csc413-tankgame-AlexWolski.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/DisplayComponents/Camera.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/DisplayComponents/Camera.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/GameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/GameManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Entity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Player.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,14 +48,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="279" />
-          <entry key="java" value="84995" />
-          <entry key="txt" value="1001" />
+          <entry key="java" value="85534" />
+          <entry key="txt" value="1017" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="84995" />
-          <entry key="PLAIN_TEXT" value="1280" />
+          <entry key="JAVA" value="85534" />
+          <entry key="PLAIN_TEXT" value="1296" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -102,42 +92,42 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="60" column="60" lean-forward="true" selection-start-line="60" selection-start-column="60" selection-end-line="60" selection-end-column="60" />
+            <state relative-caret-position="127">
+              <caret line="136" column="4" selection-start-line="136" selection-start-column="4" selection-end-line="136" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5317#5318#0" expanded="true" />
-                <element signature="e#5349#5350#0" expanded="true" />
-                <element signature="e#6029#6030#0" expanded="true" />
-                <element signature="e#6060#6061#0" expanded="true" />
-                <element signature="e#6102#6103#0" expanded="true" />
-                <element signature="e#6141#6142#0" expanded="true" />
-                <element signature="e#6171#6172#0" expanded="true" />
-                <element signature="e#6199#6200#0" expanded="true" />
-                <element signature="e#6241#6242#0" expanded="true" />
-                <element signature="e#6272#6273#0" expanded="true" />
-                <element signature="e#6961#6962#0" expanded="true" />
-                <element signature="e#6995#6996#0" expanded="true" />
-                <element signature="e#6357#6358#0" expanded="true" />
-                <element signature="e#6389#6390#0" expanded="true" />
-                <element signature="e#6418#6419#0" expanded="true" />
-                <element signature="e#6447#6448#0" expanded="true" />
-                <element signature="e#6475#6476#0" expanded="true" />
-                <element signature="e#6503#6504#0" expanded="true" />
-                <element signature="e#6534#6535#0" expanded="true" />
-                <element signature="e#6562#6563#0" expanded="true" />
+                <element signature="e#6563#6564#0" expanded="true" />
+                <element signature="e#6595#6596#0" expanded="true" />
+                <element signature="e#7307#7308#0" expanded="true" />
+                <element signature="e#7338#7339#0" expanded="true" />
+                <element signature="e#7380#7381#0" expanded="true" />
+                <element signature="e#7419#7420#0" expanded="true" />
+                <element signature="e#7449#7450#0" expanded="true" />
+                <element signature="e#7483#7484#0" expanded="true" />
+                <element signature="e#7525#7526#0" expanded="true" />
+                <element signature="e#7556#7557#0" expanded="true" />
+                <element signature="e#7587#7588#0" expanded="true" />
+                <element signature="e#7621#7622#0" expanded="true" />
+                <element signature="e#7653#7654#0" expanded="true" />
+                <element signature="e#7685#7686#0" expanded="true" />
+                <element signature="e#7714#7715#0" expanded="true" />
+                <element signature="e#7743#7744#0" expanded="true" />
+                <element signature="e#7771#7772#0" expanded="true" />
+                <element signature="e#7799#7800#0" expanded="true" />
+                <element signature="e#7830#7831#0" expanded="true" />
+                <element signature="e#7858#7859#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/HUD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="527">
               <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -306,8 +296,8 @@
         <option value="$PROJECT_DIR$/src/Tanks3D/Player.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" />
-        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/HUD.java" />
+        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" />
       </list>
     </option>
   </component>
@@ -417,7 +407,7 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Alex Wolski/Desktop/School/Fall/CSC 413/Assignment 3 (Tank Game)/csc413-tankgame-AlexWolski/src/Tanks3D/Player.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542435763100" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542436334572" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CSC413 (Wa)/CSC413 (Wa)/csc413-02-tankgame-team13-ndyoussfi" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -524,7 +514,7 @@
       <workItem from="1542224227809" duration="70000" />
       <workItem from="1542224449892" duration="7578000" />
       <workItem from="1542255935421" duration="27638000" />
-      <workItem from="1542322437687" duration="88378000" />
+      <workItem from="1542322437687" duration="88881000" />
     </task>
     <task id="LOCAL-00001" summary="Intellij Project Created">
       <created>1540168169553</created>
@@ -708,7 +698,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542429996494</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added respawning">
+      <created>1542435844417</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1542435844417</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -744,7 +741,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="493553000" />
+    <option name="totallyTimeSpent" value="494056000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
@@ -790,7 +787,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Threaded Screen Draw and fixed display bug (Huge FPS Improvement)" />
     <MESSAGE value="Commented" />
     <MESSAGE value="Wall Prototype" />
     <MESSAGE value="Wall perspective fixed" />
@@ -815,7 +811,8 @@
     <MESSAGE value="Fish-eye effect fixed on tank" />
     <MESSAGE value="Removed duplicate textures" />
     <MESSAGE value="Bullets Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bullets Added" />
+    <MESSAGE value="Added respawning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added respawning" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="setValue">
@@ -1230,42 +1227,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java">
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="60" column="60" lean-forward="true" selection-start-line="60" selection-start-column="60" selection-end-line="60" selection-end-column="60" />
+        <state relative-caret-position="527">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5317#5318#0" expanded="true" />
-            <element signature="e#5349#5350#0" expanded="true" />
-            <element signature="e#6029#6030#0" expanded="true" />
-            <element signature="e#6060#6061#0" expanded="true" />
-            <element signature="e#6102#6103#0" expanded="true" />
-            <element signature="e#6141#6142#0" expanded="true" />
-            <element signature="e#6171#6172#0" expanded="true" />
-            <element signature="e#6199#6200#0" expanded="true" />
-            <element signature="e#6241#6242#0" expanded="true" />
-            <element signature="e#6272#6273#0" expanded="true" />
-            <element signature="e#6961#6962#0" expanded="true" />
-            <element signature="e#6995#6996#0" expanded="true" />
-            <element signature="e#6357#6358#0" expanded="true" />
-            <element signature="e#6389#6390#0" expanded="true" />
-            <element signature="e#6418#6419#0" expanded="true" />
-            <element signature="e#6447#6448#0" expanded="true" />
-            <element signature="e#6475#6476#0" expanded="true" />
-            <element signature="e#6503#6504#0" expanded="true" />
-            <element signature="e#6534#6535#0" expanded="true" />
-            <element signature="e#6562#6563#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/HUD.java">
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="127">
+          <caret line="136" column="4" selection-start-line="136" selection-start-column="4" selection-end-line="136" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6563#6564#0" expanded="true" />
+            <element signature="e#6595#6596#0" expanded="true" />
+            <element signature="e#7307#7308#0" expanded="true" />
+            <element signature="e#7338#7339#0" expanded="true" />
+            <element signature="e#7380#7381#0" expanded="true" />
+            <element signature="e#7419#7420#0" expanded="true" />
+            <element signature="e#7449#7450#0" expanded="true" />
+            <element signature="e#7483#7484#0" expanded="true" />
+            <element signature="e#7525#7526#0" expanded="true" />
+            <element signature="e#7556#7557#0" expanded="true" />
+            <element signature="e#7587#7588#0" expanded="true" />
+            <element signature="e#7621#7622#0" expanded="true" />
+            <element signature="e#7653#7654#0" expanded="true" />
+            <element signature="e#7685#7686#0" expanded="true" />
+            <element signature="e#7714#7715#0" expanded="true" />
+            <element signature="e#7743#7744#0" expanded="true" />
+            <element signature="e#7771#7772#0" expanded="true" />
+            <element signature="e#7799#7800#0" expanded="true" />
+            <element signature="e#7830#7831#0" expanded="true" />
+            <element signature="e#7858#7859#0" expanded="true" />
           </folding>
         </state>
       </provider>
