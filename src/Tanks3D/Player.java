@@ -42,6 +42,19 @@ public class Player implements Runnable {
 
     //Draw the player's screen.
     public void draw() {
+        //If the tank is alive, check if it has any lives left.
+        if(!myTank.isAlive()) {
+            //If it has lives left, respawn the tank and reset the controls.
+            if(myTank.getLives() > 0) {
+                myTank.respawn();
+                forwardPressed = backPressed = leftPressed = rightPressed = false;
+                invertControls = 1;
+            }
+            //Otherwise, end the game.
+            //else
+
+        }
+
         //Draw the walls and entities.
         camera.draw(myTank.getPosition(), myTank.getAngle());
 
@@ -66,62 +79,72 @@ public class Player implements Runnable {
 
     //If the forward key has been pressed or released, update the tank's speed.
     public void forward(boolean keyPressed) {
-        if(keyPressed && !forwardPressed) {
-            myTank.speed += myTank.getMaxSpeed();
-            forwardPressed = true;
-        }
-        else if (!keyPressed && forwardPressed){
-            myTank.speed -= myTank.getMaxSpeed();
-            forwardPressed = false;
+        //Only move the player if they are alive.
+        if(myTank.isAlive()) {
+            if (keyPressed && !forwardPressed) {
+                myTank.speed += myTank.getMaxSpeed();
+                forwardPressed = true;
+            } else if (!keyPressed && forwardPressed) {
+                myTank.speed -= myTank.getMaxSpeed();
+                forwardPressed = false;
+            }
         }
     }
 
     //If the back key has been pressed or released, update the tank's speed.
     public void back(boolean keyPressed) {
-        if(keyPressed && !backPressed) {
-            myTank.speed -= myTank.getMaxSpeed();
-            backPressed = true;
+        //Only move the player if they are alive.
+        if(myTank.isAlive()) {
+            if (keyPressed && !backPressed) {
+                myTank.speed -= myTank.getMaxSpeed();
+                backPressed = true;
 
-            //Invert the left and right controls.
-            myTank.rotationSpeed *= -1;
-            invertControls *= -1;
-        }
-        else if (!keyPressed && backPressed){
-            myTank.speed += myTank.getMaxSpeed();
-            backPressed = false;
+                //Invert the left and right controls.
+                myTank.rotationSpeed *= -1;
+                invertControls *= -1;
+            } else if (!keyPressed && backPressed) {
+                myTank.speed += myTank.getMaxSpeed();
+                backPressed = false;
 
-            //Revert the left and right controls.
-            myTank.rotationSpeed *= -1;
-            invertControls *= -1;
+                //Revert the left and right controls.
+                myTank.rotationSpeed *= -1;
+                invertControls *= -1;
+            }
         }
     }
 
     //If the left key has been pressed or released, update the tank's rotation.
     public void left(boolean keyPressed) {
-        if(keyPressed && !leftPressed) {
-            myTank.rotationSpeed -= myTank.getMaxRotationSpeed() * invertControls;
-            leftPressed = true;
-        }
-        else if (!keyPressed && leftPressed){
-            myTank.rotationSpeed += myTank.getMaxRotationSpeed() * invertControls;
-            leftPressed = false;
+        //Only move the player if they are alive.
+        if(myTank.isAlive()) {
+            if (keyPressed && !leftPressed) {
+                myTank.rotationSpeed -= myTank.getMaxRotationSpeed() * invertControls;
+                leftPressed = true;
+            } else if (!keyPressed && leftPressed) {
+                myTank.rotationSpeed += myTank.getMaxRotationSpeed() * invertControls;
+                leftPressed = false;
+            }
         }
     }
 
     //If the right key has been pressed or released, update the tank's rotation.
     public void right(boolean keyPressed) {
-        if(keyPressed && !rightPressed) {
-            myTank.rotationSpeed += myTank.getMaxRotationSpeed() * invertControls;
-            rightPressed = true;
-        }
-        else if (!keyPressed && rightPressed){
-            myTank.rotationSpeed -= myTank.getMaxRotationSpeed() * invertControls;
-            rightPressed = false;
+        //Only move the player if they are alive.
+        if(myTank.isAlive()) {
+            if (keyPressed && !rightPressed) {
+                myTank.rotationSpeed += myTank.getMaxRotationSpeed() * invertControls;
+                rightPressed = true;
+            } else if (!keyPressed && rightPressed) {
+                myTank.rotationSpeed -= myTank.getMaxRotationSpeed() * invertControls;
+                rightPressed = false;
+            }
         }
     }
 
     //If the fire key was pressed, tell the tank to fire.
     public void fire() {
-        myTank.fire(entityList);
+        //Only fire if the player is alive.
+        if(myTank.isAlive())
+            myTank.fire(entityList);
     }
 }

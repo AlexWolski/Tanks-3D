@@ -1,6 +1,4 @@
 # csc413-TankGame
 
-## Student Name :
-## Student ID :
-
-
+## Student Name :	Alex Wolski
+## Student ID :		918276364

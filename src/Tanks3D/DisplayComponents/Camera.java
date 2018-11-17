@@ -220,7 +220,7 @@ public class Camera {
                     //Recalculate the distance to the center of the entity, not where it intersects.
                     dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
                     //Create the object slice.
-                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), entity.getSpriteColor(), -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
+                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), entity.spriteColor, -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
 
                     //If the array list is empty, add the object slice.
                     if(visibleEntities.isEmpty())

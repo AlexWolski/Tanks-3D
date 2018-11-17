@@ -19,7 +19,20 @@ public class Tank extends Entity {
     //How many degrees the tank can rotate per second.
     public final double maxRotationSpeed = 200;
     public double rotationSpeed;
-    private final Color color;
+
+    //Determines if the player is dead, alive, or respawning.
+    private boolean alive;
+    private boolean respawning;
+    //The tank's position and angle when it is spawned.
+    private final Point2D.Double spawnPoint;
+    private final double spawnAngle;
+    //The number of milliseconds it takes to respawn.
+    private final int respawnCooldown = 2000;
+    //The time when the tank started to respawn.
+    private long respawnStartTime;
+    //The default color of the tank.
+    private final Color defaultColor;
+
     //The size of the hit circle around the tank.
     private final static int hitCircleRadius = 5;
     //How much to scale the images when drawn to the screen.
@@ -29,11 +42,18 @@ public class Tank extends Entity {
     private int health = maxHealth;
     private int lives = 3;
 
-    public Tank(Point2D.Double position, double angle, Color spriteColor) {
-        super(position, hitCircleRadius, angle, 0);
-
+    public Tank(Point2D.Double spawnPoint, double spawnAngle, Color spriteColor) {
+        super(new Point2D.Double(spawnPoint.x, spawnPoint.y), hitCircleRadius, spawnAngle, 0);
+        this.spawnPoint = spawnPoint;
+        this.spawnAngle = spawnAngle;
         this.rotationSpeed = 0;
-        this.color = spriteColor;
+        this.defaultColor = spriteColor;
+
+        //Set the current color to the default color.
+        spriteColor = new Color(defaultColor.getRGB());
+        //The tank is alive.
+        alive = true;
+        respawning = false;
 
         BufferedImage sprites[] = new BufferedImage[4];
 
@@ -48,10 +68,18 @@ public class Tank extends Entity {
     }
 
     public void update(GameData data, double deltaTime) {
-        //Update the angle and position of the tank.
-        angle += rotationSpeed * deltaTime / 1000;
-        angle = FastMath.formatAngle(angle);
-        super.update(data, deltaTime);
+        //If the tank has no health and isn't dead yet, kill it.
+        if(alive && health <= 0) {
+            spriteColor = Color.GRAY;
+            alive = false;
+            lives--;
+        }
+        else {
+            //Update the angle and position of the tank.
+            angle += rotationSpeed * deltaTime / 1000;
+            angle = FastMath.formatAngle(angle);
+            super.update(data, deltaTime);
+        }
     }
 
     public void collide(Object object, ListIterator iterator) {
@@ -95,7 +123,7 @@ public class Tank extends Entity {
             }
         }
         else if(object instanceof Tank) {
-            health--;
+            //TODO collision detection with tanks
         }
     }
 
@@ -114,6 +142,24 @@ public class Tank extends Entity {
         health -= damage;
     }
 
+    //Respawn the tank.
+    public void respawn() {
+        //If the tank hasn't started re-spawning yet, start the timer.
+        if(!respawning) {
+            respawnStartTime = System.currentTimeMillis();
+            respawning = true;
+        }
+        //If the tank is re-spawning, check if the respawn time is up. If it is, respawn the tank.
+        else if(System.currentTimeMillis() >= respawnStartTime + respawnCooldown) {
+            health = maxHealth;
+            position.setLocation(spawnPoint);
+            angle = spawnAngle;
+            spriteColor = new Color(defaultColor.getRGB());
+            alive = true;
+            respawning = false;
+        }
+    }
+
     public double getMaxSpeed() {
         return maxSpeed;
     }
@@ -121,12 +167,14 @@ public class Tank extends Entity {
         return maxRotationSpeed;
     }
     public Color getColor() {
-        return color;
+        return spriteColor;
     }
     public Point2D.Double getPosition() {
-        return super.position;
+        return position;
     }
-    public double getAngle() { return super.angle; }
+    public double getAngle() {
+        return super.angle;
+    }
     public int getMaxHealth() {
         return maxHealth;
     }
@@ -135,5 +183,8 @@ public class Tank extends Entity {
     }
     public int getLives() {
         return lives;
+    }
+    public boolean isAlive() {
+        return alive;
     }
 }
