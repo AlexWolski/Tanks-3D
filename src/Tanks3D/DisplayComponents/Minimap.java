@@ -25,7 +25,7 @@ public class Minimap implements Runnable {
         backgroundColor = Color.darkGray.getRGB();
 
         //The size of the tank icon on the minimap.
-        tankIconSize = (int) (Tank.getHitCircleRadius()/gameData.gameLevel.getMapWidth() *2 * canvas.getWidth());
+        tankIconSize = (int) (Tank.getHitCircleRadius()/gameData.gameLevel.getMapWidth() * 2 * canvas.getWidth());
         //Load the tank icon image from the resources folder.
         player1Icon = Image.load("resources/HUD/Tank Icon.png");
         //Copy for the second player.

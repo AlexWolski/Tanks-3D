@@ -10,7 +10,6 @@ import Tanks3D.Utilities.Image;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class Tank extends Entity {
@@ -84,11 +83,8 @@ public class Tank extends Entity {
 
     public void update(GameData data, double deltaTime) {
         //If the tank has no health and isn't dead yet, kill it.
-        if(alive && health <= 0) {
-            spriteColor = Color.GRAY;
-            alive = false;
-            lives--;
-        }
+        if(alive && health <= 0)
+            die();
         else {
             //Update the angle and position of the tank.
             angle += rotationSpeed * deltaTime / 1000;
@@ -146,7 +142,7 @@ public class Tank extends Entity {
         }
     }
 
-    public void fire(ArrayList<Entity> entityList) {
+    public void fire() {
         //If the tank is not reloading, fire.
         if(!reloading) {
             //Set the last time the tank fired.
@@ -154,12 +150,12 @@ public class Tank extends Entity {
             reloading = true;
 
             //Calculate the distance to spawn the round so it doesn't hit the tank.
-            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0);
+            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0) + 10;
             //Calculate the x and y position to spawn the round based on the tank's position and angle.
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);
             //Create the round and add it to the entity list.
-            entityList.add(new ArmorPiercing(new Point2D.Double(xPos, yPos), gunHeight, angle));
+            Round.newRound(new ArmorPiercing(new Point2D.Double(xPos, yPos), gunHeight, angle));
         }
         //If the tank is reloading, check if the reload time is up. If it is, set reloading to false.
         else if(System.currentTimeMillis() >= shotTime + shotCooldown) {
@@ -179,6 +175,14 @@ public class Tank extends Entity {
         //If the new health is above the maximum, set it to the maximum.
         if(this.health > maxHealth)
             this.health = maxHealth;
+    }
+
+    public void die() {
+        spriteColor = Color.GRAY;
+        alive = false;
+        lives--;
+        speed = 0;
+        rotationSpeed = 0;
     }
 
     //Respawn the tank.

@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 //Manage the player's tank and screen. This extends 'Runnable' so that the draw function can be threaded.
 public class Player implements Runnable {
-    //An array that contains all of the objects.
-    private ArrayList<Entity> entityList;
     private final Tank myTank;
     //A camera for displaying the game world.
     private final Camera camera;
@@ -26,12 +24,10 @@ public class Player implements Runnable {
     private int invertControls = 1;
 
     public Player(GameData gameData, BufferedImage canvas, SpawnPoint spawnPoint, Color tankColor, String iconSide) {
-        this.entityList = gameData.entityList;
-
         //Create a new tank given the spawn-point and add it to the entity list.
         myTank = new Tank(spawnPoint.getPosition(), spawnPoint.getAngle(), tankColor);
         //Add the new tank to the list of all entities.
-        entityList.add(myTank);
+        gameData.entityList.add(myTank);
 
         //Create a new camera given the spawn-point position and angle.
         camera = new Camera(gameData, canvas);
@@ -145,6 +141,6 @@ public class Player implements Runnable {
     public void fire() {
         //Only fire if the player is alive.
         if(myTank.isAlive())
-            myTank.fire(entityList);
+            myTank.fire();
     }
 }

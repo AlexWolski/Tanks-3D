@@ -50,6 +50,12 @@ public abstract class Round extends Entity {
             ((Tank) object).damage(damage);
     }
 
+    //Create a new round and add it to the entity list
+    public static void newRound(Round newRound) {
+        entityList.add(newRound);
+        System.out.println("test");
+    }
+
     public static int getHitCircleRadius() {
         return hitCircleRadius;
     }
