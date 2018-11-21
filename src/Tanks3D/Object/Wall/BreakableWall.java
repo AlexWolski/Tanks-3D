@@ -19,8 +19,8 @@ public class BreakableWall extends Wall {
         super(Point1, Point2, texture, textureColor);
     }
 
-    public void breakWall() {
-        super.invisible();
-    }
     public double getHeight() { return defaultWallHeight(); }
+    public void breakWall() {
+        visible = false;
+    }
 }

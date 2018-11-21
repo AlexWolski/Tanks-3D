@@ -1,8 +1,8 @@
 package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
-import Tanks3D.Object.Entity.Round.ArmorPiercing;
 import Tanks3D.Object.Entity.Round.Round;
+import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.Utilities.Image;
@@ -16,7 +16,7 @@ public class Tank extends Entity {
     //How many units the tank can move per second.
     public final static double maxSpeed = 20;
     //How many degrees the tank can rotate per second.
-    public final static double maxRotationSpeed = 200;
+    public final static double maxRotationSpeed = 180;
     public double rotationSpeed;
 
     //The tank's position and angle when it is spawned.
@@ -57,6 +57,7 @@ public class Tank extends Entity {
         this.spawnAngle = spawnAngle;
         this.rotationSpeed = 0;
         this.defaultColor = spriteColor;
+        this.visible = true;
 
         //Set the current color to the default color.
         spriteColor = new Color(defaultColor.getRGB());
@@ -96,7 +97,7 @@ public class Tank extends Entity {
     public void collide(Object object, ListIterator iterator) {
         //If the tank collides with a breakable wall, destroy the wall.
         if(object instanceof BreakableWall) {
-            ((BreakableWall) object).breakWall();
+            ((BreakableWall)object).breakWall();
             iterator.remove();
         }
         //If the tank hits the corner of the wall, fix its position.
@@ -135,7 +136,7 @@ public class Tank extends Entity {
         }
         //If the tank hits a round, destroy it.
         else if(object instanceof Round) {
-            iterator.remove();
+            Round.removeRound((Round) object);
         }
         else if(object instanceof Tank) {
             //TODO collision detection with tanks
@@ -155,7 +156,7 @@ public class Tank extends Entity {
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);
             //Create the round and add it to the entity list.
-            Round.newRound(new ArmorPiercing(new Point2D.Double(xPos, yPos), gunHeight, angle));
+            Round.newArmorPiercing(xPos, yPos, gunHeight, angle);
         }
         //If the tank is reloading, check if the reload time is up. If it is, set reloading to false.
         else if(System.currentTimeMillis() >= shotTime + shotCooldown) {

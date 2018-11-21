@@ -205,37 +205,46 @@ public class Camera {
 
             //Iterate through each entity.
             for (Entity entity : gameData.entityList) {
-                //The angle between the camera and the entity.
-                entityAngle = Math.toDegrees(Math.atan2(entity.position.x - position.x, entity.position.y - position.y));
+                //Scan the entity if it is visible.
+                if (entity.getVisible()) {
+                    //The angle between the camera and the entity.
+                    entityAngle = Math.toDegrees(Math.atan2(entity.position.x - position.x, entity.position.y - position.y));
 
-                //Create a line at the entity's position with the same width. It is horizontal.
-                rotatedLine.setLine(entity.position.x - entity.getWidth()/2, entity.position.y, entity.position.x + entity.getWidth()/2, entity.position.y);
-                //Rotate the line around itself so that it is facing the camera.
-                FastMath.rotate(rotatedLine, entity.position, entityAngle);
-                //Rotate the line around the camera so that the ray is along the y axis.
-                FastMath.rotate(rotatedLine, position, -angle - currentRay);
-                FastMath.translate(rotatedLine, -position.x, -position.y);
+                    //Create a line at the entity's position with the same width. It is horizontal.
+                    rotatedLine.setLine(entity.position.x - entity.getWidth() / 2, entity.position.y, entity.position.x + entity.getWidth() / 2, entity.position.y);
+                    //Rotate the line around itself so that it is facing the camera.
+                    FastMath.rotate(rotatedLine, entity.position, entityAngle);
+                    //Rotate the line around the camera so that the ray is along the y axis.
+                    FastMath.rotate(rotatedLine, position, -angle - currentRay);
+                    FastMath.translate(rotatedLine, -position.x, -position.y);
 
-                //Get the distance to the entity using the line accounting for the fish eye effect.
-                dist = FastMath.getYIntercept(rotatedLine) * FastMath.cos(currentRay);
+                    //Get the distance to the entity using the line accounting for the fish eye effect.
+                    dist = FastMath.getYIntercept(rotatedLine) * FastMath.cos(currentRay);
 
-                //If the entity intersects with the ray and it is in front of the walls, draw it.
-                if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
-                    //Recalculate the distance to the center of the entity, not where it intersects.
-                    dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
-                    //Create the object slice.
-                    currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getImage(angle), entity.spriteColor, -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
+                    //If the entity intersects with the ray and it is in front of the walls, draw it.
+                    if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
+                        //Recalculate the distance to the center of the entity, not where it intersects.
+                        dist = Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
+                        //Create the object slice.
+                        currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getImage(angle), entity.spriteColor, -rotatedLine.x1 / (rotatedLine.x2 - rotatedLine.x1));
 
-                    //If the array list is empty, add the object slice.
-                    if(visibleEntities.isEmpty())
-                        visibleEntities.add(currentSlice);
-                        //Otherwise, insert the object slice in order by distance.
-                    else
-                        for(int j = 0; j < visibleEntities.size(); j++)
-                            if(dist < visibleEntities.get(j).distToCamera) {
-                                visibleEntities.add(j, currentSlice);
-                                break;
+                        //If the array list is empty, add the object slice.
+                        if (visibleEntities.isEmpty())
+                            visibleEntities.add(currentSlice);
+                            //Otherwise, insert the object slice in order by distance.
+                        else
+                            for (int j = 0; j < visibleEntities.size(); j++) {
+                                if (dist < visibleEntities.get(j).distToCamera) {
+                                    visibleEntities.add(j, currentSlice);
+                                    break;
+                                }
+                                //If the object slice is farther than the rest, add it to the end of the list.
+                                if (j == visibleEntities.size() - 1) {
+                                    visibleEntities.add(currentSlice);
+                                    break;
+                                }
                             }
+                    }
                 }
             }
 

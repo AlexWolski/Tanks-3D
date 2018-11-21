@@ -40,16 +40,18 @@ public abstract class Entity extends GameObject {
     public abstract void collide(Object object, ListIterator iterator);
 
     public void update(GameData gamedata, double deltaTime) {
-        //Move the entity based on its angle and speed.
-        double distMoved = speed * deltaTime / 1000;
-        //Equivalent of cos(angle-90)
-        position.x += distMoved * FastMath.sin(angle);
-        //Equivalent of sin(angle-90)
-        position.y += distMoved * FastMath.cos(angle);
+        if(this.visible) {
+            //Move the entity based on its angle and speed.
+            double distMoved = speed * deltaTime / 1000;
+            //Equivalent of cos(angle-90)
+            position.x += distMoved * FastMath.sin(angle);
+            //Equivalent of sin(angle-90)
+            position.y += distMoved * FastMath.cos(angle);
 
-        //Check if the entity collides with any walls or entities.
-        checkCollisionWall(gamedata.gameLevel.wallObjects);
-        checkCollisionEntity(gamedata.entityList);
+            //Check if the entity collides with any walls or entities.
+            checkCollisionWall(gamedata.gameLevel.wallObjects);
+            checkCollisionEntity(gamedata.entityList);
+        }
     }
 
     //Check if this entity collides with any walls. If it does, pass the wall to the 'collide' method.

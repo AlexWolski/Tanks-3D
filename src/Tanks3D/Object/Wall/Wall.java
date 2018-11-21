@@ -13,7 +13,6 @@ public abstract class Wall extends GameObject {
     private Line2D.Double line;
     private double length;
     private double angle;
-    private boolean visible;
     private final static double height = 20;
 
     //Constructor that takes two points.
@@ -53,7 +52,4 @@ public abstract class Wall extends GameObject {
     public double getAngle() {
         return angle;
     }
-    public boolean getVisible() { return visible; }
-
-    void invisible() { visible = false; }
 }
