@@ -1,7 +1,9 @@
 package Tanks3D.DisplayComponents;
 
 import Tanks3D.GameData;
+import Tanks3D.Object.Entity.Entity;
 import Tanks3D.Object.Entity.Tank;
+import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Player;
 import Tanks3D.Utilities.Image;
@@ -15,25 +17,12 @@ public class Minimap implements Runnable {
     private final GameData gameData;
     private final BufferedImage canvas;
     private double mapSizeRatio;
-    private int tankIconSize;
     private int backgroundColor;
-    private BufferedImage player1Icon, player2Icon;
 
     public Minimap(GameData gameData, BufferedImage canvas) {
         this.gameData = gameData;
         this.canvas = canvas;
         backgroundColor = Color.darkGray.getRGB();
-
-        //The size of the tank icon on the minimap.
-        tankIconSize = (int) (Tank.getHitCircleRadius()/gameData.gameLevel.getMapWidth() * 2 * canvas.getWidth());
-        //Load the tank icon image from the resources folder.
-        player1Icon = Image.load("resources/HUD/Tank Icon.png");
-        //Copy for the second player.
-        player2Icon = Tanks3D.Utilities.Image.copy(player1Icon);
-
-        //Color both images based on the tank's color.
-        Tanks3D.Utilities.Image.tintImage(player1Icon, gameData.player1.getColor());
-        Tanks3D.Utilities.Image.tintImage(player2Icon, gameData.player2.getColor());
 
         //Determine how the game world should be mapped to the minimap based on their sizes.
         if(gameData.gameLevel.getMapWidth() > gameData.gameLevel.getMapHeight()) {
@@ -67,15 +56,24 @@ public class Minimap implements Runnable {
         graphic.drawLine((int)p1.x, canvas.getHeight()-(int)p1.y-1, (int)p2.x, canvas.getHeight()-(int)p2.y-1);
     }
 
-    //Calculate the position to draw the tank. Then rotate and draw it.
-    private void drawTank(Graphics2D graphic, Player player, BufferedImage image) {
-        //Get the position of the first tank.
-        Point2D.Double tankPos = gameToMiniMap(player.getPosition());
-        //Center it by subtracting half of the image size.
-        tankPos.x -= tankIconSize/2.0;
-        tankPos.y += tankIconSize/2.0;
-        //Draw it rotated.
-        Image.drawRotated(graphic, image, player.getAngle(), (int)tankPos.x, canvas.getHeight()-(int)tankPos.y, tankIconSize, tankIconSize);
+    //Rotate the icons for the entities and draw them.
+    private void drawEntities(Graphics2D graphic) {
+        //The size of the icon on the screen
+        int iconSize;
+        //The position of the entity.
+        Point2D.Double entityPos;
+
+        for(Entity entity : gameData.entityList) {
+            iconSize = (int) (entity.getHitCircleRadius()/gameData.gameLevel.getMapWidth() * 2 * canvas.getWidth());;
+
+            //Get the position of the first tank.
+            entityPos = gameToMiniMap(entity.position);
+            //Center it by subtracting half of the image size.
+            entityPos.x -= iconSize / 2.0;
+            entityPos.y += iconSize / 2.0;
+            //Draw it rotated.
+            Image.drawRotated(graphic, entity.getIcon(), entity.angle, (int) entityPos.x, canvas.getHeight() - (int) entityPos.y, iconSize, iconSize);
+        }
     }
 
     public void draw() {
@@ -95,8 +93,7 @@ public class Minimap implements Runnable {
                 drawWall(graphic, wall);
 
         //Draw the tanks.
-        drawTank(graphic, gameData.player1, player1Icon);
-        drawTank(graphic, gameData.player2, player2Icon);
+        drawEntities(graphic);
 
         //Delete the graphics object.
         graphic.dispose();

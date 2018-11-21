@@ -18,11 +18,13 @@ public abstract class Entity extends GameObject {
     private final int hitCircleRadius;
     //An array containing the sprites for the entity at different angles.
     private BufferedImage sprites[];
+    //The icon used to display the entity on the minimap.
+    private BufferedImage icon;
     //The in-game size of the entity. The sprites are stretched to fit this.
     private Dimension entitySize;
 
-    //The color each sprite will be tinted.
-    public Color spriteColor;
+    //The color each image will be tinted.
+    public Color entityColor;
     //The entity's data in 3d space.
     protected int zPos;
     public Point2D.Double position;
@@ -127,7 +129,7 @@ public abstract class Entity extends GameObject {
         }
     }
 
-    private int getHitCircleRadius() {
+    public int getHitCircleRadius() {
         return hitCircleRadius;
     }
     public double getHeight() {
@@ -138,20 +140,28 @@ public abstract class Entity extends GameObject {
     }
 
     //Set the sprites and size of the entity. The sprites start with a front shot and rotate clockwise.
-    public void setSprites(BufferedImage images[], Color spriteColor, int width, int height) {
+    protected void setSprites(BufferedImage images[], int width, int height) {
         this.sprites = images;
-        this.spriteColor = spriteColor;
         this.entitySize = new Dimension(width, height);
     }
 
+    //Set the icon for the minimap.
+    protected void setIcon(BufferedImage icon) {
+        this.icon = icon;
+    }
+
     //Given the angle of the camera, return the appropriate image.
-    public BufferedImage getImage(double viewerAngle) {
+    public BufferedImage getSprite(double viewerAngle) {
         //Get the difference in angle between the tank and the viewer.
         viewerAngle = FastMath.formatAngle(this.angle - viewerAngle - 540.0/ sprites.length);
         //Map the angle to one of the sprites and return it.
         return sprites[(int)(viewerAngle * sprites.length/360)];
     }
 
+    //Get the icon for the minimap.
+    public BufferedImage getIcon() {
+        return icon;
+    }
     //Get the ingame height of the entity.
     public double getzPos() {
         return zPos;

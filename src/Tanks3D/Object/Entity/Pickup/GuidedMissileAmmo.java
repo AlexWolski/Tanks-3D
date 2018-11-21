@@ -9,15 +9,17 @@ import java.util.ListIterator;
 
 public class GuidedMissileAmmo extends Pickup {
     private final static BufferedImage[] sprites;
+    private final static BufferedImage icon;
 
     //Load the images for the pickup.
     static {
         sprites = new BufferedImage[1];
         sprites[0] = Image.load("resources/Pickups/Guided Missile Ammo.png");
+        icon = Image.load("resources/HUD/Guided Missile.png");
     }
 
     public GuidedMissileAmmo(Point2D.Double position) {
-        super(position, sprites, null);
+        super(position, sprites, icon, null);
     }
 
     public void collide(Object object, ListIterator thisObject, ListIterator iterator) {

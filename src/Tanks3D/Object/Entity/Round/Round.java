@@ -56,7 +56,9 @@ public abstract class Round extends Entity {
     public Round(Point2D.Double position, int zPos, double angle, int speed, int damage, BufferedImage[] sprites, Color imageColor) {
         super(hitCircleRadius, position, angle, speed);
         //Set the sprites for the round.
-        setSprites(sprites, imageColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+        setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+        //Set the color of the entity.
+        entityColor = imageColor;
 
         super.zPos = zPos;
         this.damage = damage;
@@ -143,7 +145,7 @@ public abstract class Round extends Entity {
         thisObject.remove();
     }
 
-    public static int getHitCircleRadius() {
+    public static int getDefaultHitCircleRadius() {
         return hitCircleRadius;
     }
 }

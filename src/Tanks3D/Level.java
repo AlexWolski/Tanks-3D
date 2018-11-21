@@ -38,13 +38,13 @@ public final class Level {
         ceilColor = new Color(0).getRGB();
 
         wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30), Color.red));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), Color.white));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), null));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), null));
 
-        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), Color.white));
+        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), null));
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), Color.white));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), Color.white));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), null));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), null));
 
         entityList.add(new Health(new Point2D.Double(-5, 0)));
         entityList.add(new HighExplosiveAmmo(new Point2D.Double(-5, 5)));

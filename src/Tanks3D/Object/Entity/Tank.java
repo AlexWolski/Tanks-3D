@@ -24,13 +24,18 @@ public class Tank extends Entity {
     //The default color of the tank.
     private final Color defaultColor;
 
+    //Images for the tank in game and on the minimap.
+    private final static BufferedImage[] sprites;
+    private final static BufferedImage deadIcon;
+    private final BufferedImage aliveIcon;
+
     //The number of milliseconds it takes to respawn.
     private final static int respawnCooldown = 2000;
     //The time when the tank started to respawn.
     private long respawnStartTime;
     //Determines if the player is dead, alive, or re-spawning.
     private boolean alive;
-    private boolean reSpawning;
+    private boolean respawning;
 
     //The number of milliseconds it takes before the tank can fire again.
     private final int shotCooldown = 1000;
@@ -50,30 +55,43 @@ public class Tank extends Entity {
     private int health = maxHealth;
     private int lives = 3;
 
-    public Tank(Point2D.Double spawnPoint, double spawnAngle, Color spriteColor) {
-        super(hitCircleRadius, new Point2D.Double(spawnPoint.x, spawnPoint.y), spawnAngle, 0);
-        this.spawnPoint = spawnPoint;
-        this.spawnAngle = spawnAngle;
-        this.rotationSpeed = 0;
-        this.defaultColor = spriteColor;
-        this.visible = true;
-
-        //Set the current color to the default color.
-        spriteColor = new Color(defaultColor.getRGB());
-        //The tank is alive.
-        alive = true;
-        reSpawning = false;
-
-        BufferedImage sprites[] = new BufferedImage[4];
-
+    //Load the images for the tank.
+    static {
         //Load the sprites.
+        sprites = new BufferedImage[4];
         sprites[0] = Image.load("resources/Tank/Front.png");
         sprites[1] = Image.load("resources/Tank/Left.png");
         sprites[2] = Image.load("resources/Tank/Back.png");
         sprites[3] = Image.load("resources/Tank/Right.png");
 
+        //Load the default icon.
+        deadIcon = Image.load("resources/HUD/Tank Icon.png");
+    }
+
+    public Tank(Point2D.Double spawnPoint, double spawnAngle, Color tankColor) {
+        super(hitCircleRadius, new Point2D.Double(spawnPoint.x, spawnPoint.y), spawnAngle, 0);
+        this.spawnPoint = spawnPoint;
+        this.spawnAngle = spawnAngle;
+        this.rotationSpeed = 0;
+        this.defaultColor = tankColor;
+        this.visible = true;
+
+        //The tank is alive.
+        alive = true;
+        respawning = false;
+
+        //Set the current color to the default color.
+        tankColor = new Color(defaultColor.getRGB());
+        entityColor = tankColor;
+
         //Pass the sprites to the parent class.
-        setSprites(sprites, spriteColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+        setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+
+        //Copy and color it to get the alive icon.
+        aliveIcon = Image.copy(deadIcon);
+        Image.tintImage(aliveIcon, tankColor);
+        //Set the icon to the alive icon.
+        setIcon(aliveIcon);
 
         //Set the height of the tank.
         zPos = (int)getHeight()/2;
@@ -143,7 +161,7 @@ public class Tank extends Entity {
             reloading = true;
 
             //Calculate the distance to spawn the round so it doesn't hit the tank.
-            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0) + 5;
+            double distance = (hitCircleRadius / 2.0 + Round.getDefaultHitCircleRadius() / 2.0) + 5;
             //Calculate the x and y position to spawn the round based on the tank's position and angle.
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);
@@ -171,34 +189,33 @@ public class Tank extends Entity {
     }
 
     public void die() {
-        spriteColor = Color.GRAY;
+        entityColor = Color.GRAY;
         alive = false;
         lives--;
         speed = 0;
         rotationSpeed = 0;
+        setIcon(deadIcon);
     }
 
     //Respawn the tank.
     public void respawn() {
         //If the tank hasn't started re-spawning yet, start the timer.
-        if(!reSpawning) {
+        if(!respawning) {
             respawnStartTime = System.currentTimeMillis();
-            reSpawning = true;
+            respawning = true;
         }
         //If the tank is re-spawning, check if the respawn time is up. If it is, respawn the tank.
         else if(System.currentTimeMillis() >= respawnStartTime + respawnCooldown) {
             health = maxHealth;
             position.setLocation(spawnPoint);
             angle = spawnAngle;
-            spriteColor = new Color(defaultColor.getRGB());
+            entityColor = new Color(defaultColor.getRGB());
             alive = true;
-            reSpawning = false;
+            respawning = false;
+            setIcon(aliveIcon);
         }
     }
 
-    public static int getHitCircleRadius() {
-        return hitCircleRadius;
-    }
     public double getMaxSpeed() {
         return maxSpeed;
     }
@@ -206,7 +223,7 @@ public class Tank extends Entity {
         return maxRotationSpeed;
     }
     public Color getColor() {
-        return spriteColor;
+        return entityColor;
     }
     public Point2D.Double getPosition() {
         return position;

@@ -251,7 +251,7 @@ public class Camera {
                         dist = rotatedPoint.y *  FastMath.cos(entityAngle - angle);
 
                         //Create the object slice.
-                        currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getImage(angle), entity.spriteColor, -rotatedLine.x1 / (rotatedLine.x2 - rotatedLine.x1));
+                        currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getSprite(angle), entity.entityColor, -rotatedLine.x1 / (rotatedLine.x2 - rotatedLine.x1));
 
                         //If the array list is empty, add the object slice.
                         if (visibleEntities.isEmpty())
