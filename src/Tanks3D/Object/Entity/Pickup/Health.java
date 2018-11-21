@@ -24,7 +24,7 @@ public class Health extends Pickup {
         super(position, sprites, imageColor);
     }
 
-    public void collide(Object object, ListIterator iterator) {
+    public void collide(Object object, ListIterator thisObject, ListIterator iterator) {
         if(object instanceof Tank) {
             ((Tank) object).repair(health);
         }

@@ -8,7 +8,7 @@ public class GuidedMissileAmmo extends Pickup {
         super(position, null, null);
     }
 
-    public void collide(Object object, ListIterator iterator) {
+    public void collide(Object object, ListIterator thisObject, ListIterator iterator) {
 
     }
 }

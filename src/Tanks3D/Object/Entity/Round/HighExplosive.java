@@ -27,12 +27,12 @@ public class HighExplosive extends Round {
         super(position, zPos, angle, speed, damage, sprites, imageColor);
     }
 
-    public void collide(Object object, ListIterator iterator) {
+    public void collide(Object object, ListIterator thisObject, ListIterator iterator) {
         //Deal splash damage.
         if(object instanceof Tank) {
 
         }
 
-        super.collide(object, iterator);
+        super.collide(object, thisObject, iterator);
     }
 }

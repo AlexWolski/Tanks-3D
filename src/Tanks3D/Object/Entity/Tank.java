@@ -2,7 +2,6 @@ package Tanks3D.Object.Entity;
 
 import Tanks3D.GameData;
 import Tanks3D.Object.Entity.Round.Round;
-import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.*;
 import Tanks3D.Utilities.FastMath;
 import Tanks3D.Utilities.Image;
@@ -82,7 +81,7 @@ public class Tank extends Entity {
         gunHeight = zPos + (int)(getHeight()/2 * 0.75);
     }
 
-    public void update(GameData data, double deltaTime) {
+    public void update(GameData data, double deltaTime, ListIterator thisObject) {
         //If the tank has no health and isn't dead yet, kill it.
         if(alive && health <= 0)
             die();
@@ -90,15 +89,15 @@ public class Tank extends Entity {
             //Update the angle and position of the tank.
             angle += rotationSpeed * deltaTime / 1000;
             angle = FastMath.formatAngle(angle);
-            super.update(data, deltaTime);
+            super.update(data, deltaTime, thisObject);
         }
     }
 
-    public void collide(Object object, ListIterator iterator) {
+    public void collide(Object object, ListIterator thisObject, ListIterator collidedObject) {
         //If the tank collides with a breakable wall, destroy the wall.
         if(object instanceof BreakableWall) {
             ((BreakableWall)object).breakWall();
-            iterator.remove();
+            collidedObject.remove();
         }
         //If the tank hits the corner of the wall, fix its position.
         else if(object instanceof Point2D.Double) {
@@ -134,10 +133,6 @@ public class Tank extends Entity {
                 this.position.y -= (hitCircleRadius + xDistance) * FastMath.sin(lineAngle);
             }
         }
-        //If the tank hits a round, destroy it.
-        else if(object instanceof Round) {
-            Round.removeRound((Round) object);
-        }
         else if(object instanceof Tank) {
             //TODO collision detection with tanks
         }
@@ -151,7 +146,7 @@ public class Tank extends Entity {
             reloading = true;
 
             //Calculate the distance to spawn the round so it doesn't hit the tank.
-            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0) + 10;
+            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0) + 5;
             //Calculate the x and y position to spawn the round based on the tank's position and angle.
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);

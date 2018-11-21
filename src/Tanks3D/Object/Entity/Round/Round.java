@@ -57,21 +57,22 @@ public abstract class Round extends Entity {
         this.damage = damage;
     }
 
-    //Set the values
-
-    public void collide(Object object, ListIterator iterator) {
+    public void collide(Object object, ListIterator thisObject, ListIterator collidedObject) {
         //If the round hits a breakable wall, break it.
         if(object instanceof BreakableWall) {
             ((BreakableWall) object).breakWall();
-            iterator.remove();
-        }
-        //If the round hits an unbreakable wall, destroy the round.
-        if(object instanceof UnbreakableWall) {
+            collidedObject.remove();
             removeRound(this);
         }
-        //If the round hits a tank, damage it.
-        if(object instanceof Tank)
+        //If the round hits an unbreakable wall, destroy the round.
+        else if(object instanceof UnbreakableWall) {
+            removeRound(this);
+        }
+        //If the round hits a tank, damage it and remove the round.
+        else if(object instanceof Tank) {
             ((Tank) object).damage(damage);
+            removeRound(this);
+        }
     }
 
     //Add a round from the given pool to the entity list.
@@ -119,8 +120,6 @@ public abstract class Round extends Entity {
 
         //Add the round back to the round pool.
         roundPool.add(roundToDelete);
-        //Remove the round from the entity list.
-        entityList.remove(roundToDelete);
     }
 
     public static int getHitCircleRadius() {

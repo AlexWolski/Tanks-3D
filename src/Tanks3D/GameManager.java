@@ -8,6 +8,7 @@ import Tanks3D.Object.Entity.Round.Round;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 //Controls the entire game. The program enters from this class, which is a singleton class.
 public class GameManager {
@@ -124,9 +125,12 @@ public class GameManager {
             frames = 0;
         }
 
-        //Update the positions of all of the entities.
-        for(Entity entity : gameData.entityList)
-            entity.update(gameData, deltaTime);
+        //Iterator for checking all of the entities. An iterator is used to prevent concurrent modification exceptions.
+        ListIterator<Entity> iterator = gameData.entityList.listIterator();
+
+        //Update the positions of all of the entities. Pass it the iterator in case the entity needs to remove itself from the list.
+        while (iterator.hasNext())
+            iterator.next().update(gameData, deltaTime, iterator);
 
         //Draw both players' screens and the minimap.
         gameWindow.draw();
