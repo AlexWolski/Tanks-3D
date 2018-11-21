@@ -49,9 +49,7 @@ public abstract class Wall extends GameObject {
     public double getWidth() {
         return length;
     }
-    public double getHeight() {
-        return height;
-    }
+    public static double defaultWallHeight() { return height; }
     public double getAngle() {
         return angle;
     }

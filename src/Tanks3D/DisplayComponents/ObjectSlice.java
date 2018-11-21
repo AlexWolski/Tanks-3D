@@ -11,6 +11,8 @@ class ObjectSlice {
     final GameObject object;
     //The distance from the camera to the intersection between the ray and the wall.
     final double distToCamera;
+    //The height of the object on the screen
+    final double zPos;
     //The image that a slice will be taken out of.
     final BufferedImage image;
     //The color to tint the image.
@@ -18,9 +20,10 @@ class ObjectSlice {
     //How far along the wall the ray intersected. Between 0 and 1.
     final double intersectRatio;
 
-    ObjectSlice(GameObject wall, double distToCamera, BufferedImage image, Color imageColor, double intersectRatio) {
+    ObjectSlice(GameObject wall, double distToCamera, double zPos, BufferedImage image, Color imageColor, double intersectRatio) {
         this.object = wall;
         this.distToCamera = distToCamera;
+        this.zPos = zPos;
         this.image = image;
         this.imageColor = imageColor;
         this.intersectRatio = intersectRatio;

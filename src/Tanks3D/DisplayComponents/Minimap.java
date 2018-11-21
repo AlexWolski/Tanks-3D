@@ -1,6 +1,7 @@
 package Tanks3D.DisplayComponents;
 
 import Tanks3D.GameData;
+import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Object.Wall.Wall;
 import Tanks3D.Player;
 import Tanks3D.Utilities.Image;
@@ -13,7 +14,8 @@ import java.awt.image.BufferedImage;
 public class Minimap implements Runnable {
     private final GameData gameData;
     private final BufferedImage canvas;
-    private double sizeRatio;
+    private double mapSizeRatio;
+    private int tankIconSize;
     private int backgroundColor;
     private BufferedImage player1Icon, player2Icon;
 
@@ -22,8 +24,10 @@ public class Minimap implements Runnable {
         this.canvas = canvas;
         backgroundColor = Color.darkGray.getRGB();
 
+        //The size of the tank icon on the minimap.
+        tankIconSize = (int) (Tank.getHitCircleRadius()/gameData.gameLevel.getMapWidth() *2 * canvas.getWidth());
         //Load the tank icon image from the resources folder.
-        player1Icon = Image.load("resources/Tank Icon.png");
+        player1Icon = Image.load("resources/HUD/Tank Icon.png");
         //Copy for the second player.
         player2Icon = Tanks3D.Utilities.Image.copy(player1Icon);
 
@@ -34,23 +38,23 @@ public class Minimap implements Runnable {
         //Determine how the game world should be mapped to the minimap based on their sizes.
         if(gameData.gameLevel.getMapWidth() > gameData.gameLevel.getMapHeight()) {
             if (canvas.getWidth() > canvas.getHeight())
-                sizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getHeight() - 1);
+                mapSizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getHeight() - 1);
             else
-                sizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getWidth() - 1);
+                mapSizeRatio = gameData.gameLevel.getMapWidth() / (canvas.getWidth() - 1);
         }
         else
         {
             if (canvas.getWidth() > canvas.getHeight())
-                sizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getHeight() - 1);
+                mapSizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getHeight() - 1);
             else
-                sizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getWidth() - 1);
+                mapSizeRatio = gameData.gameLevel.getMapHeight() / (canvas.getWidth() - 1);
         }
     }
 
     //Transform a point from the map dimensions to the minimap dimensions.
     private Point2D.Double gameToMiniMap(Point2D.Double coordinate) {
-        return new Point2D.Double((coordinate.x - gameData.gameLevel.getMapCenterX())/sizeRatio + canvas.getWidth()/2.0,
-                                  (coordinate.y - gameData.gameLevel.getMapCenterY())/sizeRatio + canvas.getHeight()/2.0);
+        return new Point2D.Double((coordinate.x - gameData.gameLevel.getMapCenterX())/ mapSizeRatio + canvas.getWidth()/2.0,
+                                  (coordinate.y - gameData.gameLevel.getMapCenterY())/ mapSizeRatio + canvas.getHeight()/2.0);
     }
 
     //Get the two points of a wall, convert them to ints, and draw them.
@@ -68,10 +72,10 @@ public class Minimap implements Runnable {
         //Get the position of the first tank.
         Point2D.Double tankPos = gameToMiniMap(player.getPosition());
         //Center it by subtracting half of the image size.
-        tankPos.x -= image.getWidth()/2.0;
-        tankPos.y += image.getHeight()/2.0;
+        tankPos.x -= tankIconSize/2.0;
+        tankPos.y += tankIconSize/2.0;
         //Draw it rotated.
-        Image.drawRotated(graphic, image, player.getAngle(), (int)tankPos.x, canvas.getHeight()-(int)tankPos.y);
+        Image.drawRotated(graphic, image, player.getAngle(), (int)tankPos.x, canvas.getHeight()-(int)tankPos.y, tankIconSize, tankIconSize);
     }
 
     public void draw() {

@@ -22,4 +22,5 @@ public class BreakableWall extends Wall {
     public void breakWall() {
         super.invisible();
     }
+    public double getHeight() { return defaultWallHeight(); }
 }

@@ -29,16 +29,16 @@ public final class Image {
     }
 
     //Rotate the image and draw it at the given point. There are many ways rotate an image, but this was the fastest.
-    public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, int x, int y) {
+    public static void drawRotated(Graphics2D graphic, BufferedImage image, double angle, int x, int y, int width, int height) {
         //Create a new transform.
         AffineTransform transform = new AffineTransform();
         //Translate the transform to where the image will be drawn.
         transform.translate(x, y);
         //Rotate the transform.
-        transform.rotate(Math.toRadians(angle), image.getWidth()/2.0, image.getHeight()/2.0);
+        transform.rotate(Math.toRadians(angle), width/2.0, height/2.0);
         //Draw the tank.
         graphic.setTransform(transform);
-        graphic.drawImage(image, 0, 0, null);
+        graphic.drawImage(image, 0, 0, width, height, null);
     }
 
     public static int tintPixel(Color pixelColor, Color tintColor) {

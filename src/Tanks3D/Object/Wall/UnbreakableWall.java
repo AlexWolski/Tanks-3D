@@ -18,4 +18,6 @@ public class UnbreakableWall extends Wall {
     public UnbreakableWall(Point2D.Double Point1, Point2D.Double Point2, Color textureColor) {
         super(Point1, Point2, texture, textureColor);
     }
+
+    public double getHeight() { return defaultWallHeight(); }
 }

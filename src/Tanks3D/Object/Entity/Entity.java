@@ -24,11 +24,12 @@ public abstract class Entity extends GameObject {
     //The color each sprite will be tinted.
     public Color spriteColor;
     //The entity's data in 3d space.
+    protected int zPos;
     public Point2D.Double position;
     public double angle;
     public double speed;
 
-    public Entity(Point2D.Double position, int hitCircleRadius, double angle, double speed) {
+    public Entity(int hitCircleRadius, Point2D.Double position, double angle, double speed) {
         this.hitCircleRadius = hitCircleRadius;
         this.position = position;
         this.angle = angle;
@@ -145,5 +146,10 @@ public abstract class Entity extends GameObject {
         viewerAngle = FastMath.formatAngle(this.angle - viewerAngle - 540.0/ sprites.length);
         //Map the angle to one of the sprites and return it.
         return sprites[(int)(viewerAngle * sprites.length/360)];
+    }
+
+    //Get the ingame height of the entity.
+    public double getzPos() {
+        return zPos;
     }
 }

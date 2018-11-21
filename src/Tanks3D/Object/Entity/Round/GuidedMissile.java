@@ -18,7 +18,7 @@ public class GuidedMissile extends Round {
         sprites[0] = Image.load("resources/Rounds/Armor Piercing.png");
     }
 
-    public GuidedMissile(Point2D.Double position, double angle) {
-        super(position, angle, speed, damage, sprites, imageColor);
+    public GuidedMissile(Point2D.Double position, int zPos, double angle) {
+        super(position, zPos, angle, speed, damage, sprites, imageColor);
     }
 }

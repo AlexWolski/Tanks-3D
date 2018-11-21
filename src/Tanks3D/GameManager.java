@@ -80,6 +80,17 @@ public class GameManager {
         time = timeOfLastFrame;
     }
 
+    private void reset() {
+        //Reset the level.
+        gameData.gameLevel = new Level(levelFile);
+        //Reset the entity list.
+        gameData.entityList = new ArrayList<>();
+
+        //Reset the players.
+        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan, "left");
+        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green, "right");
+    }
+
     //Get the current time, calculate the time elapsed since the last frame, and store it in 'deltaTime;.
     private void updateDeltaTime() {
         //currentTimeMillis() is used instead of nanoTime() because its less expensive and more precise.

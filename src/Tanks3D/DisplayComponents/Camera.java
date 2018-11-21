@@ -89,7 +89,7 @@ public class Camera {
                         }
 
                         //Calculate the intersection ratio for the texture and
-                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getTexture(), wall.getTextureColor(), (Math.abs(line.x1) % inGameImgWidth)/inGameImgWidth);
+                        wallBuffer[i] = new ObjectSlice(wall, dist, wall.getHeight()/2, wall.getTexture(), wall.getTextureColor(), (Math.abs(line.x1) % inGameImgWidth)/inGameImgWidth);
                     }
                 }
             }
@@ -108,9 +108,13 @@ public class Camera {
             int imageStart = 0;
             //The height of the image that actually gets drawn.
             int sliceHeight = (int) (slice.object.getHeight() / slice.distToCamera * distProjectionPlane);
+
+            //The y position where the image will be drawn.
+            int zPos = (int) (canvas.getHeight()/2.0 + ((Wall.defaultWallHeight()/slice.distToCamera * distProjectionPlane)/2) - (slice.zPos/slice.distToCamera * distProjectionPlane));
+
             //Calculate the y positions where the wall starts and stops on the screen.
-            int wallStart = (int) (canvas.getHeight()/2.0 - sliceHeight/2.0);
-            int wallEnd = (int) (canvas.getHeight()/2.0 + sliceHeight/2.0);
+            int wallStart = (int) (zPos - sliceHeight/2.0);
+            int wallEnd = (int) (zPos + sliceHeight/2.0);
 
             if (wallStart < 0)
                 wallStart = 0;
@@ -220,7 +224,7 @@ public class Camera {
                     //Recalculate the distance to the center of the entity, not where it intersects.
                     dist =  Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
                     //Create the object slice.
-                    currentSlice = new ObjectSlice(entity, dist, entity.getImage(angle), entity.spriteColor, -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
+                    currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getImage(angle), entity.spriteColor, -rotatedLine.x1/(rotatedLine.x2 - rotatedLine.x1));
 
                     //If the array list is empty, add the object slice.
                     if(visibleEntities.isEmpty())

@@ -15,9 +15,9 @@ import java.util.ListIterator;
 
 public class Tank extends Entity {
     //How many units the tank can move per second.
-    public final double maxSpeed = 20;
+    public final static double maxSpeed = 20;
     //How many degrees the tank can rotate per second.
-    public final double maxRotationSpeed = 200;
+    public final static double maxRotationSpeed = 200;
     public double rotationSpeed;
 
     //The tank's position and angle when it is spawned.
@@ -27,7 +27,7 @@ public class Tank extends Entity {
     private final Color defaultColor;
 
     //The number of milliseconds it takes to respawn.
-    private final int respawnCooldown = 2000;
+    private final static int respawnCooldown = 2000;
     //The time when the tank started to respawn.
     private long respawnStartTime;
     //Determines if the player is dead, alive, or re-spawning.
@@ -42,16 +42,18 @@ public class Tank extends Entity {
     private boolean reloading;
 
     //The size of the hit circle around the tank.
-    private final static int hitCircleRadius = 5;
+    private final static int hitCircleRadius = 10;
     //How much to scale the images when drawn to the screen.
-    private final double scale = 0.04;
+    private final static double scale = 0.04;
+    //How high above the center tank the bullets are fired from.
+    private final int gunHeight;
     //Stats of the tank.
-    private final int maxHealth = 100;
+    private final static int maxHealth = 100;
     private int health = maxHealth;
     private int lives = 3;
 
     public Tank(Point2D.Double spawnPoint, double spawnAngle, Color spriteColor) {
-        super(new Point2D.Double(spawnPoint.x, spawnPoint.y), hitCircleRadius, spawnAngle, 0);
+        super(hitCircleRadius, new Point2D.Double(spawnPoint.x, spawnPoint.y), spawnAngle, 0);
         this.spawnPoint = spawnPoint;
         this.spawnAngle = spawnAngle;
         this.rotationSpeed = 0;
@@ -72,7 +74,12 @@ public class Tank extends Entity {
         sprites[3] = Image.load("resources/Tank/Right.png");
 
         //Pass the sprites to the parent class.
-        super.setSprites(sprites, spriteColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+        setSprites(sprites, spriteColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
+
+        //Set the height of the tank.
+        zPos = (int)getHeight()/2;
+        //Set the height of the gun.
+        gunHeight = zPos + (int)(getHeight()/2 * 0.75);
     }
 
     public void update(GameData data, double deltaTime) {
@@ -130,6 +137,10 @@ public class Tank extends Entity {
                 this.position.y -= (hitCircleRadius + xDistance) * FastMath.sin(lineAngle);
             }
         }
+        //If the tank hits a round, destroy it.
+        else if(object instanceof Round) {
+            iterator.remove();
+        }
         else if(object instanceof Tank) {
             //TODO collision detection with tanks
         }
@@ -143,12 +154,12 @@ public class Tank extends Entity {
             reloading = true;
 
             //Calculate the distance to spawn the round so it doesn't hit the tank.
-            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0) + 3;
+            double distance = (hitCircleRadius / 2.0 + Round.getHitCircleRadius() / 2.0);
             //Calculate the x and y position to spawn the round based on the tank's position and angle.
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);
-            //Create the round and add it ot the entity list.
-            entityList.add(new ArmorPiercing(new Point2D.Double(xPos, yPos), angle));
+            //Create the round and add it to the entity list.
+            entityList.add(new ArmorPiercing(new Point2D.Double(xPos, yPos), gunHeight, angle));
         }
         //If the tank is reloading, check if the reload time is up. If it is, set reloading to false.
         else if(System.currentTimeMillis() >= shotTime + shotCooldown) {
@@ -159,6 +170,15 @@ public class Tank extends Entity {
     //Deal damage to the tank.
     public void damage(int damage) {
         health -= damage;
+    }
+
+    //Repair the tank.
+    public void repair(int health) {
+        this.health += health;
+
+        //If the new health is above the maximum, set it to the maximum.
+        if(this.health > maxHealth)
+            this.health = maxHealth;
     }
 
     //Respawn the tank.
@@ -179,6 +199,9 @@ public class Tank extends Entity {
         }
     }
 
+    public static int getHitCircleRadius() {
+        return hitCircleRadius;
+    }
     public double getMaxSpeed() {
         return maxSpeed;
     }
