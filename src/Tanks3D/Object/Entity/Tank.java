@@ -103,15 +103,12 @@ public class Tank extends Entity {
         else if(object instanceof Point2D.Double) {
             Point2D.Double point = (Point2D.Double)object;
 
-            //Calculate the distance from the point to the edge of the hit circle.
-            double distance = hitCircleRadius - Math.hypot(point.x - position.x, point.y - position.y);
-
             //Calculate the angle between the tank and the hit circle.
             double angle = Math.toDegrees(Math.atan2(point.x - position.x, point.y - position.y));
 
             //Move the tank.
-            this.position.x -= distance * FastMath.sin(angle);
-            this.position.y -= distance * FastMath.cos(angle);
+            this.position.x = point.x - hitCircleRadius * FastMath.sin(angle);
+            this.position.y = point.y - hitCircleRadius * FastMath.cos(angle);
         }
         //If the tank hits a wall, fix its position.
         else if(object instanceof UnbreakableWall) {
