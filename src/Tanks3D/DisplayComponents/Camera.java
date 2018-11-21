@@ -111,7 +111,7 @@ public class Camera {
             int sliceHeight = (int) (slice.object.getHeight() / slice.distToCamera * distProjectionPlane);
 
             //The y position where the image will be drawn.
-            int zPos = (int) (canvas.getHeight()/2.0 + ((Wall.defaultWallHeight()/slice.distToCamera * distProjectionPlane)/2) - (slice.zPos/slice.distToCamera * distProjectionPlane));
+            int zPos = (int) Math.round(canvas.getHeight()/2.0 + ((Wall.defaultWallHeight()/slice.distToCamera * distProjectionPlane)/2) - (slice.zPos/slice.distToCamera * distProjectionPlane));
 
             //Calculate the y positions where the wall starts and stops on the screen.
             int wallStart = (int) (zPos - sliceHeight/2.0);
@@ -194,6 +194,8 @@ public class Camera {
         double entityAngle;
         //A line representing the entity's location and the width of its image.
         Line2D.Double rotatedLine = new Line2D.Double();
+        //The rotated point of the entity to calculate the distance to the center of the it.
+        Point2D.Double rotatedPoint;
         //A list of entities that the ray intersects.
         ArrayList<ObjectSlice> visibleEntities = new ArrayList<>();
         //Temporarily hold an object slice before its stored in the array list.
@@ -232,8 +234,14 @@ public class Camera {
 
                     //If the entity intersects with the ray and it is in front of the walls, draw it.
                     if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
+                        //Copy the entity's position.
+                        rotatedPoint = new Point2D.Double(entity.position.x, entity.position.y);
+                        //Rotate it to in front of the ray.
+                        FastMath.rotate(rotatedPoint, position, -entityAngle);
+                        FastMath.subtract(rotatedPoint, position);
                         //Recalculate the distance to the center of the entity, not where it intersects.
-                        dist = Math.hypot(entity.position.x - position.x, entity.position.y - position.y) * FastMath.cos(entityAngle - angle);
+                        dist = rotatedPoint.y *  FastMath.cos(entityAngle - angle);
+
                         //Create the object slice.
                         currentSlice = new ObjectSlice(entity, dist, entity.getzPos(), entity.getImage(angle), entity.spriteColor, -rotatedLine.x1 / (rotatedLine.x2 - rotatedLine.x1));
 
