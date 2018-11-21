@@ -1,14 +1,29 @@
 package Tanks3D.Object.Entity.Pickup;
 
+import Tanks3D.Object.Entity.Tank;
+import Tanks3D.Utilities.Image;
+
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.util.ListIterator;
 
 public class HighExplosiveAmmo extends Pickup {
+    private final static BufferedImage[] sprites;
+
+    //Load the images for the pickup.
+    static {
+        sprites = new BufferedImage[1];
+        sprites[0] = Image.load("resources/Pickups/High Explosive Ammo.png");
+    }
+
     public HighExplosiveAmmo(Point2D.Double position) {
-        super(position, null, null);
+        super(position, sprites, null);
     }
 
     public void collide(Object object, ListIterator thisObject, ListIterator iterator) {
-
+        if(object instanceof Tank) {
+            //Remove the round.
+            removePickup(thisObject);
+        }
     }
 }

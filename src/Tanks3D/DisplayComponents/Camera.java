@@ -144,13 +144,21 @@ public class Camera {
 
                 //Loop through the image and draw all of the rows.
                 for (int canvasY = wallStart; canvasY < wallEnd; canvasY++) {
-                    //Get the color of the pixel at the current point in the image.
-                    pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
+                    //If the pixel hasn't been written to yet, draw the pixel.
+                    if(pixelTable[canvasX][canvasY]) {
+                        //Get the color of the pixel at the current point in the image if the color is valid.
+                        pixelColor = slice.image.getRGB(imageX, imageStart + (int) (imageY / (double) sliceHeight * slice.image.getHeight()));
 
-                    //If the image is not transparent and not written to yet, draw the pixel.
-                    if ((pixelColor >> 24) != 0x00 && pixelTable[canvasX][canvasY]) {
-                        canvas.setRGB(canvasX, canvasY, Image.tintPixel(new Color(pixelColor), slice.imageColor));
-                        pixelTable[canvasX][canvasY] = false;
+                        //If the pixel is not transparent, draw the pixel.
+                        if ((pixelColor >> 24) != 0x00) {
+                            //If the color is not null, tint the pixel.
+                            if(slice.imageColor != null)
+                                pixelColor = Image.tintPixel(new Color(pixelColor), slice.imageColor);
+
+                            //Draw the pixel.
+                            canvas.setRGB(canvasX, canvasY, pixelColor);
+                            pixelTable[canvasX][canvasY] = false;
+                        }
                     }
 
                     //Move on to the next row to draw.
@@ -195,7 +203,7 @@ public class Camera {
         //A line representing the entity's location and the width of its image.
         Line2D.Double rotatedLine = new Line2D.Double();
         //The rotated point of the entity to calculate the distance to the center of the it.
-        Point2D.Double rotatedPoint;
+        Point2D.Double rotatedPoint = new Point2D.Double();
         //A list of entities that the ray intersects.
         ArrayList<ObjectSlice> visibleEntities = new ArrayList<>();
         //Temporarily hold an object slice before its stored in the array list.
@@ -235,7 +243,7 @@ public class Camera {
                     //If the entity intersects with the ray and it is in front of the walls, draw it.
                     if (dist > 0 && (wallBuffer[i] == null || dist <= wallBuffer[i].distToCamera)) {
                         //Copy the entity's position.
-                        rotatedPoint = new Point2D.Double(entity.position.x, entity.position.y);
+                        rotatedPoint.setLocation(entity.position.x, entity.position.y);
                         //Rotate it to in front of the ray.
                         FastMath.rotate(rotatedPoint, position, -entityAngle);
                         FastMath.subtract(rotatedPoint, position);

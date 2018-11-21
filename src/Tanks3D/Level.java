@@ -1,5 +1,8 @@
 package Tanks3D;
 
+import Tanks3D.Object.Entity.Entity;
+import Tanks3D.Object.Entity.Pickup.Health;
+import Tanks3D.Object.Entity.Pickup.HighExplosiveAmmo;
 import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.*;
 
@@ -19,13 +22,13 @@ public final class Level {
     private int ceilColor;
 
     //Read the data file and translate it into objects. Save the player spawn-points to construct the player objects.
-    public Level(String levelFile) {
+    public Level(String levelFile, ArrayList<Entity> entityList) {
         //Read the data file and create all of the map objects.
-        parseDataFile(levelFile);
+        parseDataFile(levelFile, entityList);
     }
 
     //Read the json objects from the file and create them. Walls are stored in the 'wallObjects' ArrayList.
-    private void parseDataFile(String levelFile) {
+    private void parseDataFile(String levelFile, ArrayList<Entity> entityList) {
         //remove
         wallObjects = new ArrayList<>();
         player1Spawn = new SpawnPoint(new Point2D.Double(-10, -20), 0);
@@ -42,8 +45,9 @@ public final class Level {
 
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), Color.white));
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), Color.white));
-        //wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(10, 30)));
-        //wallObjects.add(new UnbreakableWall(new Point2D.Double(10, 30), new Point2D.Double(20, -10)));
+
+        entityList.add(new Health(new Point2D.Double(-5, 0)));
+        entityList.add(new HighExplosiveAmmo(new Point2D.Double(-5, 5)));
 
         mapCenter = new Point2D.Double(0, 0);
         mapWidth = 60;

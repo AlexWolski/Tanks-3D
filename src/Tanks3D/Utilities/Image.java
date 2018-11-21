@@ -50,12 +50,10 @@ public final class Image {
     }
 
     public static void tintImage(BufferedImage image, Color tintColor) {
-        //Color the image if it was loaded correctly.
-        if (image != null)
-            //Loop through the image and change the tint of each color.
-            for (int i = 0; i < image.getWidth(); i++)
-                for (int j = 0; j < image.getHeight(); j++)
-                    //Get the color of the pixel, tint it, and write the new color to the pixel.
-                    image.setRGB(i, j, tintPixel(new Color(image.getRGB(i, j), true), tintColor));
+        //Loop through the image and change the tint of each color.
+        for (int i = 0; i < image.getWidth(); i++)
+            for (int j = 0; j < image.getHeight(); j++)
+                //Get the color of the pixel, tint it, and write the new color to the pixel.
+                image.setRGB(i, j, tintPixel(new Color(image.getRGB(i, j), true), tintColor));
     }
 }

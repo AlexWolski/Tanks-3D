@@ -55,10 +55,10 @@ public class GameManager {
     private GameManager() {
         //Instantiate local objects.
         gameData = new GameData();
-        //Load the level from a text file.
-        gameData.gameLevel = new Level(levelFile);
         //Create the entity list.
         gameData.entityList = new ArrayList<>();
+        //Load the level from a text file.
+        gameData.gameLevel = new Level(levelFile, gameData.entityList);
 
         //Create and configure the JFrame. This JFrame will have three panels: the two players screens and a minimap.
         gameWindow = new SplitWindow(gameData, "Tanks 3D", new Dimension(defaultWidth, defaultHeight), titleBarHeight);
@@ -83,7 +83,7 @@ public class GameManager {
 
     private void reset() {
         //Reset the level.
-        gameData.gameLevel = new Level(levelFile);
+        gameData.gameLevel = new Level(levelFile, gameData.entityList);
         //Reset the entity list.
         gameData.entityList = new ArrayList<>();
 
