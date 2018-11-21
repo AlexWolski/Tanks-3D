@@ -11,6 +11,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 //Draw the level and entities.
 public class Camera {
@@ -203,8 +204,16 @@ public class Camera {
             //Empty the list of entities.
             visibleEntities.clear();
 
+            //Use an iterator to loop through the entity list to prevent a concurrent modification error.
+            ListIterator<Entity> iterator = gameData.entityList.listIterator();
+            //A temporary variable to store the next entity to check.
+            Entity entity;
+
             //Iterate through each entity.
-            for (Entity entity : gameData.entityList) {
+            while(iterator.hasNext()) {
+                //Get the next entity.
+                entity = iterator.next();
+
                 //Scan the entity if it is visible.
                 if (entity.getVisible()) {
                     //The angle between the camera and the entity.

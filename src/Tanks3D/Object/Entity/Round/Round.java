@@ -1,5 +1,6 @@
 package Tanks3D.Object.Entity.Round;
 
+import Tanks3D.GameData;
 import Tanks3D.Object.Entity.Entity;
 import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Object.Wall.BreakableWall;
@@ -27,6 +28,11 @@ public abstract class Round extends Entity {
     //The damage the round does when it hits a tank directly.
     private final int damage;
 
+    //The distance the round has traveled since being fired
+    private double distTraveled;
+    //The maximum distance the round can travel before being removed
+    private static final double maxDist = 300;
+
     //Initialize the pools of rounds.
     public static void init(ArrayList<Entity> EntityList) {
         entityList = EntityList;
@@ -51,10 +57,22 @@ public abstract class Round extends Entity {
         super(hitCircleRadius, position, angle, speed);
         //Set the sprites for the round.
         setSprites(sprites, imageColor, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
-        //Set the in game height of the round.
-        super.zPos = zPos;
 
+        super.zPos = zPos;
         this.damage = damage;
+        distTraveled = 0;
+    }
+
+    public void update(GameData data, double deltaTime, ListIterator thisObject) {
+        //Calculate how far this round has traveled
+        distTraveled += speed * deltaTime / 1000;
+
+        //If this round has traveled too far, remove it.
+        if(distTraveled > maxDist)
+            this.removeRound(thisObject);
+        //Otherwise, update the round.
+        else
+            super.update(data, deltaTime, thisObject);
     }
 
     public void collide(Object object, ListIterator thisObject, ListIterator collidedObject) {
@@ -62,16 +80,16 @@ public abstract class Round extends Entity {
         if(object instanceof BreakableWall) {
             ((BreakableWall) object).breakWall();
             collidedObject.remove();
-            removeRound(this);
+            removeRound(thisObject);
         }
         //If the round hits an unbreakable wall, destroy the round.
         else if(object instanceof UnbreakableWall) {
-            removeRound(this);
+            removeRound(thisObject);
         }
         //If the round hits a tank, damage it and remove the round.
         else if(object instanceof Tank) {
             ((Tank) object).damage(damage);
-            removeRound(this);
+            removeRound(thisObject);
         }
     }
 
@@ -87,6 +105,7 @@ public abstract class Round extends Entity {
             tempRound.zPos = zPos;
             tempRound.angle = angle;
             tempRound.visible = true;
+            tempRound.distTraveled = 0;
 
             //Add the modified round to the entity pool.
             entityList.add(tempRound);
@@ -104,22 +123,24 @@ public abstract class Round extends Entity {
         addFromPool(HighExplosivePool, x, y, zPos, angle);
     }
 
-    public static void removeRound(Round roundToDelete) {
-        //Determine what type the round is and get the corresponding round pool.
+    protected void removeRound(ListIterator thisObject) {
+        //Determine what type this round is and get the corresponding round pool.
         ArrayList<Round> roundPool;
 
-        if(roundToDelete instanceof ArmorPiercing)
+        if(this instanceof ArmorPiercing)
             roundPool = ArmorPiercingPool;
-        else if(roundToDelete instanceof  GuidedMissile)
+        else if(this instanceof  GuidedMissile)
             roundPool = GuidedMissilePool;
         else
             roundPool = HighExplosivePool;
 
-        //Make teh round invisible.
-        roundToDelete.visible = false;
+        //Make this round invisible.
+        this.visible = false;
 
-        //Add the round back to the round pool.
-        roundPool.add(roundToDelete);
+        //Add this round back to the round pool.
+        roundPool.add(this);
+        //Remove this round from the entity list.
+        thisObject.remove();
     }
 
     public static int getHitCircleRadius() {

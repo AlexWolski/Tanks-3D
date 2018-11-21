@@ -8,21 +8,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ee0992c8-61b3-4767-b2a8-a386d8d1bb00" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/GameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/GameManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Entity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Entity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/PIckup/GuidedMissileAmmo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/PIckup/GuidedMissileAmmo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/PIckup/HighExplosiveAmmo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/PIckup/HighExplosiveAmmo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Round/HighExplosive.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Round/HighExplosive.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Round/Round.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Round/Round.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/csc413-tankgame-AlexWolski/Tanks3D/Object/Entity/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/GuidedMissileAmmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/GuidedMissileAmmo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/Health.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/Health.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/HighExplosiveAmmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/HighExplosiveAmmo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,28 +55,28 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="279" />
-          <entry key="java" value="91397" />
-          <entry key="txt" value="1168" />
+          <entry key="java" value="92284" />
+          <entry key="txt" value="1209" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="91397" />
-          <entry key="PLAIN_TEXT" value="1447" />
+          <entry key="JAVA" value="92284" />
+          <entry key="PLAIN_TEXT" value="1488" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="LICENSE" value="1" />
           <entry key="class" value="1" />
-          <entry key="java" value="896" />
+          <entry key="java" value="901" />
           <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="896" />
+          <entry key="JAVA" value="901" />
           <entry key="PLAIN_TEXT" value="3" />
         </counts>
       </usages-collector>
@@ -99,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Tanks3D/GameManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1505">
-              <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+            <state relative-caret-position="165">
+              <caret line="127" column="18" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,68 +100,36 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java">
+        <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="379">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5752#5753#0" expanded="true" />
-                <element signature="e#5790#5791#0" expanded="true" />
-                <element signature="e#5822#5823#0" expanded="true" />
-                <element signature="e#5862#5863#0" expanded="true" />
-                <element signature="e#5893#5894#0" expanded="true" />
-                <element signature="e#5932#5933#0" expanded="true" />
-                <element signature="e#6760#6761#0" expanded="true" />
-                <element signature="e#6787#6788#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java">
+        <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/ArmorPiercing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="148" column="92" selection-start-line="148" selection-start-column="92" selection-end-line="148" selection-end-column="92" />
+            <state relative-caret-position="85">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6902#6903#0" expanded="true" />
-                <element signature="e#6934#6935#0" expanded="true" />
-                <element signature="e#8053#8054#0" expanded="true" />
-                <element signature="e#8091#8092#0" expanded="true" />
-                <element signature="e#8125#8126#0" expanded="true" />
-                <element signature="e#8156#8157#0" expanded="true" />
-                <element signature="e#8198#8199#0" expanded="true" />
-                <element signature="e#8237#8238#0" expanded="true" />
-                <element signature="e#8267#8268#0" expanded="true" />
-                <element signature="e#8301#8302#0" expanded="true" />
-                <element signature="e#8343#8344#0" expanded="true" />
-                <element signature="e#8374#8375#0" expanded="true" />
-                <element signature="e#8405#8406#0" expanded="true" />
-                <element signature="e#8439#8440#0" expanded="true" />
-                <element signature="e#8471#8472#0" expanded="true" />
-                <element signature="e#8503#8504#0" expanded="true" />
-                <element signature="e#8532#8533#0" expanded="true" />
-                <element signature="e#8561#8562#0" expanded="true" />
-                <element signature="e#8589#8590#0" expanded="true" />
-                <element signature="e#8617#8618#0" expanded="true" />
-                <element signature="e#8648#8649#0" expanded="true" />
-                <element signature="e#8676#8677#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java">
+        <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
+            <state relative-caret-position="247">
+              <caret line="213" column="37" selection-start-line="213" selection-start-column="37" selection-end-line="213" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4872#4873#0" expanded="true" />
-                <element signature="e#4910#4911#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -188,7 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>TYPE_INT_RGB</find>
       <find>getRGB</find>
       <find>hypo</find>
       <find>FastMath.</find>
@@ -197,7 +155,6 @@
       <find>magenta</find>
       <find>alpha</find>
       <find>spawnpoi</find>
-      <find>iterator</find>
       <find>init</find>
       <find>bullet</find>
       <find>health</find>
@@ -218,6 +175,8 @@
       <find>hud</find>
       <find>zpos</find>
       <find>remove</find>
+      <find>entityList</find>
+      <find>iterator</find>
     </findStrings>
     <replaceStrings>
       <replace>float</replace>
@@ -271,7 +230,6 @@
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/Pickup.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/ObjectSlice.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Wall/UnbreakableWall.java" />
-        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/ArmorPiercing.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/GuidedMissile.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Utilities/Image.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Player.java" />
@@ -279,15 +237,16 @@
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/GameObject.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Wall/BreakableWall.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Minimap.java" />
-        <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/GameManager.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java" />
-        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/HighExplosiveAmmo.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/Health.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Pickup/GuidedMissileAmmo.java" />
-        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java" />
+        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/ArmorPiercing.java" />
+        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java" />
         <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java" />
+        <option value="$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java" />
+        <option value="$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java" />
       </list>
     </option>
   </component>
@@ -406,7 +365,7 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Alex Wolski/Desktop/School/Fall/CSC 413/Assignment 3 (Tank Game)/csc413-tankgame-AlexWolski/src/Tanks3D/Player.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542789344760" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542791551262" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CSC413 (Wa)/CSC413 (Wa)/csc413-02-tankgame-team13-ndyoussfi" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -517,7 +476,7 @@
       <workItem from="1542493623405" duration="113000" />
       <workItem from="1542574636006" duration="9000" />
       <workItem from="1542744258181" duration="3435000" />
-      <workItem from="1542747769766" duration="27835000" />
+      <workItem from="1542747769766" duration="30059000" />
     </task>
     <task id="LOCAL-00001" summary="Intellij Project Created">
       <created>1540168169553</created>
@@ -736,7 +695,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542784977249</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Concurrent Modification Exception fixed">
+      <created>1542789378003</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1542789378003</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -772,7 +738,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="529120000" />
+    <option name="totallyTimeSpent" value="531344000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
@@ -792,9 +758,9 @@
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50242716" side_tool="true" weight="0.24766356" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32866043" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4975728" weight="0.24766356" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" sideWeight="0.4975728" visible="true" weight="0.24766356" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Debug" order="9" sideWeight="0.49919093" visible="true" weight="0.4657321" />
+      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49919093" weight="0.4657321" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="12" />
@@ -818,7 +784,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Controls Improved + using Java Line and Point classes" />
     <MESSAGE value="Minimap shows walls" />
     <MESSAGE value="Minimap shows tanks" />
     <MESSAGE value="Fixed bugs in camera and minimap" />
@@ -843,7 +808,8 @@
     <MESSAGE value="Entity height fixed and adjusted tank hitcircles" />
     <MESSAGE value="Bug fixed when player dies" />
     <MESSAGE value="Added a pool of rounds" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a pool of rounds" />
+    <MESSAGE value="Concurrent Modification Exception fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Concurrent Modification Exception fixed" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="setValue">
@@ -1125,16 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="207" column="33" selection-start-line="207" selection-start-column="33" selection-end-line="207" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
@@ -1149,13 +1105,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/ArmorPiercing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="20" column="53" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -1174,16 +1123,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#203#204#0" expanded="true" />
             <element signature="e#246#247#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="29" column="62" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1210,38 +1149,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/GameManager.java">
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/HighExplosive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1505">
-          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+        <state relative-caret-position="108">
+          <caret line="29" column="87" selection-start-line="29" selection-start-column="87" selection-end-line="29" selection-end-column="87" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5752#5753#0" expanded="true" />
-            <element signature="e#5790#5791#0" expanded="true" />
-            <element signature="e#5822#5823#0" expanded="true" />
-            <element signature="e#5862#5863#0" expanded="true" />
-            <element signature="e#5893#5894#0" expanded="true" />
-            <element signature="e#5932#5933#0" expanded="true" />
-            <element signature="e#6760#6761#0" expanded="true" />
-            <element signature="e#6787#6788#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Tank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="148" column="92" selection-start-line="148" selection-start-column="92" selection-end-line="148" selection-end-column="92" />
+        <state relative-caret-position="182">
+          <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#6902#6903#0" expanded="true" />
@@ -1272,12 +1193,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/Round.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
+        <state relative-caret-position="379">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4872#4873#0" expanded="true" />
-            <element signature="e#4910#4911#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="54" column="52" selection-start-line="54" selection-start-column="42" selection-end-line="54" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5752#5753#0" expanded="true" />
+            <element signature="e#5790#5791#0" expanded="true" />
+            <element signature="e#5822#5823#0" expanded="true" />
+            <element signature="e#5862#5863#0" expanded="true" />
+            <element signature="e#5893#5894#0" expanded="true" />
+            <element signature="e#5932#5933#0" expanded="true" />
+            <element signature="e#6760#6761#0" expanded="true" />
+            <element signature="e#6787#6788#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/Object/Entity/Round/ArmorPiercing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/GameManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="127" column="18" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Tanks3D/DisplayComponents/Camera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="213" column="37" selection-start-line="213" selection-start-column="37" selection-end-line="213" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

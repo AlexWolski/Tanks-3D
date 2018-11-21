@@ -27,12 +27,9 @@ public class HighExplosive extends Round {
         super(position, zPos, angle, speed, damage, sprites, imageColor);
     }
 
-    public void collide(Object object, ListIterator thisObject, ListIterator iterator) {
-        //Deal splash damage.
-        if(object instanceof Tank) {
-
-        }
-
-        super.collide(object, thisObject, iterator);
+    //If the high explosive round hits an object, deal splash damage and remove itself.
+    protected void removeRound(ListIterator thisObject) {
+        //splash damage
+        super.removeRound(thisObject);
     }
 }
