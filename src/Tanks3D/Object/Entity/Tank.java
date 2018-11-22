@@ -149,7 +149,14 @@ public class Tank extends Entity {
             }
         }
         else if(object instanceof Tank) {
-            //TODO collision detection with tanks
+            Tank tank = (Tank)object;
+
+            //Calculate the angle between the centers of the two tanks.
+            double angle = Math.toDegrees(Math.atan2(tank.position.x - position.x, tank.position.y - position.y));
+
+            //Move this tank by half of the distance.
+            this.position.x = tank.position.x -  2 * hitCircleRadius * FastMath.sin(angle);
+            this.position.y = tank.position.y - 2 * hitCircleRadius * FastMath.cos(angle);
         }
     }
 

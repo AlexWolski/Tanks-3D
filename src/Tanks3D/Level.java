@@ -51,8 +51,8 @@ public final class Level {
         entityList.add(new GuidedMissileAmmo(new Point2D.Double(-5, 5)));
 
         mapCenter = new Point2D.Double(0, 0);
-        mapWidth = 60;
-        mapHeight = 60;
+        mapWidth = 120;
+        mapHeight = 120;
     }
 
     public double getMapCenterX() { return mapCenter.x; }
