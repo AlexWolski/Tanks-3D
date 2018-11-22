@@ -1,7 +1,6 @@
 package Tanks3D;
 
 import Tanks3D.Object.Entity.Entity;
-import Tanks3D.Object.Entity.Pickup.GuidedMissileAmmo;
 import Tanks3D.Object.Entity.Pickup.Health;
 import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.*;

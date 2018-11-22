@@ -29,7 +29,7 @@ public class HighExplosive extends Round {
 
     //If the high explosive round hits an object, deal splash damage and remove itself.
     protected void removeRound(ListIterator thisObject) {
-        //splash damage
+        //TODO splash damage
         super.removeRound(thisObject);
     }
 }
