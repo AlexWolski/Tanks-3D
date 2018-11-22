@@ -9,7 +9,7 @@ import java.util.ListIterator;
 
 public abstract class Pickup extends Entity {
     //How much to scale the images when drawn to the screen.
-    private final static double scale = 0.0175;
+    private final static double scale = 0.02;
 
     public Pickup(Point2D.Double position, BufferedImage[] sprites, BufferedImage icon, Color imageColor) {
         //Construct the entity with no angle or speed. Use the size of the image for the hitcircle size.

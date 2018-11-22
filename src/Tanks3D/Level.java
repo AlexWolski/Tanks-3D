@@ -3,7 +3,6 @@ package Tanks3D;
 import Tanks3D.Object.Entity.Entity;
 import Tanks3D.Object.Entity.Pickup.GuidedMissileAmmo;
 import Tanks3D.Object.Entity.Pickup.Health;
-import Tanks3D.Object.Entity.Pickup.HighExplosiveAmmo;
 import Tanks3D.Object.SpawnPoint;
 import Tanks3D.Object.Wall.*;
 
@@ -32,27 +31,37 @@ public final class Level {
     private void parseDataFile(String levelFile, ArrayList<Entity> entityList) {
         //remove
         wallObjects = new ArrayList<>();
-        player1Spawn = new SpawnPoint(new Point2D.Double(-10, -20), 0);
-        player2Spawn = new SpawnPoint(new Point2D.Double(10, -20), 0);
+        player1Spawn = new SpawnPoint(new Point2D.Double(0, -80), 0);
+        player2Spawn = new SpawnPoint(new Point2D.Double(0, 80), 180);
 
-        floorColor = new Color(0x803700).getRGB();
-        ceilColor = new Color(0).getRGB();
+        floorColor = Color.darkGray.getRGB();
+        ceilColor = Color.darkGray.darker().getRGB();
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(30, 30), new Point2D.Double(-30, 30), Color.red));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, 30), new Point2D.Double(-30, -30), null));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(-30, -30), new Point2D.Double(30, -30), null));
+        //Map border
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-100, 0), new Point2D.Double(-50, 86.6025403784), Color.green.darker()));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-50, 86.6025403784), new Point2D.Double(50, 86.6025403784), Color.green.darker()));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(50, 86.6025403784), new Point2D.Double(100, 0), Color.green.darker()));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(100, 0), new Point2D.Double(50, -86.6025403784), Color.blue));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(50, -86.6025403784), new Point2D.Double(-50, -86.6025403784), Color.blue));
+        wallObjects.add(new UnbreakableWall(new Point2D.Double(-50, -86.6025403784), new Point2D.Double(-100, 0), Color.blue));
 
-        wallObjects.add(new BreakableWall(new Point2D.Double(30, -30), new Point2D.Double(30, 30), null));
+        //Breakable walls
+        wallObjects.add(new BreakableWall(new Point2D.Double(-50, 86.6025403784), new Point2D.Double(0, 0), null));
+        wallObjects.add(new BreakableWall(new Point2D.Double(50, 86.6025403784), new Point2D.Double(0, 0), null));
+        wallObjects.add(new BreakableWall(new Point2D.Double(100, 0), new Point2D.Double(0, 0), null));
+        wallObjects.add(new BreakableWall(new Point2D.Double(50, -86.6025403784), new Point2D.Double(0, 0), null));
+        wallObjects.add(new BreakableWall(new Point2D.Double(-50, -86.6025403784), new Point2D.Double(0, 0), null));
+        wallObjects.add(new BreakableWall(new Point2D.Double(-100, 0), new Point2D.Double(0, 0), null));
 
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, 10), null));
-        wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), null));
-
-        entityList.add(new Health(new Point2D.Double(-5, 0)));
-        entityList.add(new GuidedMissileAmmo(new Point2D.Double(-5, 5)));
+        //Health crates
+        entityList.add(new Health(new Point2D.Double(-50, 43.3012701892)));
+        entityList.add(new Health(new Point2D.Double(50, 43.3012701892)));
+        entityList.add(new Health(new Point2D.Double(-50, -43.3012701892)));
+        entityList.add(new Health(new Point2D.Double(50, -43.3012701892)));
 
         mapCenter = new Point2D.Double(0, 0);
-        mapWidth = 120;
-        mapHeight = 120;
+        mapWidth = 200;
+        mapHeight = 200;
     }
 
     public double getMapCenterX() { return mapCenter.x; }

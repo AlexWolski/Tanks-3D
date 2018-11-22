@@ -13,7 +13,7 @@ import java.util.ListIterator;
 
 public class Tank extends Entity {
     //How many units the tank can move per second.
-    public final static double maxSpeed = 20;
+    public final static double maxSpeed = 40;
     //How many degrees the tank can rotate per second.
     public final static double maxRotationSpeed = 180;
     public double rotationSpeed;
