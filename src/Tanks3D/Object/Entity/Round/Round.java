@@ -28,6 +28,9 @@ public abstract class Round extends Entity {
     //The damage the round does when it hits a tank directly.
     private final int damage;
 
+    //The tank that shot this round.
+    private Tank owner;
+
     //The distance the round has traveled since being fired
     private double distTraveled;
     //The maximum distance the round can travel before being removed
@@ -44,16 +47,13 @@ public abstract class Round extends Entity {
 
         //Populate each pool with rounds that are not visible.
         for(int i = 0; i < poolSize; i++) {
-            ArmorPiercingPool.add(new ArmorPiercing(new Point2D.Double(0, 0), 0, 0));
-            ArmorPiercingPool.get(i).visible = false;
-            GuidedMissilePool.add(new GuidedMissile(new Point2D.Double(0, 0), 0, 0));
-            GuidedMissilePool.get(i).visible = false;
-            HighExplosivePool.add(new HighExplosive(new Point2D.Double(0, 0), 0, 0));
-            HighExplosivePool.get(i).visible = false;
+            ArmorPiercingPool.add(new ArmorPiercing(new Point2D.Double(0, 0), 0, 0, null));
+            GuidedMissilePool.add(new GuidedMissile(new Point2D.Double(0, 0), 0, 0, null));
+            HighExplosivePool.add(new HighExplosive(new Point2D.Double(0, 0), 0, 0, null));
         }
     }
 
-    public Round(Point2D.Double position, int zPos, double angle, int speed, int damage, BufferedImage[] sprites, Color imageColor) {
+    public Round(Point2D.Double position, int zPos, double angle, int speed, int damage, BufferedImage[] sprites, Color imageColor, Tank owner) {
         super(hitCircleRadius, position, angle, speed);
         //Set the sprites for the round.
         setSprites(sprites, (int)(sprites[0].getWidth() * scale), (int)(sprites[0].getHeight() * scale));
@@ -62,10 +62,11 @@ public abstract class Round extends Entity {
 
         super.zPos = zPos;
         this.damage = damage;
+        this.owner = owner;
         distTraveled = 0;
     }
 
-    public void update(GameData data, double deltaTime, ListIterator thisObject) {
+    public void update(GameData data, double deltaTime, ListIterator<Entity> thisObject) {
         //Calculate how far this round has traveled
         distTraveled += speed * deltaTime / 1000;
 
@@ -88,44 +89,48 @@ public abstract class Round extends Entity {
         else if(object instanceof UnbreakableWall) {
             removeRound(thisObject);
         }
-        //If the round hits a tank, damage it and remove the round.
-        else if(object instanceof Tank) {
+        //If the round hits a tank other than the tank firing the round, damage it and remove the round.
+        else if(object instanceof Tank && object != owner) {
             ((Tank) object).damage(damage);
             removeRound(thisObject);
         }
     }
 
     //Add a round from the given pool to the entity list.
-    public static void addFromPool(ArrayList<Round> roundPool, double x, double y, int zPos, double angle) {
+    public static void addFromPool(ArrayList<Round> roundPool, double x, double y, int zPos, double angle, Tank owner) {
         if(!roundPool.isEmpty()) {
             //Temporarily hold the first round in the pool and remove it.
             Round tempRound = roundPool.get(0);
+
+            //Add the modified round to the entity list.
+            entityList.add(tempRound);
+            //Remove it from the round pool.
             roundPool.remove(0);
 
             //Modify the variables of the round.
             tempRound.position.setLocation(x, y);
             tempRound.zPos = zPos;
             tempRound.angle = angle;
-            tempRound.visible = true;
             tempRound.distTraveled = 0;
-
-            //Add the modified round to the entity pool.
-            entityList.add(tempRound);
+            tempRound.owner = owner;
         }
     }
 
     //Create a new round and add it to the entity list
-    public static void newArmorPiercing(double x, double y, int zPos, double angle) {
-        addFromPool(ArmorPiercingPool, x, y, zPos, angle);
+    public static void newArmorPiercing(double x, double y, int zPos, double angle, Tank owner) {
+        addFromPool(ArmorPiercingPool, x, y, zPos, angle, owner);
     }
-    public static void newGuidedMissile(double x, double y, int zPos, double angle) {
-        addFromPool(GuidedMissilePool, x, y, zPos, angle);
+    public static void newGuidedMissile(double x, double y, int zPos, double angle, Tank owner) {
+        addFromPool(GuidedMissilePool, x, y, zPos, angle, owner);
     }
-    public static void newHighExplosive(double x, double y, int zPos, double angle) {
-        addFromPool(HighExplosivePool, x, y, zPos, angle);
+    public static void newHighExplosive(double x, double y, int zPos, double angle, Tank owner) {
+        addFromPool(HighExplosivePool, x, y, zPos, angle, owner);
     }
 
     protected void removeRound(ListIterator thisObject) {
+        //Remove this round from the entity list.
+        thisObject.remove();
+
         //Determine what type this round is and get the corresponding round pool.
         ArrayList<Round> roundPool;
 
@@ -136,16 +141,7 @@ public abstract class Round extends Entity {
         else
             roundPool = HighExplosivePool;
 
-        //Make this round invisible.
-        this.visible = false;
-
         //Add this round back to the round pool.
         roundPool.add(this);
-        //Remove this round from the entity list.
-        thisObject.remove();
-    }
-
-    public static int getDefaultHitCircleRadius() {
-        return hitCircleRadius;
     }
 }

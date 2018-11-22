@@ -5,6 +5,10 @@ public abstract class GameObject {
     public abstract double getWidth();
     public abstract double getHeight();
 
+    protected GameObject() {
+        visible = true;
+    }
+
     public boolean getVisible() {
         return visible;
     }

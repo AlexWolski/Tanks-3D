@@ -23,8 +23,8 @@ public class HighExplosive extends Round {
         sprites[0] = Image.load("resources/Rounds/Armor Piercing.png");
     }
 
-    public HighExplosive(Point2D.Double position, int zPos, double angle) {
-        super(position, zPos, angle, speed, damage, sprites, imageColor);
+    public HighExplosive(Point2D.Double position, int zPos, double angle, Tank owner) {
+        super(position, zPos, angle, speed, damage, sprites, imageColor, owner);
     }
 
     //If the high explosive round hits an object, deal splash damage and remove itself.

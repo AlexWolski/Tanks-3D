@@ -2,10 +2,7 @@ package Tanks3D.DisplayComponents;
 
 import Tanks3D.GameData;
 import Tanks3D.Object.Entity.Entity;
-import Tanks3D.Object.Entity.Tank;
-import Tanks3D.Object.GameObject;
 import Tanks3D.Object.Wall.Wall;
-import Tanks3D.Player;
 import Tanks3D.Utilities.Image;
 
 import java.awt.*;
@@ -64,7 +61,7 @@ public class Minimap implements Runnable {
         Point2D.Double entityPos;
 
         for(Entity entity : gameData.entityList) {
-            iconSize = (int) (entity.getHitCircleRadius()/gameData.gameLevel.getMapWidth() * 2 * canvas.getWidth());;
+            iconSize = (int) (entity.getHitCircleRadius()/gameData.gameLevel.getMapWidth() * 2 * canvas.getWidth());
 
             //Get the position of the first tank.
             entityPos = gameToMiniMap(entity.position);

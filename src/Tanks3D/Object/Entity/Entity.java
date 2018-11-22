@@ -162,7 +162,7 @@ public abstract class Entity extends GameObject {
     public BufferedImage getIcon() {
         return icon;
     }
-    //Get the ingame height of the entity.
+    //Get the in game height of the entity.
     public double getzPos() {
         return zPos;
     }

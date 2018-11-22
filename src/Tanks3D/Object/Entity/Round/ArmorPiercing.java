@@ -1,5 +1,6 @@
 package Tanks3D.Object.Entity.Round;
 
+import Tanks3D.Object.Entity.Tank;
 import Tanks3D.Utilities.Image;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ public class ArmorPiercing extends Round {
         sprites[0] = Image.load("resources/Rounds/Armor Piercing.png");
     }
 
-    public ArmorPiercing(Point2D.Double position, int zPos, double angle) {
-        super(position, zPos, angle, speed, damage, sprites, imageColor);
+    public ArmorPiercing(Point2D.Double position, int zPos, double angle, Tank owner) {
+        super(position, zPos, angle, speed, damage, sprites, imageColor, owner);
     }
 }

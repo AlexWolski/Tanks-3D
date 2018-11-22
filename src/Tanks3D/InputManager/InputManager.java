@@ -3,7 +3,6 @@ package Tanks3D.InputManager;
 import Tanks3D.InputManager.PlayerControl.*;
 import Tanks3D.Player;
 import javax.swing.*;
-import java.awt.event.InputEvent;
 
 import static java.awt.event.KeyEvent.*;
 import static javax.swing.JComponent.*;

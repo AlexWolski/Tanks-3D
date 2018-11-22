@@ -22,8 +22,6 @@ public abstract class Wall extends GameObject {
         this.textureColor = textureColor;
 
         line = new Line2D.Double(point1, point2);
-        //The wall can be seen and has collision.
-        visible = true;
         //Distance formula.
         length = Math.sqrt(Math.pow(line.x1 - line.x2, 2) + Math.pow(line.y1 - line.y2, 2));
         //Modified equation for spherical coordinates.

@@ -38,7 +38,7 @@ public class Tank extends Entity {
     private boolean respawning;
 
     //The number of milliseconds it takes before the tank can fire again.
-    private final int shotCooldown = 1000;
+    private static final int shotCooldown = 1000;
     //The last time the tank fired.
     private long shotTime;
     //Determines if the tank can fire again or not.
@@ -53,7 +53,8 @@ public class Tank extends Entity {
     //Stats of the tank.
     private final static int maxHealth = 100;
     private int health = maxHealth;
-    private int lives = 3;
+    private final static int maxLives = 3;
+    private int lives = maxLives;
 
     //Load the images for the tank.
     static {
@@ -74,7 +75,6 @@ public class Tank extends Entity {
         this.spawnAngle = spawnAngle;
         this.rotationSpeed = 0;
         this.defaultColor = tankColor;
-        this.visible = true;
 
         //The tank is alive.
         alive = true;
@@ -96,10 +96,10 @@ public class Tank extends Entity {
         //Set the height of the tank.
         zPos = (int)getHeight()/2;
         //Set the height of the gun.
-        gunHeight = zPos + (int)(getHeight()/2 * 0.75);
+        gunHeight = zPos + (int)(getHeight()/2 * 0.65);
     }
 
-    public void update(GameData data, double deltaTime, ListIterator thisObject) {
+    public void update(GameData data, double deltaTime, ListIterator<Entity> thisObject) {
         //If the tank has no health and isn't dead yet, kill it.
         if(alive && health <= 0)
             die();
@@ -160,13 +160,13 @@ public class Tank extends Entity {
             shotTime = System.currentTimeMillis();
             reloading = true;
 
-            //Calculate the distance to spawn the round so it doesn't hit the tank.
-            double distance = (hitCircleRadius / 2.0 + Round.getDefaultHitCircleRadius() / 2.0) + 5;
+            //Calculate the distance to spawn the round.
+            double distance = hitCircleRadius;
             //Calculate the x and y position to spawn the round based on the tank's position and angle.
             double xPos = position.x + distance * FastMath.sin(angle);
             double yPos = position.y + distance * FastMath.cos(angle);
             //Create the round and add it to the entity list.
-            Round.newArmorPiercing(xPos, yPos, gunHeight, angle);
+            Round.newArmorPiercing(xPos, yPos, gunHeight, angle, this);
         }
         //If the tank is reloading, check if the reload time is up. If it is, set reloading to false.
         else if(System.currentTimeMillis() >= shotTime + shotCooldown) {
@@ -205,15 +205,22 @@ public class Tank extends Entity {
             respawning = true;
         }
         //If the tank is re-spawning, check if the respawn time is up. If it is, respawn the tank.
-        else if(System.currentTimeMillis() >= respawnStartTime + respawnCooldown) {
-            health = maxHealth;
-            position.setLocation(spawnPoint);
-            angle = spawnAngle;
-            entityColor = new Color(defaultColor.getRGB());
-            alive = true;
-            respawning = false;
-            setIcon(aliveIcon);
-        }
+        else if(System.currentTimeMillis() >= respawnStartTime + respawnCooldown)
+            resetTank();
+    }
+
+    public void resetTank() {
+        position.setLocation(spawnPoint);
+        angle = spawnAngle;
+        entityColor = new Color(defaultColor.getRGB());
+        health = maxHealth;
+        alive = true;
+        respawning = false;
+        setIcon(aliveIcon);
+    }
+
+    public void resetLives() {
+        lives = maxLives;
     }
 
     public double getMaxSpeed() {

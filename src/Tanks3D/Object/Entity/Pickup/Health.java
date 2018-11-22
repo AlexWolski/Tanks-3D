@@ -11,7 +11,7 @@ public class Health extends Pickup {
     private final static BufferedImage[] sprites;
     private final static BufferedImage icon;
     //The amount of health this pickup restores.
-    private final int health = 50;
+    private static final int health = 50;
 
     //Load the images for the pickup.
     static {

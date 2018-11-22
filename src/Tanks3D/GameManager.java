@@ -10,8 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-//Controls the entire game. The program enters from this class, which is a singleton class.
-public class GameManager {
+//Controls the entire game. The program enters from this class, which is an abstract.
+public abstract class GameManager {
     //Constant settings.
     private final static String levelFile = "Underground Arena.txt";
     //Size of the display. The extra 4px on the width is for the screen divider.
@@ -21,30 +21,35 @@ public class GameManager {
     private final static int titleBarHeight = 30;
 
     //The window that the game runs in and controls drawing of the screen.
-    private final SplitWindow gameWindow;
+    private final static SplitWindow gameWindow;
     //'struct' that holds all of the data for the game world.
-    private final GameData gameData;
+    private final static GameData gameData;
+
+    //Determine if the game has ended and is restarting.
+    private static boolean restarting;
+    //Store the time when the game ended.
+    private static long timeOfGameEnd;
+    //How long it takes for the game to reset.
+    private final static long restartTime = 3000;
 
     //Store the time that the last frame was drawn so that 'deltaTime' can be calculated.
-    private long timeOfLastFrame;
+    private static long timeOfLastFrame;
     //Store the current time.
-    long currentTime;
+    private static long currentTime;
     //The time that elapsed since the last frame was drawn. This is used to run the game at a speed independent of FPS.
-    private long deltaTime;
+    private static long deltaTime;
 
     //Remove
     //Variable to count the number of frames run.
-    private int frames;
+    private static int frames;
     //Timer for fps.
-    private long time;
+    private static long time;
 
-    //Create a single 'Game' object and keep updating the game.
+    //Instantiate the game manager and update it.
     public static void main(String[] args) {
-        GameManager Tanks3d = new GameManager();
-
         while(true) {
             try {
-                Tanks3d.update();
+                GameManager.update();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -52,7 +57,7 @@ public class GameManager {
     }
 
     //Initialize variables. The constructor is private to prevent any classes extending it and creating a new instance.
-    private GameManager() {
+    static {
         //Instantiate local objects.
         gameData = new GameData();
         //Create the entity list.
@@ -81,19 +86,23 @@ public class GameManager {
         time = timeOfLastFrame;
     }
 
-    private void reset() {
+    private static void reset() {
         //Reset the level.
         gameData.gameLevel = new Level(levelFile, gameData.entityList);
         //Reset the entity list.
-        gameData.entityList = new ArrayList<>();
+        gameData.entityList.clear();
+        gameData.entityList.add(gameData.player1.getTank());
+        gameData.entityList.add(gameData.player2.getTank());
+        //Rest the round pool.
+        Round.init(gameData.entityList);
 
-        //Reset the players.
-        gameData.player1 = new Player(gameData, gameWindow.getScreen1Buffer(), gameData.gameLevel.getPlayer1Spawn(), Color.cyan, "left");
-        gameData.player2 = new Player(gameData, gameWindow.getScreen2Buffer(), gameData.gameLevel.getPlayer2Spawn(), Color.green, "right");
+        //Reset the tanks.
+        gameData.player1.reset();
+        gameData.player2.reset();
     }
 
     //Get the current time, calculate the time elapsed since the last frame, and store it in 'deltaTime;.
-    private void updateDeltaTime() {
+    private static void updateDeltaTime() {
         //currentTimeMillis() is used instead of nanoTime() because its less expensive and more precise.
         currentTime = System.currentTimeMillis();
         deltaTime = currentTime - timeOfLastFrame;
@@ -112,9 +121,15 @@ public class GameManager {
         timeOfLastFrame = currentTime;
     }
 
-    private void update() {
+    private static void update() {
         //Update the time since the last frame.
         updateDeltaTime();
+
+        //If the game is restarting and the restart time has passed, restart the game.
+        if(restarting && currentTime - timeOfGameEnd > restartTime) {
+            restarting = false;
+            reset();
+        }
 
         //Remove
         //Print the FPS every second.
@@ -138,5 +153,23 @@ public class GameManager {
         //remove
         //Increment the frame count for the FPS.
         frames++;
+    }
+
+    public static void loseGame(Player player) {
+        //If the game is not already restarting, restart it.
+        if(!restarting) {
+            //Display 'You Lose' on the screen of the player who lost.
+            player.lose();
+
+            //Determine which player won and display 'You Win' on their screen.
+            if (player == gameData.player1)
+                gameData.player2.win();
+            else
+                gameData.player1.win();
+
+            //Save the current time and start counting down until the restart.
+            timeOfGameEnd = System.currentTimeMillis();
+            restarting = true;
+        }
     }
 }

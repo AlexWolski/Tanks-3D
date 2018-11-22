@@ -13,8 +13,15 @@ public class HUD {
     private final GradientPaint gradient;
     //The side of the screen that the stats will be on.
     private final String iconSide;
-    //Images that will be displayed.
+    //The uncolored images for the HUD.
+    private static BufferedImage defaultBody, defaultGun, defaultHealthIcon, defaultLifeIcon;
+    //The images that are displayed when the game is over.
+    private static BufferedImage winImage, loseImage;
+    //The colored images.
     private BufferedImage body, gun, healthIcon, lifeIcon;
+    //The position and dimensions of the image displayed when the game ends.
+    private final Point endGameImagePos;
+    private final Dimension endGameImageDim;
     //The position and size of the tank images. The gun's position is not final so it can be animated.
     private Point gunPos;
     private final Point bodyPos;
@@ -25,22 +32,34 @@ public class HUD {
     private final Point healthBarPos;
     private final Dimension healthBarDim;
     //The size of the health and life icons.
-    private final int iconSize = 50;
+    private static final int iconSize = 50;
     //The distance between the icons and the side of the screen.
-    private final int iconGap = 20;
+    private static final int iconGap = 20;
     //The distance between each life icon. Can be positive or negative depending on if its on the left or right.
     private final int lifeIconGap;
+
+    static {
+        //Load the uncolored images.
+        defaultBody = Image.load("resources/HUD/Tank Body.png");
+        defaultGun = Image.load("resources/HUD/Tank Gun.png");
+        defaultHealthIcon = Image.load("resources/HUD/Health Icon.png");
+        defaultLifeIcon = Image.load("resources/HUD/Life Icon.png");
+
+        //Load the messages for when the game is won or lost.
+        winImage = Image.load("resources/Game End/Win.png");
+        loseImage = Image.load("resources/Game End/Lose.png");
+    }
 
     public HUD(BufferedImage canvas, Color hudColor, String iconSide) {
         this.canvas = canvas;
         this.iconSide = iconSide;
         this.healthBarDim = new Dimension(canvas.getWidth()/2, canvas.getWidth()/15);
 
-        //Load the images.
-        body = Image.load("resources/HUD/Tank Body.png");
-        gun = Image.load("resources/HUD/Tank Gun.png");
-        healthIcon = Image.load("resources/HUD/Health Icon.png");
-        lifeIcon = Image.load("resources/HUD/Life Icon.png");
+        //Copy the default images to make the colored images.
+        body = Image.copy(defaultBody);
+        gun = Image.copy(defaultGun);
+        healthIcon = Image.copy(defaultHealthIcon);
+        lifeIcon = Image.copy(defaultLifeIcon);
 
         //Color the images.
         Tanks3D.Utilities.Image.tintImage(body, hudColor);
@@ -72,15 +91,31 @@ public class HUD {
             lifeIconPos = new Point(canvas.getWidth() - iconGap - iconSize, 2*iconGap + iconSize);
             lifeIconGap = -(iconSize + iconGap);
         }
+
+        //Calculate the dimension of the end of game message.
+        endGameImageDim = new Dimension();
+        endGameImageDim.width = (int)(canvas.getWidth() * 0.75);
+        endGameImageDim.height = (int)((double)winImage.getHeight()/winImage.getWidth() * endGameImageDim.width);
+        //Calculate the position of the end of game message.
+        endGameImagePos = new Point();
+        endGameImagePos.x = canvas.getWidth()/2 - endGameImageDim.width/2;
+        endGameImagePos.y = canvas.getHeight()/2 - endGameImageDim.height/2;
     }
 
     //Draw the player's tank and status.
-    public void draw(int maxHealth, int health, int lives) {
+    public void draw(int maxHealth, int health, int lives, boolean win, boolean lose, boolean alive) {
         Graphics2D graphic = canvas.createGraphics();
 
-        //Draw the tank.
-        graphic.drawImage(body, bodyPos.x, bodyPos.y, bodyDim.width, bodyDim.height, null);
-        graphic.drawImage(gun, gunPos.x, gunPos.y, gunDim.width, gunDim.height, null);
+        //If the tank is alive, draw the colored image.
+        if(alive) {
+            graphic.drawImage(body, bodyPos.x, bodyPos.y, bodyDim.width, bodyDim.height, null);
+            graphic.drawImage(gun, gunPos.x, gunPos.y, gunDim.width, gunDim.height, null);
+        }
+        //If the tank is dead, draw the default image.
+        else {
+            graphic.drawImage(defaultBody, bodyPos.x, bodyPos.y, bodyDim.width, bodyDim.height, null);
+            graphic.drawImage(defaultGun, gunPos.x, gunPos.y, gunDim.width, gunDim.height, null);
+        }
 
         //Draw the health icon.
         graphic.drawImage(healthIcon, healthIconPos.x, healthIconPos.y, iconSize, iconSize, null);
@@ -109,5 +144,12 @@ public class HUD {
         graphic.setStroke(new BasicStroke(2));
         graphic.setColor(Color.white);
         graphic.drawRect(healthBarPos.x, healthBarPos.y, healthBarDim.width, healthBarDim.height);
+
+        //If the player won the game, display the winning message.
+        if(win)
+            graphic.drawImage(winImage, endGameImagePos.x, endGameImagePos.y, endGameImageDim.width, endGameImageDim.height, null);
+        //If the player lost the game, display the losing message.
+        else if(lose)
+            graphic.drawImage(loseImage, endGameImagePos.x, endGameImagePos.y, endGameImageDim.width, endGameImageDim.height, null);
     }
 }

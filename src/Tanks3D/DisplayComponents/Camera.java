@@ -214,16 +214,8 @@ public class Camera {
             //Empty the list of entities.
             visibleEntities.clear();
 
-            //Use an iterator to loop through the entity list to prevent a concurrent modification error.
-            ListIterator<Entity> iterator = gameData.entityList.listIterator();
-            //A temporary variable to store the next entity to check.
-            Entity entity;
-
-            //Iterate through each entity.
-            while(iterator.hasNext()) {
-                //Get the next entity.
-                entity = iterator.next();
-
+            //Iterate through the entity list and draw the slices that are visible.
+            for(Entity entity : gameData.entityList) {
                 //Scan the entity if it is visible.
                 if (entity.getVisible()) {
                     //The angle between the camera and the entity.

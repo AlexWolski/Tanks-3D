@@ -1,6 +1,7 @@
 package Tanks3D;
 
 import Tanks3D.Object.Entity.Entity;
+import Tanks3D.Object.Entity.Pickup.GuidedMissileAmmo;
 import Tanks3D.Object.Entity.Pickup.Health;
 import Tanks3D.Object.Entity.Pickup.HighExplosiveAmmo;
 import Tanks3D.Object.SpawnPoint;
@@ -47,7 +48,7 @@ public final class Level {
         wallObjects.add(new UnbreakableWall(new Point2D.Double(0, 0), new Point2D.Double(30, -10), null));
 
         entityList.add(new Health(new Point2D.Double(-5, 0)));
-        entityList.add(new HighExplosiveAmmo(new Point2D.Double(-5, 5)));
+        entityList.add(new GuidedMissileAmmo(new Point2D.Double(-5, 5)));
 
         mapCenter = new Point2D.Double(0, 0);
         mapWidth = 60;
