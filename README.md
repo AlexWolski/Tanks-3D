@@ -1,4 +1,5 @@
-# csc413-TankGame
+# Tanks 3D
 
-## Student Name :	Alex Wolski
-## Student ID :		918276364
+### A Psuedo-3D split-screen multiplayer game
+
+![Screenshot](https://i.imgur.com/TcBI1DB.png)
